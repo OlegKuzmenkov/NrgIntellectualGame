@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_background"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/question_text_border">
+
+        <TextView
+            android:id="@+id/question_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="32dp"
+            android:text="432"
+            android:textStyle="bold|italic" />
+
+     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/timer_view"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:background="@drawable/time_green_indicator"
+            android:textStyle="bold|italic"
+            android:textSize="34dp"
+            android:textAllCaps="false" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="7dp"
+        android:background="@drawable/answers_background_border">
+
+        <Button
+            android:id="@+id/first_answer_button"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:text="1"/>
+
+        <Button
+            android:id="@+id/second_answer_button"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_below="@+id/first_answer_button"
+            android:text="2"/>
+
+        <Button
+            android:id="@+id/third_answer_button"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_toRightOf="@+id/first_answer_button"
+            android:text="3"/>
+
+        <Button
+            android:id="@+id/fourth_answer_button"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_below="@+id/third_answer_button"
+            android:layout_toRightOf="@+id/second_answer_button"
+            android:text="4"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

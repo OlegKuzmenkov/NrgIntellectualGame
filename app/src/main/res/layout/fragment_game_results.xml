@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_background"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:background="@drawable/question_text_border">
+
+        <TextView
+            android:id="@+id/game_results_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold|italic"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="32dp"
+            android:textAllCaps="false" />
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/go_to_main_menu_button"
+        android:layout_width="160dp"
+        android:layout_height="70dp"
+        android:background="@drawable/answer_button_style"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold|italic"
+        android:textSize="22dp"
+        android:textAllCaps="false"
+        android:text="@string/go_to_main_menu_button"/>
+
+</LinearLayout>

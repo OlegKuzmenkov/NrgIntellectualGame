@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "260623826028",
+    "firebase_url": "https://nrgintellectualg-1528307183759.firebaseio.com",
+    "project_id": "nrgintellectualg-1528307183759",
+    "storage_bucket": "nrgintellectualg-1528307183759.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260623826028:android:4b39b691bee1bd24",
+        "android_client_info": {
+          "package_name": "com.oleg_kuzmenkov.android.nrgintellectualgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260623826028-i50ej600l691re6iiu38jqk12m2tbqtq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR5Vv7Qd5bcN8tD1vLnTgtltZeCRvf-nk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

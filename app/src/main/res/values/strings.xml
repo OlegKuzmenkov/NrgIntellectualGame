@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NrgIntellectualGame</string>
+    <string name="single_player_mode_button">Single player</string>
+    <string name="statistics_button">Statistics</string>
+    <string name="best_players_button">Best players</string>
+    <string name="go_to_main_menu_button">Go to main menu</string>
+</resources>

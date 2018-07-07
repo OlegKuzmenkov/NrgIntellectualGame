@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_background"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_weight="2"
+        android:background="@drawable/question_text_border">
+
+        <TextView
+            android:id="@+id/question_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textStyle="bold|italic"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="32dp"
+            android:textAllCaps="false" />
+
+     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/timer_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/time_green_indicator"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="34dp"
+            android:textStyle="bold|italic" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/answers_background_border">
+
+        <Button
+            android:id="@+id/first_answer_button"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:text="1"/>
+
+        <Button
+            android:id="@+id/second_answer_button"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_below="@+id/first_answer_button"
+            android:text="2"/>
+
+        <Button
+            android:id="@+id/third_answer_button"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_toRightOf="@+id/first_answer_button"
+            android:text="3"/>
+
+        <Button
+            android:id="@+id/fourth_answer_button"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@drawable/answer_button_border"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold|italic"
+            android:textSize="22dp"
+            android:textAllCaps="false"
+            android:layout_below="@+id/third_answer_button"
+            android:layout_toRightOf="@+id/second_answer_button"
+            android:text="4"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
