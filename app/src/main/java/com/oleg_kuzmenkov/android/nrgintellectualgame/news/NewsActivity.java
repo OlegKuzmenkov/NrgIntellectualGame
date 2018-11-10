@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -16,9 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity implements NewsView{
+public class NewsActivity extends AppCompatActivity implements NewsView {
     private final String BROADCAST_ACTION = "download_news";
     private static final String BUNDLE_CONTENT = "content";
     private static final String LOG_TAG = "Message";

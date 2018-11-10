@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
 import android.graphics.Bitmap;
 

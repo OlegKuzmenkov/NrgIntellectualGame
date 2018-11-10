@@ -1,4 +1,6 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.menu;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;

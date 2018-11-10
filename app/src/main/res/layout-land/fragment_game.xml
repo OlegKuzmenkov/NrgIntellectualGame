@@ -22,7 +22,6 @@
             android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="32dp"
-            android:text="432"
             android:textStyle="bold|italic" />
 
      </FrameLayout>
@@ -62,8 +61,7 @@
             android:layout_marginTop="5dp"
             android:textStyle="bold|italic"
             android:textSize="22dp"
-            android:textAllCaps="false"
-            android:text="1"/>
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/second_answer_button"
@@ -75,8 +73,7 @@
             android:textStyle="bold|italic"
             android:textSize="22dp"
             android:textAllCaps="false"
-            android:layout_below="@+id/first_answer_button"
-            android:text="2"/>
+            android:layout_below="@+id/first_answer_button" />
 
         <Button
             android:id="@+id/third_answer_button"
@@ -88,8 +85,7 @@
             android:textStyle="bold|italic"
             android:textSize="22dp"
             android:textAllCaps="false"
-            android:layout_toRightOf="@+id/first_answer_button"
-            android:text="3"/>
+            android:layout_toRightOf="@+id/first_answer_button" />
 
         <Button
             android:id="@+id/fourth_answer_button"
@@ -102,8 +98,7 @@
             android:textSize="22dp"
             android:textAllCaps="false"
             android:layout_below="@+id/third_answer_button"
-            android:layout_toRightOf="@+id/second_answer_button"
-            android:text="4"/>
+            android:layout_toRightOf="@+id/second_answer_button" />
 
     </RelativeLayout>
 

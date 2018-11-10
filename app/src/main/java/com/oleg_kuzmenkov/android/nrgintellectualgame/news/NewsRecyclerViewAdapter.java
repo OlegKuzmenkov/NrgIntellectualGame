@@ -1,10 +1,13 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 
 import java.util.List;
 

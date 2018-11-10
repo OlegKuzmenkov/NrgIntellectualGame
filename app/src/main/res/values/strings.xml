@@ -3,5 +3,12 @@
     <string name="single_player_mode_button">Single player</string>
     <string name="statistics_button">Statistics</string>
     <string name="best_players_button">Best players</string>
+    <string name="read_news_button">Read News</string>
+    <string name="exit_button">Exit</string>
+    <string name="login_button">Login</string>
+    <string name="enter_login_notification">Please enter login</string>
+    <string name="loading_user_notification">Loading ......</string>
+    <string name="loading_news_notification">News are loading now......</string>
+    <string name="right_answers_notification">Percent of right answers</string>
     <string name="go_to_main_menu_button">Go to main menu</string>
 </resources>

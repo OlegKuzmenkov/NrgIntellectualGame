@@ -15,7 +15,7 @@
         android:textSize="30dp"
         android:textStyle="bold|italic"
         android:textAllCaps="false"
-        android:text="Loading..."/>
+        android:text="@string/loading_user_notification"/>
 
     <Button
         android:id="@+id/single_player_button"
@@ -67,7 +67,7 @@
         android:textStyle="bold|italic"
         android:textSize="20dp"
         android:textAllCaps="false"
-        android:text="Read News"/>
+        android:text="@string/read_news_button"/>
 
     <Button
         android:id="@+id/exit_button"
@@ -80,6 +80,6 @@
         android:textStyle="bold|italic"
         android:textSize="20dp"
         android:textAllCaps="false"
-        android:text="Exit"/>
+        android:text="@string/exit_button"/>
 
 </LinearLayout>

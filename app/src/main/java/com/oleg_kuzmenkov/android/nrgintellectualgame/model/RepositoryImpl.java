@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,7 +45,7 @@ public class RepositoryImpl implements Repository {
             mQuestionList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading questions.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new ReadQuestionsFromLocalDatabaseTask(db,mQuestionList,listener).execute();
+            new GetQuestionsFromLocalDatabaseAsyncTask(db,mQuestionList,listener).execute();
         } else{
             Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
             Log.d(LOG_TAG, "List of questions size is - "+mQuestionList.size());
@@ -59,7 +59,7 @@ public class RepositoryImpl implements Repository {
             //mNewsList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading news.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new ReadNewsFromLocalDatabaseTask(db,mNewsList,listener).execute();
+            new GetNewsFromLocalDatabaseAsyncTask(db,mNewsList,listener).execute();
         } else{
             Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
             listener.onFinishedGettingNews(mNewsList);

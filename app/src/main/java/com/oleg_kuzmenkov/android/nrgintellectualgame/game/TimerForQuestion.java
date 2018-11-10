@@ -1,7 +1,9 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.util.Log;
 import android.widget.TextView;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

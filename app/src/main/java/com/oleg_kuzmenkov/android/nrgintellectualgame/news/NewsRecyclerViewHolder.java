@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -6,6 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.news.OriginalNewsActivity;
 
 public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private final String LOG_TAG = "Message";

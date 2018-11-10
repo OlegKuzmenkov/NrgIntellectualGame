@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 
 public class GameResultsFragment extends Fragment {
@@ -80,7 +82,7 @@ public class GameResultsFragment extends Fragment {
     }
 
     /**
-     * Set the received content in the fragment's view
+     * Set the received content in the fragment's game
      */
     private void setContent(){
        mGameResultsTextView.setText("You answered correctly for "+mCountRightAnswers+" out of "+mCountQuestions+

@@ -1,10 +1,12 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 public class OriginalNewsActivity extends AppCompatActivity {
     private final String INTENT_CONTENT = "url";

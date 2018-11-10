@@ -1,6 +1,9 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.menu;
 
 import android.util.Log;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;

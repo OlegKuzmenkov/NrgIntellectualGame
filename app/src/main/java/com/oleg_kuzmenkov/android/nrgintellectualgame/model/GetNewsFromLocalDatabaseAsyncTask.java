@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,17 +7,21 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.QuestionsDatabase;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class ReadNewsFromLocalDatabaseTask extends AsyncTask<Void, Void, Void> {
+class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
     private final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.NewsOnFinishedListener mListener;
     private List<News> mNewsList;
 
-    public ReadNewsFromLocalDatabaseTask(SQLiteDatabase database, List<News> news, Repository.NewsOnFinishedListener listener) {
+    public GetNewsFromLocalDatabaseAsyncTask(SQLiteDatabase database, List<News> news, Repository.NewsOnFinishedListener listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;
@@ -45,10 +49,14 @@ class ReadNewsFromLocalDatabaseTask extends AsyncTask<Void, Void, Void> {
             int newsImageColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_IMAGE);
             do {
                 News news = new News();
-                news.setSourceName(c.getString(newsSourceColIndex));
-                news.setTitle(c.getString(newsTitleColIndex));
-                news.setDescription(c.getString(newsDescriptionColIndex));
-                news.setUrl(c.getString(newsURLColIndex));
+                try {
+                    news.setSourceName(c.getString(newsSourceColIndex));
+                    news.setTitle(c.getString(newsTitleColIndex));
+                    news.setDescription(c.getString(newsDescriptionColIndex));
+                    news.setUrl(c.getString(newsURLColIndex));
+                } catch(Exception e){
+                    Log.d(LOG_TAG, "Error");
+                }
 
                 byte[] byteArray = c.getBlob(newsImageColIndex);
                 if(byteArray!= null) {

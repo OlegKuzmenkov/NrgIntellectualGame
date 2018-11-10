@@ -17,7 +17,7 @@
             android:textColor="@android:color/white"
             android:textSize="22dp"
             android:textAllCaps="false"
-            android:text="News are loading now......" />
+            android:text="@string/loading_news_notification" />
 
         <android.support.v7.widget.RecyclerView
             xmlns:android="http://schemas.android.com/apk/res/android"

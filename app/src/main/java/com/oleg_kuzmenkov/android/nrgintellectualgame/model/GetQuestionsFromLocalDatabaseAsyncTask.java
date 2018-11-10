@@ -1,20 +1,24 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.QuestionsDatabase;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
+
 import java.util.List;
 
-class ReadQuestionsFromLocalDatabaseTask extends AsyncTask<Void, Void, Void> {
+class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
     private final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.QuestionOnFinishedListener mListener;
     private List<Question> mQuestionList;
 
-    public ReadQuestionsFromLocalDatabaseTask(SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
+    public GetQuestionsFromLocalDatabaseAsyncTask(SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;

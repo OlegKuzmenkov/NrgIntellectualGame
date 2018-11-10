@@ -47,8 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:layout_below="@id/news_image"
-                android:text="123"/>
+                android:layout_below="@id/news_image"/>
 
             <TextView
                 android:id="@+id/news_source"

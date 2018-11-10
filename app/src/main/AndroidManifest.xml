@@ -18,22 +18,22 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAPTCncgb4ZykHVAHJlP-YLwPecQ16sq6E" />
 
-        <activity android:name=".UserLoginActivity">
+        <activity android:name=".game.UserLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".BestPlayersActivity" />
-        <activity android:name=".GameActivity" />
-        <activity android:name=".StatisticsActivity" />
-        <activity android:name=".NewsActivity" />
-        <activity android:name=".OriginalNewsActivity" />
+        <activity android:name=".menu.MenuScreenActivity" />
+        <activity android:name=".statistics.BestPlayersActivity" />
+        <activity android:name=".game.GameActivity" />
+        <activity android:name=".statistics.StatisticsActivity" />
+        <activity android:name=".news.NewsActivity" />
+        <activity android:name=".news.OriginalNewsActivity" />
 
         <service
-            android:name=".UpdateNewsJobSchedulerService"
+            android:name=".news.UpdateNewsJobSchedulerService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

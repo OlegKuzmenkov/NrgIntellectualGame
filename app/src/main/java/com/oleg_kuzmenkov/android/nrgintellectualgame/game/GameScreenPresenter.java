@@ -1,7 +1,12 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameScreenView;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -115,7 +120,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     /**
      * Choose list of random questions
      */
-    private void chooseRandomQuestions(List<Question> list){
+    private void chooseRandomQuestions(@NonNull List<Question> list){
         Random gen = new Random();
         int max = list.size();
         mQuestionListForGame = new ArrayList();

@@ -1,4 +1,8 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 

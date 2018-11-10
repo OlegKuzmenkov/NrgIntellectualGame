@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.statistics;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 public class StatisticsActivity extends AppCompatActivity {
     private static final String INTENT_CONTENT = "1";
@@ -62,7 +65,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the received content in the view
+     * Set the received content in the game
      */
     private void setContent(User user) {
         if (user != null) {

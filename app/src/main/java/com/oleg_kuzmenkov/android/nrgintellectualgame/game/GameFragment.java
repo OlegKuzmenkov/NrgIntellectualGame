@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
@@ -26,6 +26,10 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
@@ -123,6 +127,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         });
 
         if(savedInstanceState == null) {
+            // start new game
             timer = 10;
             mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
             mPresenter.setView(this);
@@ -137,7 +142,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
             }
             mPresenter.onClickSinglePlayerButton();
         }else{
-            //restore the question
+            // restore the question
             mAnswerIsDone = savedInstanceState.getBoolean(BUNDLE_ANSWER);
             timer = savedInstanceState.getInt(BUNDLE_TIMER);
             mPresenter = (GameScreenPresenter)savedInstanceState.getSerializable(BUNDLE_CONTENT);

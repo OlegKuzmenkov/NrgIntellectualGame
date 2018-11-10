@@ -1,7 +1,10 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.menu;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -17,10 +17,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oleg_kuzmenkov.android.nrgintellectualgame.news.NewsActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.StatisticsActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.BestPlayersActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.game.UserLoginActivity;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class MenuActivity extends AppCompatActivity implements MenuScreenView{
+public class MenuScreenActivity extends AppCompatActivity implements MenuScreenView {
     private static final String BUNDLE_CONTENT = "content";
     private static final String INTENT_CONTENT = "content";
     private final String LOG_TAG = "Message";
@@ -171,7 +180,7 @@ public class MenuActivity extends AppCompatActivity implements MenuScreenView{
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "MenuActivity:onSaveInstanceState");
+        Log.d(LOG_TAG, "MenuScreenActivity:onSaveInstanceState");
         outState.putSerializable(BUNDLE_CONTENT,mPresenter);
     }
 

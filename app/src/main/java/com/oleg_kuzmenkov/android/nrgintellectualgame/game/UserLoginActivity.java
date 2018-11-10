@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuScreenActivity;
 
 public class UserLoginActivity extends AppCompatActivity {
     private final String LOG_TAG = "Message";
@@ -37,7 +40,7 @@ public class UserLoginActivity extends AppCompatActivity {
                 if(mUserLogin.equals("")){
                     Toast.makeText(getApplicationContext(), "Please enter login", Toast.LENGTH_SHORT).show();
                 }else {
-                    Intent startMenuIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                    Intent startMenuIntent = new Intent(getApplicationContext(), MenuScreenActivity.class);
                     startMenuIntent.putExtra(INTENT_CONTENT, mUserLogin);
                     startActivity(startMenuIntent);
                     finish();

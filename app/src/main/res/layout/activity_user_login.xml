@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:textSize="32dp"
         android:textAllCaps="false"
-        android:text="Please enter login"/>
+        android:text="@string/enter_login_notification"/>
 
     <FrameLayout
         android:layout_width="300dp"
@@ -48,6 +48,6 @@
         android:textStyle="bold|italic"
         android:textSize="22dp"
         android:textAllCaps="false"
-        android:text="Login"/>
+        android:text="@string/login_button"/>
 
 </LinearLayout>

@@ -1,4 +1,6 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
+
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
 
 public interface GameScreenView {
     void displayQuestion(Question question);
