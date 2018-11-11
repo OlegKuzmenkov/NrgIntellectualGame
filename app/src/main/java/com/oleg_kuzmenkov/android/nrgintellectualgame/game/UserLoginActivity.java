@@ -12,7 +12,6 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuScreenActivity;
 
 public class UserLoginActivity extends AppCompatActivity {
-    private final String LOG_TAG = "Message";
     private static final String INTENT_CONTENT = "content";
     private static final String BUNDLE_CONTENT = "content";
 
@@ -27,7 +26,7 @@ public class UserLoginActivity extends AppCompatActivity {
 
         mUserLoginEditText = findViewById(R.id.login_edit_text);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mUserLogin = savedInstanceState.getString(BUNDLE_CONTENT);
             mUserLoginEditText.setText(mUserLogin);
         }
@@ -37,9 +36,9 @@ public class UserLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mUserLogin = mUserLoginEditText.getText().toString();
-                if(mUserLogin.equals("")){
+                if (mUserLogin.equals("")) {
                     Toast.makeText(getApplicationContext(), "Please enter login", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Intent startMenuIntent = new Intent(getApplicationContext(), MenuScreenActivity.class);
                     startMenuIntent.putExtra(INTENT_CONTENT, mUserLogin);
                     startActivity(startMenuIntent);

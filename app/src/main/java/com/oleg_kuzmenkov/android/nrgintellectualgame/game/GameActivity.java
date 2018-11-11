@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (fragment == null) {
             Intent intent = getIntent();
-            User user = (User)intent.getSerializableExtra("1");
+            User user = (User) intent.getSerializableExtra("1");
             fragment = GameFragment.newInstance(user);
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }

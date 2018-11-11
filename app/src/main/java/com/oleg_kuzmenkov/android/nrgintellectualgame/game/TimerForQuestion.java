@@ -16,20 +16,20 @@ public class TimerForQuestion extends TimerTask {
     private GameFragmentCallBacks mGameFragmentCallBacks;
     private boolean mIsRedIndicator;
 
-    public TimerForQuestion(int timer, TextView timerTextView, GameFragmentCallBacks gameFragmentCallBacks) {
-        Log.d(LOG_TAG,"Create Timer!!!!!!!!!!!!!!");
+    public TimerForQuestion(int timer, final TextView timerTextView, GameFragmentCallBacks gameFragmentCallBacks) {
+        Log.d(LOG_TAG, "Create Timer!!!!!!!!!!!!!!");
         mRemainTime = timer;
         mTimerTextView = timerTextView;
         mGameFragmentCallBacks = gameFragmentCallBacks;
         setIndicator();
         Timer t = new Timer();
-        t.scheduleAtFixedRate(this,0,1000L);
+        t.scheduleAtFixedRate(this, 0, 1000L);
     }
 
     @Override
     public void run() {
-        if(mRemainTime == 0){
-            Log.d(LOG_TAG,"Task is cancelled");
+        if (mRemainTime == 0) {
+            Log.d(LOG_TAG, "Task is cancelled");
             mTimerTextView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -38,14 +38,14 @@ public class TimerForQuestion extends TimerTask {
             });
             cancel();
         }
-        Log.d(LOG_TAG,"mRemainTime = "+mRemainTime);
+        Log.d(LOG_TAG, "mRemainTime = " + mRemainTime);
         mTimerTextView.post(new Runnable() {
             @Override
             public void run() {
                 mTimerTextView.setText(Integer.toString(mRemainTime));
 
-                if(mIsRedIndicator == false){
-                    if(mRemainTime == 3){
+                if (mIsRedIndicator == false) {
+                    if (mRemainTime == 3) {
                         mIsRedIndicator = true;
                         mTimerTextView.setBackgroundResource(R.drawable.time_red_indicator);
                     }
@@ -55,14 +55,14 @@ public class TimerForQuestion extends TimerTask {
         });
     }
 
-    private void setIndicator(){
+    private void setIndicator() {
         mTimerTextView.post(new Runnable() {
             @Override
             public void run() {
-                if(mRemainTime > 3){
+                if (mRemainTime > 3) {
                     mIsRedIndicator = false;
                     mTimerTextView.setBackgroundResource(R.drawable.time_green_indicator);
-                } else{
+                } else {
                     mIsRedIndicator = true;
                     mTimerTextView.setBackgroundResource(R.drawable.time_red_indicator);
                 }
@@ -70,7 +70,7 @@ public class TimerForQuestion extends TimerTask {
         });
     }
 
-    public int getRemainTime(){
+    public int getRemainTime() {
         return mRemainTime;
     }
 }

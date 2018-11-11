@@ -19,27 +19,27 @@ public class NewsViewPresenter implements Repository.NewsOnFinishedListener, Ser
         mRepository = repository;
     }
 
-    public void setView(NewsView newsView){
+    public void setView(NewsView newsView) {
         mNewsView = newsView;
     }
 
-    public void detach(){
+    public void detach() {
         mNewsView = null;
         mRepository = null;
     }
 
-    public void getNews(){
+    public void getNews() {
         mRepository.getNewsFromDatabase(this);
     }
 
     @Override
     public void onFinishedGettingNews(List<News> list) {
         Log.d(LOG_TAG, "Count of news = " + list.size());
-        if(list.size() < 10) {
+        if (list.size() < 10) {
             //start updating of the news
             mNewsView.startNewsUpdating();
-        } else{
-            if(list.size() == 10) {
+        } else {
+            if (list.size() == 10) {
                 //display news
                 mNewsView.displayNews(list);
             }

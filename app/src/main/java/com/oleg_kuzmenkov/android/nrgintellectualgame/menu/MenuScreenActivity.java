@@ -32,7 +32,7 @@ import java.util.List;
 public class MenuScreenActivity extends AppCompatActivity implements MenuScreenView {
     private static final String BUNDLE_CONTENT = "content";
     private static final String INTENT_CONTENT = "content";
-    private final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "Message";
 
     private Button mSinglePlayerButton;
     private Button mStatisticsButton;
@@ -91,12 +91,12 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
 
         //get Data From intent
         Intent intent = getIntent();
-        String userLogin = intent.getStringExtra(INTENT_CONTENT );
-        Log.d(LOG_TAG, "UserLogin - "+userLogin);
+        String userLogin = intent.getStringExtra(INTENT_CONTENT);
+        Log.d(LOG_TAG, "UserLogin - " + userLogin);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             mPresenter = new MenuScreenPresenter();
-        } else{
+        } else {
             mPresenter = (MenuScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         }
         // Set View and Repository in presenter
@@ -105,7 +105,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
         //get User Data
         mPresenter.checkUsers(userLogin);
 
-        if(checkPermission() == false) {
+        if (checkPermission() == false) {
             startRequestForPermission();
         }
     }
@@ -130,27 +130,27 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
 
     @Override
     public void displayUserLogin(User user) {
-        mCurrentUserTextView.setText("Login:"+user.getUserLogin());
+        mCurrentUserTextView.setText("Login:" + user.getUserLogin());
     }
 
     @Override
     public void startGameActivity(User user) {
         Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
-        startGameIntent.putExtra("1",user);
+        startGameIntent.putExtra("1", user);
         startActivity(startGameIntent);
     }
 
     @Override
     public void startStatisticsActivity(User user) {
         Intent startStatisticsIntent = new Intent(getApplicationContext(), StatisticsActivity.class);
-        startStatisticsIntent.putExtra("1",user);
+        startStatisticsIntent.putExtra("1", user);
         startActivity(startStatisticsIntent);
     }
 
     @Override
     public void startBestPlayersActivity(List<User> listBestPlayers) {
         Intent startBestPlayersActivityIntent = new Intent(getApplicationContext(), BestPlayersActivity.class);
-        startBestPlayersActivityIntent.putExtra("1",(Serializable) listBestPlayers);
+        startBestPlayersActivityIntent.putExtra("1", (Serializable) listBestPlayers);
         startActivity(startBestPlayersActivityIntent);
     }
 
@@ -165,8 +165,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
         new AlertDialog.Builder(this).setIcon(R.drawable.exit_icon)
                 .setTitle("Closing the game")
                 .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -181,7 +180,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(LOG_TAG, "MenuScreenActivity:onSaveInstanceState");
-        outState.putSerializable(BUNDLE_CONTENT,mPresenter);
+        outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
     @Override
@@ -191,7 +190,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     }
 
     @Override
-    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -199,7 +198,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
                 } else {
                     // destroy Activity
                     Toast.makeText(this, "Call permission not granted", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),UserLoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -214,7 +213,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     /**
      * Check permission
      */
-    private boolean checkPermission(){
+    private boolean checkPermission() {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 //location Permission already granted
@@ -231,7 +230,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     /**
      * Request permission
      */
-    private void startRequestForPermission () {
+    private void startRequestForPermission() {
         int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);

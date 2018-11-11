@@ -1,9 +1,5 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
-
 import java.util.List;
 
 public interface Repository {
@@ -12,11 +8,11 @@ public interface Repository {
         void onFinishedGettingQuestions(List<Question> list);
     }
 
-    interface UsersOnFinishedListener{
+    interface UsersOnFinishedListener {
         void onFinishedGettingUsers(List<User> list);
     }
 
-    interface NewsOnFinishedListener{
+    interface NewsOnFinishedListener {
         void onFinishedGettingNews(List<News> list);
     }
 

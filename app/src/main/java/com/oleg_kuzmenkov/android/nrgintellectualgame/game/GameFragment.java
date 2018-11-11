@@ -1,7 +1,6 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.MediaPlayer;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -26,14 +24,15 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
+
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
-public class GameFragment extends Fragment implements GameScreenView,GameFragmentCallBacks{
+public class GameFragment extends Fragment implements GameScreenView, GameFragmentCallBacks {
     private static final String LOG_TAG = "Message";
     private static final String BUNDLE_CONTENT = "content";
     private static final String BUNDLE_TIMER = "timer";
@@ -62,7 +61,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
 
     private GameScreenPresenter mPresenter;
 
-    public static GameFragment newInstance(User user) {
+    public static GameFragment newInstance(final User user) {
         GameFragment fragment = new GameFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(BUNDLE_CONTENT, user);
@@ -72,8 +71,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -82,10 +80,10 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game, container, false);
 
-        mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(),R.raw.right_answer_sound);
-        mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(),R.raw.wrong_answer_sound);
-        mMediaPlayerForRightAnswer.setVolume(mVolume,mVolume);
-        mMediaPlayerForWrongAnswer.setVolume(mVolume,mVolume);
+        mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
+        mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
+        mMediaPlayerForRightAnswer.setVolume(mVolume, mVolume);
+        mMediaPlayerForWrongAnswer.setVolume(mVolume, mVolume);
 
         mTimerTextView = v.findViewById(R.id.timer_view);
         mQuestionTextView = v.findViewById(R.id.question_text_view);
@@ -126,7 +124,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
             }
         });
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             // start new game
             timer = 10;
             mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
@@ -135,29 +133,28 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
                 User user = (User) getArguments().getSerializable(BUNDLE_CONTENT);
                 mPresenter.setUser(user);
                 mPresenter.checkIsExistUserLocation();
-                Log.d(LOG_TAG,"User login"+user.getUserLogin());
-            }
-            else {
+                Log.d(LOG_TAG, "User login" + user.getUserLogin());
+            } else {
                 throw new IllegalArgumentException("Must be created through newInstance(...)");
             }
             mPresenter.onClickSinglePlayerButton();
-        }else{
+        } else {
             // restore the question
             mAnswerIsDone = savedInstanceState.getBoolean(BUNDLE_ANSWER);
             timer = savedInstanceState.getInt(BUNDLE_TIMER);
-            mPresenter = (GameScreenPresenter)savedInstanceState.getSerializable(BUNDLE_CONTENT);
+            mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
             mPresenter.setView(this);
             mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
             mPresenter.checkIsExistUserLocation();
 
-            if(timer < 1 || mAnswerIsDone == true) {
-                if(timer == 0 && mAnswerIsDone == false){
+            if (timer < 1 || mAnswerIsDone == true) {
+                if (timer == 0 && mAnswerIsDone == false) {
                     mMediaPlayerForWrongAnswer.start();
                 }
-                if(mPresenter.isLastQuestion()){
+                if (mPresenter.isLastQuestion()) {
                     Log.d(LOG_TAG, "It was last question");
                     mPresenter.showResultsOfTheGame();
-                }else {
+                } else {
                     timer = 10;
                     mPresenter.getNextQuestion();
                 }
@@ -171,20 +168,13 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     }
 
     /**
-     * Animate all of fragment's content
+     * Create the Location callback
      */
-    private void animateFragment(View view){
-        ObjectAnimator animation = ObjectAnimator.ofFloat(view, "rotationY", 0.0f, 360f);
-        animation.setDuration(1600);
-        animation.setInterpolator(new AccelerateDecelerateInterpolator());
-        animation.start();
-    }
-
     private void createLocationCallback() {
         Log.d(LOG_TAG, "createLocationCallback");
         mLocationCallback = new LocationCallback() {
             @Override
-            public void onLocationResult(LocationResult locationResult) {
+            public void onLocationResult(final LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 Log.d(LOG_TAG, "OnLocationResult from Service");
                 //set location result
@@ -193,6 +183,9 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         };
     }
 
+    /**
+     * Create the Location request
+     */
     private void createLocationRequest() {
         Log.d(LOG_TAG, "createLocationRequest");
         mLocationRequest = LocationRequest.create();
@@ -201,22 +194,25 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-    private void setLocationResult(LocationResult locationResult){
+    /**
+     * Set user's location
+     */
+    private void setLocationResult(final LocationResult locationResult) {
         Log.d(LOG_TAG, "OnLocationResult");
         List<Location> locationList;
 
-        if(locationResult != null) {
+        if (locationResult != null) {
             locationList = locationResult.getLocations();
-        } else{
+        } else {
             return;
         }
 
         if (locationList.size() > 0) {
             //the last location in the list is the newest
             Location currentLocation = locationList.get(locationList.size() - 1);
-            Log.d(LOG_TAG, "Location latitude - "+currentLocation.getLatitude());
-            Log.d(LOG_TAG, "Location longitude - "+currentLocation.getLongitude());
-            mPresenter.setUserLocation(currentLocation.getLatitude(),currentLocation.getLongitude());
+            Log.d(LOG_TAG, "Location latitude - " + currentLocation.getLatitude());
+            Log.d(LOG_TAG, "Location longitude - " + currentLocation.getLongitude());
+            mPresenter.setUserLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
         }
     }
 
@@ -235,7 +231,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
                 // Send Message to User
                 Log.d(LOG_TAG, "Geolocation is disabled");
             }
-        } else{
+        } else {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }
     }
@@ -264,7 +260,7 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     @Override
     public void displayResultsOfGame(int countOfQuestions, int countWriteAnswers) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        Fragment fragment = GameResultsFragment.newInstance(countOfQuestions,countWriteAnswers);
+        Fragment fragment = GameResultsFragment.newInstance(countOfQuestions, countWriteAnswers);
         fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
@@ -274,15 +270,14 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         mAnswerIsDone = true;
         setDisableAnswerButtons();
 
-        if(mAnswerButton == mRightAnswerButton){
+        if (mAnswerButton == mRightAnswerButton) {
             //Answer is right
             mPresenter.sendAnswerResult(true);
             mAnswerButton.setBackgroundResource(R.drawable.right_answer_button_border);
             mMediaPlayerForRightAnswer.start();
-        }
-        else{
+        } else {
             //Answer is wrong
-            if(mAnswerButton != null) {
+            if (mAnswerButton != null) {
                 mAnswerButton.setBackgroundResource(R.drawable.wrong_answer_button_border);
             }
             mRightAnswerButton.setBackgroundResource(R.drawable.right_answer_button_border);
@@ -291,11 +286,11 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         showResultAfterAnswer();
     }
 
-    private void startTimerForQuestion(int remainTime){
-        mTimerForQuestion = new TimerForQuestion(remainTime,mTimerTextView,this);
+    private void startTimerForQuestion(int remainTime) {
+        mTimerForQuestion = new TimerForQuestion(remainTime, mTimerTextView, this);
     }
 
-    private void showResultAfterAnswer(){
+    private void showResultAfterAnswer() {
         Thread pauseThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -308,15 +303,15 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
                 mRightAnswerButton.post(new Runnable() {
                     @Override
                     public void run() {
-                        if(mAnswerButton != mRightAnswerButton){
+                        if (mAnswerButton != mRightAnswerButton) {
                             mRightAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
                         }
-                        if(mAnswerButton!= null) {
+                        if (mAnswerButton != null) {
                             mAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
                         }
                         setEnableAnswerButtons();
 
-                        if(mPresenter.isLastQuestion()){
+                        if (mPresenter.isLastQuestion()) {
                             Log.d(LOG_TAG, "It was last question");
                             mPresenter.showResultsOfTheGame();
                         } else {
@@ -331,16 +326,16 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
         pauseThread.start();
     }
 
-    private Button identifyCorrectAnswerButton(String rightAnswer){
-        if(mFirstAnswerButton.getText().toString().equals(rightAnswer)){
+    private Button identifyCorrectAnswerButton(final String rightAnswer) {
+        if (mFirstAnswerButton.getText().toString().equals(rightAnswer)) {
             return mFirstAnswerButton;
         }
-        if(mSecondAnswerButton.getText().toString().equals(rightAnswer)){
+        if (mSecondAnswerButton.getText().toString().equals(rightAnswer)) {
             return mSecondAnswerButton;
         }
-        if(mThirdAnswerButton.getText().toString().equals(rightAnswer)){
+        if (mThirdAnswerButton.getText().toString().equals(rightAnswer)) {
             return mThirdAnswerButton;
-        } else{
+        } else {
             return mFourthAnswerButton;
         }
     }
@@ -362,13 +357,13 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
+    public void onSaveInstanceState(@NonNull final  Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(LOG_TAG, "Fragment: onSaveInstanceState");
-        Log.d(LOG_TAG, "Remain time = "+mTimerForQuestion.getRemainTime());
+        Log.d(LOG_TAG, "Remain time = " + mTimerForQuestion.getRemainTime());
         timer = mTimerForQuestion.getRemainTime();
         outState.putInt(BUNDLE_TIMER, timer);
-        outState.putBoolean(BUNDLE_ANSWER,mAnswerIsDone);
+        outState.putBoolean(BUNDLE_ANSWER, mAnswerIsDone);
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
 
     }
@@ -384,10 +379,10 @@ public class GameFragment extends Fragment implements GameScreenView,GameFragmen
     @Override
     public void onDestroy() {
         Log.d(LOG_TAG, "Fragment: onDestroy");
-        if(mTimerForQuestion != null) {
+        if (mTimerForQuestion != null) {
             mTimerForQuestion.cancel();
         }
-        if(mFusedLocationClient != null) {
+        if (mFusedLocationClient != null) {
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
         mPresenter.detach();

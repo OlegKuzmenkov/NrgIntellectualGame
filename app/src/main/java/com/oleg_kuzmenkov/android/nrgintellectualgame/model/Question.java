@@ -9,8 +9,7 @@ public class Question {
     private String mFourthCaseAnswer;
     private String mRightAnswer;
 
-    public Question() {
-    }
+    Question() { }
 
     public String getQuestionText() {
         return mQuestionText;

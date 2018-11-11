@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryImpl implements Repository {
-    private final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "Message";
     private static RepositoryImpl sRepository;
     //local database
     private QuestionsDatabase mDatabase;
@@ -26,14 +26,14 @@ public class RepositoryImpl implements Repository {
     private List<News> mNewsList;
     private Context mContext;
 
-    public static RepositoryImpl get(Context context){
-        if(sRepository == null){
+    public static RepositoryImpl get(Context context) {
+        if (sRepository == null) {
             sRepository = new RepositoryImpl(context);
         }
         return sRepository;
     }
 
-    private RepositoryImpl(Context context){
+    private RepositoryImpl(Context context) {
         mContext = context;
         mDatabase = new QuestionsDatabase(mContext);
         mRemoteDatabase = FirebaseDatabase.getInstance().getReference();
@@ -41,26 +41,26 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void getQuestionsFromDatabase(QuestionOnFinishedListener listener) {
-        if(mQuestionList == null){
+        if (mQuestionList == null) {
             mQuestionList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading questions.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new GetQuestionsFromLocalDatabaseAsyncTask(db,mQuestionList,listener).execute();
-        } else{
+            new GetQuestionsFromLocalDatabaseAsyncTask(db, mQuestionList, listener).execute();
+        } else {
             Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
-            Log.d(LOG_TAG, "List of questions size is - "+mQuestionList.size());
+            Log.d(LOG_TAG, "List of questions size is - " + mQuestionList.size());
             listener.onFinishedGettingQuestions(mQuestionList);
         }
     }
 
     @Override
     public void getNewsFromDatabase(NewsOnFinishedListener listener) {
-        if(mNewsList == null){
+        if (mNewsList == null) {
             //mNewsList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading news.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new GetNewsFromLocalDatabaseAsyncTask(db,mNewsList,listener).execute();
-        } else{
+            new GetNewsFromLocalDatabaseAsyncTask(db, mNewsList, listener).execute();
+        } else {
             Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
             listener.onFinishedGettingNews(mNewsList);
         }
@@ -69,10 +69,10 @@ public class RepositoryImpl implements Repository {
     @Override
     public void getCurrentUserData(UsersOnFinishedListener listener) {
         Log.d(LOG_TAG, "getCurrentUserData");
-        if(mNewsList == null) {
+        if (mNewsList == null) {
             Log.d(LOG_TAG, "Start loading all users");
             readFromRemoteDatabase(listener);
-        } else{
+        } else {
             Log.d(LOG_TAG, "List of users is exist. Loading is not started.");
             listener.onFinishedGettingUsers(mUserList);
         }
@@ -80,12 +80,12 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public List<User> getAllUsers() {
-        Log.d(LOG_TAG,"Send all users");
+        Log.d(LOG_TAG, "Send all users");
         return mUserList;
     }
 
-    private void writeNewUser(String userId, String userLogin, int countRightAnswers, int countAnswers, double latitude, double longitude ) {
-        User user = new User(userLogin, countRightAnswers,countAnswers,latitude,longitude);
+    private void writeNewUser(String userId, String userLogin, int countRightAnswers, int countAnswers, double latitude, double longitude) {
+        User user = new User(userLogin, countRightAnswers, countAnswers, latitude, longitude);
         //mRemoteDatabase.child("users").child(userId).setValue(user);
         DatabaseReference postsRef = mRemoteDatabase.child("users");
         DatabaseReference newPostRef = postsRef.push();
@@ -94,7 +94,8 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void updateUserData(User user) {
-        User newUser = new User(user.getUserLogin(), user.getCountRightAnswers(),user.getCountAnswers(),user.getLatitude(),user.getLongitude());
+        User newUser = new User(user.getUserLogin(), user.getCountRightAnswers(), user.getCountAnswers(),
+                user.getLatitude(), user.getLongitude());
         mRemoteDatabase.child("users").child(user.getUserId()).setValue(newUser);
     }
 

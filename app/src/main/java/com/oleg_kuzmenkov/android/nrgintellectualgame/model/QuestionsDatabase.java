@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class QuestionsDatabase extends SQLiteOpenHelper {
@@ -74,55 +75,55 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
 
     }
 
-    private void addSomeDataToDatabase(SQLiteDatabase sqLiteDatabase) {
+    private void addSomeDataToDatabase(@NonNull final SQLiteDatabase sqLiteDatabase) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_QUESTION_TEXT, "How much people live in Belarus?");
-        cv.put(COLUMN_ANSWER_FIRST , "4 millions");
-        cv.put(COLUMN_ANSWER_SECOND , "7 millions");
-        cv.put(COLUMN_ANSWER_THIRD , "9 millions");
-        cv.put(COLUMN_ANSWER_FOURTH , "11 millions");
-        cv.put(COLUMN_RIGHT_ANSWER , "9 millions");
-        cv.put(COLUMN_DETAILS,"Geography");
+        cv.put(COLUMN_ANSWER_FIRST, "4 millions");
+        cv.put(COLUMN_ANSWER_SECOND, "7 millions");
+        cv.put(COLUMN_ANSWER_THIRD, "9 millions");
+        cv.put(COLUMN_ANSWER_FOURTH, "11 millions");
+        cv.put(COLUMN_RIGHT_ANSWER, "9 millions");
+        cv.put(COLUMN_DETAILS, "Geography");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
         cv.put(COLUMN_QUESTION_TEXT, "How much people live in Russia?");
-        cv.put(COLUMN_ANSWER_FIRST , "50 millions");
-        cv.put(COLUMN_ANSWER_SECOND , "80 millions");
-        cv.put(COLUMN_ANSWER_THIRD , "110 millions");
-        cv.put(COLUMN_ANSWER_FOURTH , "140 millions");
-        cv.put(COLUMN_RIGHT_ANSWER , "140 millions");
-        cv.put(COLUMN_DETAILS,"Geography");
+        cv.put(COLUMN_ANSWER_FIRST, "50 millions");
+        cv.put(COLUMN_ANSWER_SECOND, "80 millions");
+        cv.put(COLUMN_ANSWER_THIRD, "110 millions");
+        cv.put(COLUMN_ANSWER_FOURTH, "140 millions");
+        cv.put(COLUMN_RIGHT_ANSWER, "140 millions");
+        cv.put(COLUMN_DETAILS, "Geography");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
         cv.put(COLUMN_QUESTION_TEXT, "What type of the Irish Guinness beer?");
-        cv.put(COLUMN_ANSWER_FIRST , "Light");
-        cv.put(COLUMN_ANSWER_SECOND , "Dark");
-        cv.put(COLUMN_ANSWER_THIRD , "Red");
-        cv.put(COLUMN_ANSWER_FOURTH , "Pink");
-        cv.put(COLUMN_RIGHT_ANSWER , "Dark");
+        cv.put(COLUMN_ANSWER_FIRST, "Light");
+        cv.put(COLUMN_ANSWER_SECOND, "Dark");
+        cv.put(COLUMN_ANSWER_THIRD, "Red");
+        cv.put(COLUMN_ANSWER_FOURTH, "Pink");
+        cv.put(COLUMN_RIGHT_ANSWER, "Dark");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
         cv.put(COLUMN_QUESTION_TEXT, "What color is included in the RGB color model, in addition to red and blue?");
-        cv.put(COLUMN_ANSWER_FIRST , "Yellow");
-        cv.put(COLUMN_ANSWER_SECOND , "Gray");
-        cv.put(COLUMN_ANSWER_THIRD , "Green");
-        cv.put(COLUMN_ANSWER_FOURTH , "White");
-        cv.put(COLUMN_RIGHT_ANSWER , "Green");
+        cv.put(COLUMN_ANSWER_FIRST, "Yellow");
+        cv.put(COLUMN_ANSWER_SECOND, "Gray");
+        cv.put(COLUMN_ANSWER_THIRD, "Green");
+        cv.put(COLUMN_ANSWER_FOURTH, "White");
+        cv.put(COLUMN_RIGHT_ANSWER, "Green");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
         cv.put(COLUMN_QUESTION_TEXT, "In what year did Ankara become the capital of Turkey?");
-        cv.put(COLUMN_ANSWER_FIRST , "1923");
-        cv.put(COLUMN_ANSWER_SECOND , "1900");
-        cv.put(COLUMN_ANSWER_THIRD , "1854");
-        cv.put(COLUMN_ANSWER_FOURTH , "1932");
-        cv.put(COLUMN_RIGHT_ANSWER , "1923");
+        cv.put(COLUMN_ANSWER_FIRST, "1923");
+        cv.put(COLUMN_ANSWER_SECOND, "1900");
+        cv.put(COLUMN_ANSWER_THIRD, "1854");
+        cv.put(COLUMN_ANSWER_FOURTH, "1932");
+        cv.put(COLUMN_RIGHT_ANSWER, "1923");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
         cv.put(COLUMN_NEWS_SOURCE, "2");
-        cv.put(COLUMN_NEWS_TITLE , "2");
-        cv.put(COLUMN_NEWS_DESCRIPTION , "2");
-        cv.put(COLUMN_NEWS_URL , "2");
-        cv.put(COLUMN_NEWS_IMAGE , "2");
+        cv.put(COLUMN_NEWS_TITLE, "2");
+        cv.put(COLUMN_NEWS_DESCRIPTION, "2");
+        cv.put(COLUMN_NEWS_URL, "2");
+        cv.put(COLUMN_NEWS_IMAGE, "2");
         sqLiteDatabase.insert(TABLE_NEWS, null, cv);
 
 

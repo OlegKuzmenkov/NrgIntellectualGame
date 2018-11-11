@@ -7,21 +7,17 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.QuestionsDatabase;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 
 class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
-    private final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.NewsOnFinishedListener mListener;
     private List<News> mNewsList;
 
-    public GetNewsFromLocalDatabaseAsyncTask(SQLiteDatabase database, List<News> news, Repository.NewsOnFinishedListener listener) {
+    GetNewsFromLocalDatabaseAsyncTask(final SQLiteDatabase database, final List<News> news, Repository.NewsOnFinishedListener listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;
@@ -37,7 +33,7 @@ class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
         mListener.onFinishedGettingNews(mNewsList);
     }
 
-    private void getNewsFromDatabase(){
+    private void getNewsFromDatabase() {
         mNewsList = new ArrayList<>();
         Cursor c = mDatabase.query(QuestionsDatabase.TABLE_NEWS, null, null, null,
                 null, null, null);
@@ -54,17 +50,17 @@ class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
                     news.setTitle(c.getString(newsTitleColIndex));
                     news.setDescription(c.getString(newsDescriptionColIndex));
                     news.setUrl(c.getString(newsURLColIndex));
-                } catch(Exception e){
+                } catch (Exception e) {
                     Log.d(LOG_TAG, "Error");
                 }
 
                 byte[] byteArray = c.getBlob(newsImageColIndex);
-                if(byteArray!= null) {
+                if (byteArray != null) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                     news.setImage(bitmap);
                 }
                 mNewsList.add(news);
-                Log.d(LOG_TAG, "Count of news is "+mNewsList.size());
+                Log.d(LOG_TAG, "Count of news is " + mNewsList.size());
             } while (c.moveToNext());
         } else {
             // table is empty

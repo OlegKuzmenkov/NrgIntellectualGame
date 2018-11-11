@@ -5,20 +5,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.QuestionsDatabase;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
-
 import java.util.List;
 
 class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
-    private final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.QuestionOnFinishedListener mListener;
     private List<Question> mQuestionList;
 
-    public GetQuestionsFromLocalDatabaseAsyncTask(SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
+    GetQuestionsFromLocalDatabaseAsyncTask(final SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;
@@ -34,7 +30,7 @@ class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void>
         mListener.onFinishedGettingQuestions(mQuestionList);
     }
 
-    private void getQuestionsFromDatabase(){
+    private void getQuestionsFromDatabase() {
         Cursor c = mDatabase.query(QuestionsDatabase.TABLE_QUESTION, null, null, null,
                 null, null, null);
         if (c.moveToFirst()) {

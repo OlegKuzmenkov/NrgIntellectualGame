@@ -12,8 +12,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.news.OriginalNewsActivity;
 
 public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private final String LOG_TAG = "Message";
-    private final String INTENT_CONTENT = "url";
+    private static final String INTENT_CONTENT = "url";
 
     private TextView mIdNewsTextView;
     private TextView mTitleNewsTextView;
@@ -39,23 +38,23 @@ public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements V
     public void bindNews(News news, int position) {
         mNews = news;
         position++;
-        mIdNewsTextView.setText("News # "+position);
+        mIdNewsTextView.setText("News # " + position);
         mTitleNewsTextView.setText(mNews.getTitle());
         mDescriptionNewsrView.setText(mNews.getDescription());
         mSourceNewsView.setText(mNews.getSourceName());
-        if(mNews.getImage() == null) {
+        if (mNews.getImage() == null) {
             // remain standart image
-        } else{
-            Bitmap scaledBitmap = scaleBitmap(mImageNewsView,mNews.getImage());
+        } else {
+            Bitmap scaledBitmap = scaleBitmap(mImageNewsView, mNews.getImage());
             mImageNewsView.setImageBitmap(scaledBitmap);
         }
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(),OriginalNewsActivity.class);
+        Intent intent = new Intent(view.getContext(), OriginalNewsActivity.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(INTENT_CONTENT,mNews.getUrl());
+        intent.putExtra(INTENT_CONTENT, mNews.getUrl());
         view.getContext().startActivity(intent);
     }
 
@@ -64,10 +63,10 @@ public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements V
      */
     private Bitmap scaleBitmap(ImageView imageView, Bitmap bitmap) {
         Bitmap scaledBitmap = null;
-        if(imageView != null && bitmap!=null){
+        if (imageView != null && bitmap != null) {
             int wantedWidth = imageView.getLayoutParams().width;
             int wantedHeight = imageView.getLayoutParams().height;
-            scaledBitmap = Bitmap.createScaledBitmap(bitmap,wantedWidth,wantedHeight,false);
+            scaledBitmap = Bitmap.createScaledBitmap(bitmap, wantedWidth, wantedHeight, false);
         }
         return scaledBitmap;
     }

@@ -25,18 +25,17 @@ public class GameResultsFragment extends Fragment {
     private int mCountQuestions;
     private int mCountRightAnswers;
 
-    public static GameResultsFragment newInstance(int countQuestions,int countRightAnswers) {
+    public static GameResultsFragment newInstance(int countQuestions, final int countRightAnswers) {
         GameResultsFragment fragment = new GameResultsFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(BUNDLE_CONTENT_COUNT_QUESTIONS , countQuestions);
+        arguments.putInt(BUNDLE_CONTENT_COUNT_QUESTIONS, countQuestions);
         arguments.putInt(BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS, countRightAnswers);
         fragment.setArguments(arguments);
         return fragment;
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -51,8 +50,7 @@ public class GameResultsFragment extends Fragment {
         if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT_COUNT_QUESTIONS)) {
             mCountQuestions = getArguments().getInt(BUNDLE_CONTENT_COUNT_QUESTIONS);
             mCountRightAnswers = getArguments().getInt(BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Must be created through newInstance(...)");
         }
 
@@ -72,8 +70,9 @@ public class GameResultsFragment extends Fragment {
     /**
      * Animate Button
      */
-    private void animateButton(){
-        ObjectAnimator animation = ObjectAnimator.ofFloat(mGoToMainMenuButton, "rotationY", 0.0f, 360f);
+    private void animateButton() {
+        ObjectAnimator animation = ObjectAnimator.ofFloat(mGoToMainMenuButton, "rotationY",
+                0.0f, 360f);
         animation.setDuration(2000);
         animation.setStartDelay(1000);
         animation.setRepeatCount(ValueAnimator.INFINITE);
@@ -84,9 +83,9 @@ public class GameResultsFragment extends Fragment {
     /**
      * Set the received content in the fragment's game
      */
-    private void setContent(){
-       mGameResultsTextView.setText("You answered correctly for "+mCountRightAnswers+" out of "+mCountQuestions+
-               " questions. Congratulations!");
+    private void setContent() {
+       mGameResultsTextView.setText("You answered correctly for " + mCountRightAnswers + " out of " + mCountQuestions
+               + " questions. Congratulations!");
     }
 }
 

@@ -15,7 +15,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     private final Context context;
     private List<News> mNews;
 
-    public NewsRecyclerViewAdapter(Context context, List<News> news) {
+    public NewsRecyclerViewAdapter(final Context context, List<News> news) {
         this.context = context;
         mNews = news;
     }

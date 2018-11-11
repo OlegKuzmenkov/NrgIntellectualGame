@@ -23,7 +23,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
 import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements NewsView {
-    private final String BROADCAST_ACTION = "download_news";
+    private static final String BROADCAST_ACTION = "download_news";
     private static final String BUNDLE_CONTENT = "content";
     private static final String LOG_TAG = "Message";
 
@@ -40,7 +40,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mIsStartLoadingNews = savedInstanceState.getBoolean(BUNDLE_CONTENT);
         }
 
@@ -57,11 +57,11 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    Log.d(LOG_TAG,"Scrolling up");
+                    Log.d(LOG_TAG, "Scrolling up");
                     findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
                     // Scrolling up
                 } else {
-                    Log.d(LOG_TAG,"Scrolling down");
+                    Log.d(LOG_TAG, "Scrolling down");
                     findViewById(R.id.floating_action_button).setVisibility(View.INVISIBLE);
                     // Scrolling down
                 }
@@ -72,7 +72,6 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mRecyclerView.scrollToPosition(0);
                 mRecyclerView.smoothScrollToPosition(0);
             }
         });
@@ -87,7 +86,7 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void startNewsUpdating() {
-        if(mIsStartLoadingNews == false) {
+        if (mIsStartLoadingNews == false) {
             mIsStartLoadingNews = true;
             JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
             ComponentName componentName = new ComponentName(NewsActivity.this, UpdateNewsJobSchedulerService.class);
@@ -103,8 +102,9 @@ public class NewsActivity extends AppCompatActivity implements NewsView {
     public void displayNews(List<News> newsList) {
         mLoadingTextView.setText("List of all news:");
         mIsStartLoadingNews = false;
-        if(mAdapter == null)
-            mAdapter = new NewsRecyclerViewAdapter(this,newsList);
+        if (mAdapter == null) {
+            mAdapter = new NewsRecyclerViewAdapter(this, newsList);
+        }
         mRecyclerView.setAdapter(mAdapter);
     }
 

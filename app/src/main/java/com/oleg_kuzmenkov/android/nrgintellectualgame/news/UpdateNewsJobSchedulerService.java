@@ -5,7 +5,7 @@ import android.app.job.JobService;
 import android.util.Log;
 
 public class UpdateNewsJobSchedulerService extends JobService {
-    private final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "Message";
 
     @Override
     public boolean onStartJob(JobParameters params) {

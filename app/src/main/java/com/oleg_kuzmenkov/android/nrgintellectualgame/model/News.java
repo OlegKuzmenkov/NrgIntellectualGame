@@ -9,8 +9,7 @@ public class News {
     private String mUrl;
     private Bitmap mImage;
 
-    public News() {
-    }
+    News() { }
 
     public String getSourceName() {
         return mSourceName;

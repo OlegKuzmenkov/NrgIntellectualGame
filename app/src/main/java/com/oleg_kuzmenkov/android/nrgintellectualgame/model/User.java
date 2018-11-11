@@ -17,7 +17,7 @@ public class User implements Serializable {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String userLogin, int countRightAnswers, int countAnswers, double latitude,double longitude) {
+    public User(String userLogin, int countRightAnswers, int countAnswers, double latitude, double longitude) {
         mUserLogin = userLogin;
         mCountRightAnswers = countRightAnswers;
         mCountAnswers = countAnswers;

@@ -36,7 +36,7 @@ public class StatisticsActivity extends AppCompatActivity {
         mGoToMainMenuButton = findViewById(R.id.go_to_main_menu_button);
 
         Intent intent = getIntent();
-        User user = (User)intent.getSerializableExtra(INTENT_CONTENT );
+        User user = (User) intent.getSerializableExtra(INTENT_CONTENT);
 
         setContent(user);
 
@@ -55,7 +55,7 @@ public class StatisticsActivity extends AppCompatActivity {
     /**
      * Animate Button
      */
-    private void animateButton(){
+    private void animateButton() {
         ObjectAnimator animation = ObjectAnimator.ofFloat(mGoToMainMenuButton, "rotationY", 0.0f, 360f);
         animation.setDuration(2000);
         animation.setStartDelay(1000);
@@ -69,15 +69,14 @@ public class StatisticsActivity extends AppCompatActivity {
      */
     private void setContent(User user) {
         if (user != null) {
-            mUserIdTextView.setText("ID: "+user.getUserId());
-            mUserLoginTextView.setText("Login: "+user.getUserLogin());
-            mUserCountAnswersTextView.setText("Count answers: "+Integer.toString(user.getCountAnswers()));
-            mUserCountRightAnswersTextView.setText("Count right answers: "+Integer.toString(user.getCountRightAnswers()));
-            if(user.getCountAnswers() != 0) {
-                //float percent2 = (user.getCountRightAnswers() * 100.0f) / user.getCountAnswers();
+            mUserIdTextView.setText("ID: " + user.getUserId());
+            mUserLoginTextView.setText("Login: " + user.getUserLogin());
+            mUserCountAnswersTextView.setText("Count answers: " + Integer.toString(user.getCountAnswers()));
+            mUserCountRightAnswersTextView.setText("Count right answers: " + Integer.toString(user.getCountRightAnswers()));
+            if (user.getCountAnswers() != 0) {
                 int percent = (int) (user.getCountRightAnswers() * 100.0f) / user.getCountAnswers();
                 mUserPercentRightAnswersTextView.setText(Integer.toString(percent));
-            } else{
+            } else {
                 mUserPercentRightAnswersTextView.setText("0");
             }
         }
