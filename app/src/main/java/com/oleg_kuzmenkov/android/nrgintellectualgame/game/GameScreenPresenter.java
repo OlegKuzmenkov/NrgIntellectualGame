@@ -13,12 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable {
+public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable, QuestionTimerCallBacks, PauseBetweenQuestionsThreadCallbacks {
     private static final String LOG_TAG = "Message";
     private static final int COUNT_QUESTIONS_FOR_GAME = 3;
+    private static final int COUNT_SECONDS_FOR_QUESTION = 10;
 
     private int mNumberOfCurrentQuestion;
     private int mCountRightAnswers;
+    private int mQuestionRemainTime;
+    private boolean mAnswerIsDone;
+    private QuestionTimer mQuestionTimer;
+    private PauseBetweenQuestionsThread mPauseBetweenQuestionsThread;
     private List<Question> mQuestionListForGame;
     private User mCurrentUser;
 
@@ -38,6 +43,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     }
 
     public void detach() {
+        mQuestionTimer.cancel();
         mGameScreenView = null;
         mRepository = null;
     }
@@ -47,16 +53,43 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     }
 
     public void getNextQuestion() {
-        if (mNumberOfCurrentQuestion < mQuestionListForGame.size() - 1) {
+        if (isLastQuestion()) {
+            showResultsOfTheGame();
+        } else {
+            //get new question
             mNumberOfCurrentQuestion++;
+            mQuestionRemainTime = COUNT_SECONDS_FOR_QUESTION;
+            mGameScreenView.setGreenTimeIndicator();
+            getCurrentQuestion();
         }
-        getQuestion();
     }
 
-    public void getQuestion() {
+    public void getCurrentQuestion() {
         if (mGameScreenView != null) {
             mGameScreenView.displayQuestion(mQuestionListForGame.get(mNumberOfCurrentQuestion));
+            mQuestionTimer = new QuestionTimer(this);
+
         }
+    }
+
+    public void restoreQuestion() {
+        if (mAnswerIsDone) {
+            getNextQuestion();
+            return;
+        }
+
+        if (mQuestionRemainTime == 0) {
+            //time is left
+            //mGameScreenView.
+            return;
+        }
+
+        if (mQuestionRemainTime < 4) {
+            mGameScreenView.setRedTimeIndicator();
+        }
+        getCurrentQuestion();
+        //mGameScreenView.displayQuestion(mQuestionListForGame.get(mNumberOfCurrentQuestion));
+        //mQuestionTimer = new QuestionTimer(this);
     }
 
     public boolean isLastQuestion() {
@@ -74,13 +107,9 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         chooseRandomQuestions(list);
         mNumberOfCurrentQuestion = 0;
         mCountRightAnswers = 0;
-        getQuestion();
-    }
-
-    public void sendAnswerResult(final boolean answer) {
-        if (answer == true) {
-            mCountRightAnswers++;
-        }
+        //refresh timer
+        mQuestionRemainTime = COUNT_SECONDS_FOR_QUESTION;
+        getCurrentQuestion();
     }
 
     public void setUser(User user) {
@@ -119,6 +148,32 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     }
 
     /**
+     * Show result of the game
+     *
+     */
+    public void checkAnswer(String answer) {
+        Log.d(LOG_TAG, "Answer is = " + answer);
+        mQuestionTimer.cancel();
+        mAnswerIsDone = true;
+        mGameScreenView.setDisableAnswerButtons();
+
+        if (mQuestionListForGame.get(mNumberOfCurrentQuestion).getRightAnswer().equals(answer)) {
+            //answer is true
+            Log.d(LOG_TAG, "Answer is true = " + answer);
+            mCountRightAnswers ++;
+            mGameScreenView.displayRightAnswerResult(answer);
+        } else {
+            //answer is wrong
+            Log.d(LOG_TAG, "Answer is wrong = " + answer);
+            mGameScreenView.displayWrongAnswerResult(mQuestionListForGame.get(mNumberOfCurrentQuestion).getRightAnswer(), answer);
+        }
+
+
+        mPauseBetweenQuestionsThread = new PauseBetweenQuestionsThread(this);
+        mPauseBetweenQuestionsThread.start();
+    }
+
+    /**
      * Choose list of random questions
      */
     private void chooseRandomQuestions(@NonNull final List<Question> list) {
@@ -133,6 +188,27 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
             }
         }
         Log.d(LOG_TAG, "Count of questions = " + mQuestionListForGame.size());
+    }
+
+    @Override
+    public void changeRemainQuestionTime() {
+        mQuestionRemainTime --;
+        mGameScreenView.setQuestionRemainTime(mQuestionRemainTime);
+        if(mQuestionRemainTime == 3) {
+            mGameScreenView.setRedTimeIndicator();
+        }
+        if(mQuestionRemainTime == 0) {
+            mQuestionTimer.cancel();
+            mGameScreenView.displayRightAnswer(mQuestionListForGame.get(mNumberOfCurrentQuestion).getRightAnswer());
+            mPauseBetweenQuestionsThread = new PauseBetweenQuestionsThread(this);
+            mPauseBetweenQuestionsThread.start();
+        }
+        Log.d(LOG_TAG, "Remain time = " + mQuestionRemainTime);
+    }
+
+    @Override
+    public void finishPause() {
+        mGameScreenView.continueGame();
     }
 
     @Override

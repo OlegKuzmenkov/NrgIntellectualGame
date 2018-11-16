@@ -32,28 +32,21 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
-public class GameFragment extends Fragment implements GameScreenView, GameFragmentCallBacks {
+public class GameFragment extends Fragment implements GameScreenView {
     private static final String LOG_TAG = "Message";
     private static final String BUNDLE_CONTENT = "content";
-    private static final String BUNDLE_TIMER = "timer";
-    private static final String BUNDLE_ANSWER = "answer";
-    private final float mVolume = 0.01f;
+    private static final float VOLUME = 0.01f;
 
-    private TextView mTimerTextView;
+    private TextView mQuestionTimerTextView;
     private TextView mQuestionTextView;
     private Button mFirstAnswerButton;
     private Button mSecondAnswerButton;
     private Button mThirdAnswerButton;
     private Button mFourthAnswerButton;
-    private Button mRightAnswerButton;
-    private Button mAnswerButton;
     private String mRightAnswer;
-    private int timer;
-    private boolean mAnswerIsDone;
 
     private MediaPlayer mMediaPlayerForRightAnswer;
     private MediaPlayer mMediaPlayerForWrongAnswer;
-    private TimerForQuestion mTimerForQuestion;
 
     private LocationCallback mLocationCallback;
     private LocationRequest mLocationRequest;
@@ -82,18 +75,17 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
 
         mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
         mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
-        mMediaPlayerForRightAnswer.setVolume(mVolume, mVolume);
-        mMediaPlayerForWrongAnswer.setVolume(mVolume, mVolume);
+        mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
+        mMediaPlayerForWrongAnswer.setVolume(VOLUME, VOLUME);
 
-        mTimerTextView = v.findViewById(R.id.timer_view);
+        mQuestionTimerTextView = v.findViewById(R.id.timer_view);
         mQuestionTextView = v.findViewById(R.id.question_text_view);
 
         mFirstAnswerButton = v.findViewById(R.id.first_answer_button);
         mFirstAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAnswerButton = mFirstAnswerButton;
-                checkAnswer();
+                mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
             }
         });
 
@@ -101,8 +93,7 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
         mSecondAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAnswerButton = mSecondAnswerButton;
-                checkAnswer();
+                mPresenter.checkAnswer(mSecondAnswerButton.getText().toString());
             }
         });
 
@@ -110,8 +101,7 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
         mThirdAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAnswerButton = mThirdAnswerButton;
-                checkAnswer();
+                mPresenter.checkAnswer(mThirdAnswerButton.getText().toString());
             }
         });
 
@@ -119,14 +109,12 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
         mFourthAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAnswerButton = mFourthAnswerButton;
-                checkAnswer();
+                mPresenter.checkAnswer(mFourthAnswerButton.getText().toString());
             }
         });
 
         if (savedInstanceState == null) {
             // start new game
-            timer = 10;
             mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
             mPresenter.setView(this);
             if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT)) {
@@ -134,33 +122,16 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
                 mPresenter.setUser(user);
                 mPresenter.checkIsExistUserLocation();
                 Log.d(LOG_TAG, "User login" + user.getUserLogin());
-            } else {
-                throw new IllegalArgumentException("Must be created through newInstance(...)");
             }
+
             mPresenter.onClickSinglePlayerButton();
         } else {
             // restore the question
-            mAnswerIsDone = savedInstanceState.getBoolean(BUNDLE_ANSWER);
-            timer = savedInstanceState.getInt(BUNDLE_TIMER);
             mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
             mPresenter.setView(this);
             mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
             mPresenter.checkIsExistUserLocation();
-
-            if (timer < 1 || mAnswerIsDone == true) {
-                if (timer == 0 && mAnswerIsDone == false) {
-                    mMediaPlayerForWrongAnswer.start();
-                }
-                if (mPresenter.isLastQuestion()) {
-                    Log.d(LOG_TAG, "It was last question");
-                    mPresenter.showResultsOfTheGame();
-                } else {
-                    timer = 10;
-                    mPresenter.getNextQuestion();
-                }
-            } else {
-                mPresenter.getQuestion();
-            }
+            mPresenter.restoreQuestion();
             Log.d(LOG_TAG, "SavedInstanceState is true");
         }
 
@@ -246,15 +217,15 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
     @Override
     public void displayQuestion(Question question) {
         Log.d(LOG_TAG, "displayQuestion");
-        mAnswerIsDone = false;
+        //mAnswerIsDone = false;
         mQuestionTextView.setText(question.getQuestionText());
         mFirstAnswerButton.setText(question.getFirstCaseAnswer());
         mSecondAnswerButton.setText(question.getSecondCaseAnswer());
         mThirdAnswerButton.setText(question.getThirdCaseAnswer());
         mFourthAnswerButton.setText(question.getFourthCaseAnswer());
         mRightAnswer = question.getRightAnswer();
-        mRightAnswerButton = identifyCorrectAnswerButton(mRightAnswer);
-        startTimerForQuestion(timer);
+        //mRightAnswerButton = identifyCorrectAnswerButton(mRightAnswer);
+        //startTimerForQuestion(timer);
     }
 
     @Override
@@ -264,80 +235,41 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
         fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
-    @Override
-    public void checkAnswer() {
-        mTimerForQuestion.cancel();
-        mAnswerIsDone = true;
-        setDisableAnswerButtons();
-
-        if (mAnswerButton == mRightAnswerButton) {
-            //Answer is right
-            mPresenter.sendAnswerResult(true);
-            mAnswerButton.setBackgroundResource(R.drawable.right_answer_button_border);
-            mMediaPlayerForRightAnswer.start();
-        } else {
-            //Answer is wrong
-            if (mAnswerButton != null) {
-                mAnswerButton.setBackgroundResource(R.drawable.wrong_answer_button_border);
-            }
-            mRightAnswerButton.setBackgroundResource(R.drawable.right_answer_button_border);
-            mMediaPlayerForWrongAnswer.start();
-        }
-        showResultAfterAnswer();
-    }
-
-    private void startTimerForQuestion(int remainTime) {
-        mTimerForQuestion = new TimerForQuestion(remainTime, mTimerTextView, this);
-    }
-
-    private void showResultAfterAnswer() {
-        Thread pauseThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mRightAnswerButton.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mAnswerButton != mRightAnswerButton) {
-                            mRightAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                        }
-                        if (mAnswerButton != null) {
-                            mAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                        }
-                        setEnableAnswerButtons();
-
-                        if (mPresenter.isLastQuestion()) {
-                            Log.d(LOG_TAG, "It was last question");
-                            mPresenter.showResultsOfTheGame();
-                        } else {
-                            timer = 10;
-                            mPresenter.getNextQuestion();
-                        }
-                    }
-                });
-
-            }
-        });
-        pauseThread.start();
-    }
-
-    private Button identifyCorrectAnswerButton(final String rightAnswer) {
-        if (mFirstAnswerButton.getText().toString().equals(rightAnswer)) {
+    private Button getAppropriateButton(String buttonText) {
+        if (mFirstAnswerButton.getText().toString().equals(buttonText)) {
             return mFirstAnswerButton;
         }
-        if (mSecondAnswerButton.getText().toString().equals(rightAnswer)) {
+        if (mSecondAnswerButton.getText().toString().equals(buttonText)) {
             return mSecondAnswerButton;
         }
-        if (mThirdAnswerButton.getText().toString().equals(rightAnswer)) {
+        if (mThirdAnswerButton.getText().toString().equals(buttonText)) {
             return mThirdAnswerButton;
-        } else {
-            return mFourthAnswerButton;
         }
+        return mFourthAnswerButton;
+    }
+
+    @Override
+    public void displayRightAnswerResult(final String rightAnswer) {
+        getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
+        mMediaPlayerForRightAnswer.start();
+    }
+
+    @Override
+    public void displayRightAnswer(final String rightAnswer) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
+                mMediaPlayerForWrongAnswer.start();
+            }
+        });
+    }
+
+    @Override
+    public void displayWrongAnswerResult(String rightAnswer, String wrongAnswer) {
+        getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
+        getAppropriateButton(wrongAnswer).setBackgroundResource(R.drawable.wrong_answer_button_border);
+        mMediaPlayerForWrongAnswer.start();
     }
 
     @Override
@@ -357,31 +289,71 @@ public class GameFragment extends Fragment implements GameScreenView, GameFragme
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull final  Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "Fragment: onSaveInstanceState");
-        Log.d(LOG_TAG, "Remain time = " + mTimerForQuestion.getRemainTime());
-        timer = mTimerForQuestion.getRemainTime();
-        outState.putInt(BUNDLE_TIMER, timer);
-        outState.putBoolean(BUNDLE_ANSWER, mAnswerIsDone);
-        outState.putSerializable(BUNDLE_CONTENT, mPresenter);
-
+    public void clearButtons() {
+        mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+        mSecondAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+        mThirdAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+        mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
     }
 
     @Override
-    public void showRightAnswer() {
-        setDisableAnswerButtons();
-        mRightAnswerButton.setBackgroundResource(R.drawable.right_answer_button_border);
-        mMediaPlayerForWrongAnswer.start();
-        showResultAfterAnswer();
+    public void setQuestionRemainTime(final int remainTime) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mQuestionTimerTextView.setText(Integer.toString(remainTime));
+            }
+        });
+    }
+
+    @Override
+    public void continueGame() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //refresh game board
+                setEnableAnswerButtons();
+                clearButtons();
+                //get next question
+                mPresenter.getNextQuestion();
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull final  Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(LOG_TAG, "Fragment: onSaveInstanceState");
+        //Log.d(LOG_TAG, "Remain time = " + mTimerForQuestion.getRemainTime());
+        //timer = mTimerForQuestion.getRemainTime();
+        //outState.putInt(BUNDLE_TIMER, timer);
+        //outState.putBoolean(BUNDLE_ANSWER, mAnswerIsDone);
+        outState.putSerializable(BUNDLE_CONTENT, mPresenter);
+    }
+
+    @Override
+    public void setGreenTimeIndicator() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mQuestionTimerTextView.setBackgroundResource(R.drawable.time_green_indicator);
+            }
+        });
+    }
+
+    @Override
+    public void setRedTimeIndicator() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mQuestionTimerTextView.setBackgroundResource(R.drawable.time_red_indicator);
+            }
+        });
     }
 
     @Override
     public void onDestroy() {
         Log.d(LOG_TAG, "Fragment: onDestroy");
-        if (mTimerForQuestion != null) {
-            mTimerForQuestion.cancel();
-        }
         if (mFusedLocationClient != null) {
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
