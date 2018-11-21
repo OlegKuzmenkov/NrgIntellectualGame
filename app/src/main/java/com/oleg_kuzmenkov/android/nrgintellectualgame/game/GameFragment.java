@@ -32,7 +32,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
-public class GameFragment extends Fragment implements GameScreenView {
+public class GameFragment extends Fragment implements GameScreenView, View.OnClickListener {
     private static final String LOG_TAG = "Message";
     private static final String BUNDLE_CONTENT = "content";
     private static final float VOLUME = 0.01f;
@@ -73,45 +73,19 @@ public class GameFragment extends Fragment implements GameScreenView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game, container, false);
 
-        mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
-        mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
-        mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
-        mMediaPlayerForWrongAnswer.setVolume(VOLUME, VOLUME);
+        initMediaPlayer();
 
         mQuestionTimerTextView = v.findViewById(R.id.timer_view);
         mQuestionTextView = v.findViewById(R.id.question_text_view);
 
         mFirstAnswerButton = v.findViewById(R.id.first_answer_button);
-        mFirstAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
-            }
-        });
-
+        mFirstAnswerButton.setOnClickListener(this);
         mSecondAnswerButton = v.findViewById(R.id.second_answer_button);
-        mSecondAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.checkAnswer(mSecondAnswerButton.getText().toString());
-            }
-        });
-
+        mSecondAnswerButton.setOnClickListener(this);
         mThirdAnswerButton = v.findViewById(R.id.third_answer_button);
-        mThirdAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.checkAnswer(mThirdAnswerButton.getText().toString());
-            }
-        });
-
+        mThirdAnswerButton.setOnClickListener(this);
         mFourthAnswerButton = v.findViewById(R.id.fourth_answer_button);
-        mFourthAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.checkAnswer(mFourthAnswerButton.getText().toString());
-            }
-        });
+        mFourthAnswerButton.setOnClickListener(this);
 
         if (savedInstanceState == null) {
             // start new game
@@ -126,13 +100,9 @@ public class GameFragment extends Fragment implements GameScreenView {
 
             mPresenter.onClickSinglePlayerButton();
         } else {
-            // restore the question
+            // restore state
             mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
-            mPresenter.setView(this);
-            mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
-            mPresenter.checkIsExistUserLocation();
-            mPresenter.restoreQuestion();
-            Log.d(LOG_TAG, "SavedInstanceState is true");
+            restoreState();
         }
 
         return v;
@@ -204,6 +174,27 @@ public class GameFragment extends Fragment implements GameScreenView {
             }
         } else {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.first_answer_button:
+                mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
+                break;
+
+            case R.id.second_answer_button:
+                mPresenter.checkAnswer(mSecondAnswerButton.getText().toString());
+                break;
+
+            case R.id.third_answer_button:
+                mPresenter.checkAnswer(mThirdAnswerButton.getText().toString());
+                break;
+
+            case R.id.fourth_answer_button:
+                mPresenter.checkAnswer(mFourthAnswerButton.getText().toString());
+                break;
         }
     }
 
@@ -359,6 +350,21 @@ public class GameFragment extends Fragment implements GameScreenView {
         }
         mPresenter.detach();
         super.onDestroy();
+    }
+
+    private void initMediaPlayer() {
+        mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
+        mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
+        mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
+        mMediaPlayerForWrongAnswer.setVolume(VOLUME, VOLUME);
+    }
+
+    private void restoreState() {
+        mPresenter.setView(this);
+        mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
+        mPresenter.checkIsExistUserLocation();
+        mPresenter.restoreQuestion();
+        Log.d(LOG_TAG, "SavedInstanceState is true");
     }
 
 }

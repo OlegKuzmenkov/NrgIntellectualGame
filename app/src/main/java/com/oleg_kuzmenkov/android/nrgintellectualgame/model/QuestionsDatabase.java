@@ -77,7 +77,7 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
 
     private void addSomeDataToDatabase(@NonNull final SQLiteDatabase sqLiteDatabase) {
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_QUESTION_TEXT, "How much people live in Belarus?");
+        cv.put(COLUMN_QUESTION_TEXT, "How many people live in Belarus?");
         cv.put(COLUMN_ANSWER_FIRST, "4 millions");
         cv.put(COLUMN_ANSWER_SECOND, "7 millions");
         cv.put(COLUMN_ANSWER_THIRD, "9 millions");
@@ -86,7 +86,7 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_DETAILS, "Geography");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
-        cv.put(COLUMN_QUESTION_TEXT, "How much people live in Russia?");
+        cv.put(COLUMN_QUESTION_TEXT, "How many people live in Russia?");
         cv.put(COLUMN_ANSWER_FIRST, "50 millions");
         cv.put(COLUMN_ANSWER_SECOND, "80 millions");
         cv.put(COLUMN_ANSWER_THIRD, "110 millions");
@@ -119,12 +119,12 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_RIGHT_ANSWER, "1923");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
 
-        cv.put(COLUMN_NEWS_SOURCE, "2");
+        /*cv.put(COLUMN_NEWS_SOURCE, "2");
         cv.put(COLUMN_NEWS_TITLE, "2");
         cv.put(COLUMN_NEWS_DESCRIPTION, "2");
         cv.put(COLUMN_NEWS_URL, "2");
         cv.put(COLUMN_NEWS_IMAGE, "2");
-        sqLiteDatabase.insert(TABLE_NEWS, null, cv);
+        sqLiteDatabase.insert(TABLE_NEWS, null, cv);*/
 
 
     }
