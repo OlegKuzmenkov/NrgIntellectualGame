@@ -8,8 +8,7 @@ public interface GameScreenView {
     void displayRightAnswerResult(String rightAnswer);
     void displayWrongAnswerResult(String rightAnswer, String wrongAnswer);
     void displayRightAnswer(String rightAnswer);
-    void setEnableAnswerButtons();
-    void setDisableAnswerButtons();
+    void enableAnswerButtons(boolean isEnable);
     void startGettingUserLocation();
     void stopGettingUserLocation();
     void continueGame();

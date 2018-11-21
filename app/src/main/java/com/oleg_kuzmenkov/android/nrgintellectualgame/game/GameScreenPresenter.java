@@ -155,7 +155,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         Log.d(LOG_TAG, "Answer is = " + answer);
         mQuestionTimer.cancel();
         mAnswerIsDone = true;
-        mGameScreenView.setDisableAnswerButtons();
+        mGameScreenView.enableAnswerButtons(false);
 
         if (mQuestionListForGame.get(mNumberOfCurrentQuestion).getRightAnswer().equals(answer)) {
             //answer is true

@@ -264,19 +264,11 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void setEnableAnswerButtons() {
-        mFirstAnswerButton.setClickable(true);
-        mSecondAnswerButton.setClickable(true);
-        mThirdAnswerButton.setClickable(true);
-        mFourthAnswerButton.setClickable(true);
-    }
-
-    @Override
-    public void setDisableAnswerButtons() {
-        mFirstAnswerButton.setClickable(false);
-        mSecondAnswerButton.setClickable(false);
-        mThirdAnswerButton.setClickable(false);
-        mFourthAnswerButton.setClickable(false);
+    public void enableAnswerButtons(boolean isEnable) {
+        mFirstAnswerButton.setClickable(isEnable);
+        mSecondAnswerButton.setClickable(isEnable);
+        mThirdAnswerButton.setClickable(isEnable);
+        mFourthAnswerButton.setClickable(isEnable);
     }
 
     @Override
@@ -303,7 +295,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             @Override
             public void run() {
                 //refresh game board
-                setEnableAnswerButtons();
+                enableAnswerButtons(true);
                 clearButtons();
                 //get next question
                 mPresenter.getNextQuestion();
