@@ -43,7 +43,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     private Button mSecondAnswerButton;
     private Button mThirdAnswerButton;
     private Button mFourthAnswerButton;
-    private String mRightAnswer;
 
     private MediaPlayer mMediaPlayerForRightAnswer;
     private MediaPlayer mMediaPlayerForWrongAnswer;
@@ -206,15 +205,19 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void displayQuestion(Question question) {
+    public void displayQuestion(final Question question) {
         Log.d(LOG_TAG, "displayQuestion");
         //mAnswerIsDone = false;
-        mQuestionTextView.setText(question.getQuestionText());
-        mFirstAnswerButton.setText(question.getFirstCaseAnswer());
-        mSecondAnswerButton.setText(question.getSecondCaseAnswer());
-        mThirdAnswerButton.setText(question.getThirdCaseAnswer());
-        mFourthAnswerButton.setText(question.getFourthCaseAnswer());
-        mRightAnswer = question.getRightAnswer();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mQuestionTextView.setText(question.getQuestionText());
+                mFirstAnswerButton.setText(question.getFirstCaseAnswer());
+                mSecondAnswerButton.setText(question.getSecondCaseAnswer());
+                mThirdAnswerButton.setText(question.getThirdCaseAnswer());
+                mFourthAnswerButton.setText(question.getFourthCaseAnswer());
+            }
+        });
         //mRightAnswerButton = identifyCorrectAnswerButton(mRightAnswer);
         //startTimerForQuestion(timer);
     }
@@ -264,19 +267,29 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void enableAnswerButtons(boolean isEnable) {
-        mFirstAnswerButton.setClickable(isEnable);
-        mSecondAnswerButton.setClickable(isEnable);
-        mThirdAnswerButton.setClickable(isEnable);
-        mFourthAnswerButton.setClickable(isEnable);
+    public void enableAnswerButtons(final boolean isEnable) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFirstAnswerButton.setClickable(isEnable);
+                mSecondAnswerButton.setClickable(isEnable);
+                mThirdAnswerButton.setClickable(isEnable);
+                mFourthAnswerButton.setClickable(isEnable);
+            }
+        });
     }
 
     @Override
     public void clearButtons() {
-        mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-        mSecondAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-        mThirdAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-        mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+                mSecondAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+                mThirdAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+                mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+            }
+        });
     }
 
     @Override
@@ -285,20 +298,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             @Override
             public void run() {
                 mQuestionTimerTextView.setText(Integer.toString(remainTime));
-            }
-        });
-    }
-
-    @Override
-    public void continueGame() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //refresh game board
-                enableAnswerButtons(true);
-                clearButtons();
-                //get next question
-                mPresenter.getNextQuestion();
             }
         });
     }

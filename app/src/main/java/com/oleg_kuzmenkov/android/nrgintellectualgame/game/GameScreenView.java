@@ -11,7 +11,6 @@ public interface GameScreenView {
     void enableAnswerButtons(boolean isEnable);
     void startGettingUserLocation();
     void stopGettingUserLocation();
-    void continueGame();
     void clearButtons();
     void setGreenTimeIndicator();
     void setRedTimeIndicator();
