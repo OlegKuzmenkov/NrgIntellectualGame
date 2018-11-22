@@ -305,11 +305,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     @Override
     public void onSaveInstanceState(@NonNull final  Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "Fragment: onSaveInstanceState");
-        //Log.d(LOG_TAG, "Remain time = " + mTimerForQuestion.getRemainTime());
-        //timer = mTimerForQuestion.getRemainTime();
-        //outState.putInt(BUNDLE_TIMER, timer);
-        //outState.putBoolean(BUNDLE_ANSWER, mAnswerIsDone);
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
