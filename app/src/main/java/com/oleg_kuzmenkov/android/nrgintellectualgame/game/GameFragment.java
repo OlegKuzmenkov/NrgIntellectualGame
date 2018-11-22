@@ -78,11 +78,12 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         if (savedInstanceState == null) {
             // start new game
             initPresenter();
-            mPresenter.onClickSinglePlayerButton();
+            mPresenter.startGame();
         } else {
             // restore game
-            mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
-            restoreState();
+            //mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+            restorePresenter(savedInstanceState);
+            mPresenter.restoreQuestion();
         }
 
         return v;
@@ -344,20 +345,18 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.setView(this);
         Bundle bundle = getArguments();
-        
+
         if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
             mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
             mPresenter.checkIsExistUserLocation();
         }
     }
 
-    private void restoreState() {
+    private void restorePresenter(@NonNull Bundle savedInstanceState) {
+        mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         mPresenter.setView(this);
         mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.checkIsExistUserLocation();
-        mPresenter.restoreQuestion();
-        Log.d(LOG_TAG, "SavedInstanceState is true");
     }
-
 }
 

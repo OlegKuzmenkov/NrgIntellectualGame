@@ -53,7 +53,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         mRepository = null;
     }
 
-    public void onClickSinglePlayerButton() {
+    public void startGame() {
             mRepository.getQuestionsFromDatabase(this);
     }
 
