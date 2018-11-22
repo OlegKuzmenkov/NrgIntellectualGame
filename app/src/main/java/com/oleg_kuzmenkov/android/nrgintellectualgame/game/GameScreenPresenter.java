@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable, QuestionTimerCallBacks, PauseBetweenQuestionsThreadCallbacks {
+public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable,
+        QuestionTimerCallBacks, PauseBetweenQuestionsThreadCallbacks {
+
     private static final String LOG_TAG = "GameScreenPresenter";
     private static final int COUNT_QUESTIONS_FOR_GAME = 3;
     private static final int COUNT_SECONDS_FOR_RED_INDICATOR = 3;
@@ -30,15 +32,15 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     private GameScreenView mGameScreenView;
     private Repository mRepository;
 
-    GameScreenPresenter(@NonNull Repository repository) {
+    GameScreenPresenter(@NonNull final Repository repository) {
         mRepository = repository;
     }
 
-    public void setView(GameScreenView gameScreenView) {
+    public void setView(final GameScreenView gameScreenView) {
         mGameScreenView = gameScreenView;
     }
 
-    public void setRepository(Repository repository) {
+    public void setRepository(final Repository repository) {
         mRepository = repository;
     }
 
@@ -60,7 +62,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
             finishGame();
         } else {
             //get new question
-            mCurrentQuestionIndex ++;
+            mCurrentQuestionIndex++;
             mQuestionRemainTime = COUNT_SECONDS_FOR_QUESTION;
             mGameScreenView.setGreenTimeIndicator();
             getCurrentQuestion();
@@ -92,7 +94,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         //mQuestionTimer = new QuestionTimer(this);
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         mCurrentUser = user;
     }
 
@@ -122,7 +124,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         mGameScreenView.displayResultsOfGame(mGameQuestionsList.size(), mRightAnswersCount);
     }
 
-    private void updateUserStatistics () {
+    private void updateUserStatistics() {
         mCurrentUser.setCountRightAnswers(mCurrentUser.getCountRightAnswers() + mRightAnswersCount);
         mCurrentUser.setCountAnswers(mCurrentUser.getCountAnswers() + mGameQuestionsList.size());
         mRepository.updateUserData(mCurrentUser);
@@ -175,16 +177,16 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
      */
     @Override
     public void changeRemainQuestionTime() {
-        mQuestionRemainTime --;
+        mQuestionRemainTime--;
         Log.d(LOG_TAG, "Remain time = " + mQuestionRemainTime);
         mGameScreenView.setQuestionRemainTime(mQuestionRemainTime);
 
-        if(mQuestionRemainTime == COUNT_SECONDS_FOR_RED_INDICATOR) {
+        if (mQuestionRemainTime == COUNT_SECONDS_FOR_RED_INDICATOR) {
             mGameScreenView.setRedTimeIndicator();
             return;
         }
 
-        if(mQuestionRemainTime == 0) {
+        if (mQuestionRemainTime == 0) {
             mQuestionTimer.cancel();
             mGameScreenView.displayRightAnswer(mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer());
             mPauseBetweenQuestionsThread = new PauseBetweenQuestionsThread(this);
@@ -207,7 +209,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
      * Start the Game
      */
     @Override
-    public void onFinishedGettingQuestions(List<Question> list) {
+    public void onFinishedGettingQuestions(final List<Question> list) {
         chooseRandomQuestions(list);
         mCurrentQuestionIndex = 0;
         mRightAnswersCount = 0;

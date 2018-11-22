@@ -249,6 +249,13 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
+    public void displayWrongAnswerResult(String rightAnswer, String wrongAnswer) {
+        getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
+        getAppropriateButton(wrongAnswer).setBackgroundResource(R.drawable.wrong_answer_button_border);
+        mMediaPlayerForWrongAnswer.start();
+    }
+
+    @Override
     public void displayRightAnswer(final String rightAnswer) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -257,13 +264,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
                 mMediaPlayerForWrongAnswer.start();
             }
         });
-    }
-
-    @Override
-    public void displayWrongAnswerResult(String rightAnswer, String wrongAnswer) {
-        getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
-        getAppropriateButton(wrongAnswer).setBackgroundResource(R.drawable.wrong_answer_button_border);
-        mMediaPlayerForWrongAnswer.start();
     }
 
     @Override
