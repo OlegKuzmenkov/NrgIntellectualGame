@@ -343,13 +343,11 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     private void initPresenter() {
         mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.setView(this);
-
         Bundle bundle = getArguments();
+        
         if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
-            //User user = (User) bundle.getSerializable(BUNDLE_CONTENT);
             mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
             mPresenter.checkIsExistUserLocation();
-           // Log.d(LOG_TAG, "User login" + user.getUserLogin());
         }
     }
 
