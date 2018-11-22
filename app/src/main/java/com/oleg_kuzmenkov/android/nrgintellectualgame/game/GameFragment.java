@@ -30,6 +30,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class GameFragment extends Fragment implements GameScreenView, View.OnClickListener {
@@ -43,6 +44,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     private Button mSecondAnswerButton;
     private Button mThirdAnswerButton;
     private Button mFourthAnswerButton;
+    private HashMap <Integer,Button> mGameButtonsHashMap;
 
     private MediaPlayer mMediaPlayerForRightAnswer;
     private MediaPlayer mMediaPlayerForWrongAnswer;
@@ -331,14 +333,23 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         mQuestionTimerTextView = view.findViewById(R.id.timer_view);
         mQuestionTextView = view.findViewById(R.id.question_text_view);
 
-        mFirstAnswerButton = view.findViewById(R.id.first_answer_button);
-        mFirstAnswerButton.setOnClickListener(this);
-        mSecondAnswerButton = view.findViewById(R.id.second_answer_button);
-        mSecondAnswerButton.setOnClickListener(this);
-        mThirdAnswerButton = view.findViewById(R.id.third_answer_button);
-        mThirdAnswerButton.setOnClickListener(this);
-        mFourthAnswerButton = view.findViewById(R.id.fourth_answer_button);
-        mFourthAnswerButton.setOnClickListener(this);
+        mGameButtonsHashMap = new HashMap();
+        mGameButtonsHashMap.put(R.id.first_answer_button, (Button) view.findViewById(R.id.first_answer_button));
+        mGameButtonsHashMap.put(R.id.second_answer_button, (Button) view.findViewById(R.id.second_answer_button));
+        mGameButtonsHashMap.put(R.id.third_answer_button, (Button) view.findViewById(R.id.third_answer_button));
+        mGameButtonsHashMap.put(R.id.fourth_answer_button, (Button) view.findViewById(R.id.fourth_answer_button));
+
+        for (Button button : mGameButtonsHashMap.values()) {
+            button.setOnClickListener(this);
+        }
+        //mFirstAnswerButton = view.findViewById(R.id.first_answer_button);
+        //mFirstAnswerButton.setOnClickListener(this);
+        //mSecondAnswerButton = view.findViewById(R.id.second_answer_button);
+        //mSecondAnswerButton.setOnClickListener(this);
+        //mThirdAnswerButton = view.findViewById(R.id.third_answer_button);
+        //mThirdAnswerButton.setOnClickListener(this);
+        //mFourthAnswerButton = view.findViewById(R.id.fourth_answer_button);
+        //mFourthAnswerButton.setOnClickListener(this);
     }
 
     private void initPresenter() {
