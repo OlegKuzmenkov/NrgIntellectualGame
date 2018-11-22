@@ -9,8 +9,8 @@ public interface GameScreenView {
     void displayWrongAnswerResult(String rightAnswer, String wrongAnswer);
     void displayRightAnswer(String rightAnswer);
     void enableAnswerButtons(boolean isEnable);
-    void startGettingUserLocation();
-    void stopGettingUserLocation();
+    void startLocationService();
+    void stopLocationService();
     void clearButtons();
     void setGreenTimeIndicator();
     void setRedTimeIndicator();

@@ -139,7 +139,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void startGettingUserLocation() {
+    public void startLocationService() {
         Log.d(LOG_TAG, "startGettingUserLocation");
         createLocationCallback();
         createLocationRequest();
@@ -180,7 +180,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void stopGettingUserLocation() {
+    public void stopLocationService() {
         Log.d(LOG_TAG, "stopGettingUserLocation");
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         mFusedLocationClient = null;
@@ -348,7 +348,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
 
         if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
             mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
-            mPresenter.checkIsExistUserLocation();
+            mPresenter.getUserLocation();
         }
     }
 
@@ -356,7 +356,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         mPresenter.setView(this);
         mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
-        mPresenter.checkIsExistUserLocation();
+        mPresenter.getUserLocation();
     }
 }
 

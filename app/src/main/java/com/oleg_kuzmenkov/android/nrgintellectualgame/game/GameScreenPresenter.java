@@ -98,11 +98,11 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         mCurrentUser = user;
     }
 
-    public void checkIsExistUserLocation() {
+    public void getUserLocation() {
         if (mCurrentUser.getLatitude() == 0) {
             Log.d(LOG_TAG, "It is a new User. We must get his location!!!");
             //get location
-            mGameScreenView.startGettingUserLocation();
+            mGameScreenView.startLocationService();
         }
     }
 
@@ -113,7 +113,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         mCurrentUser.setLatitude(latitude);
         mCurrentUser.setLongitude(longitude);
         // stop getting user's location
-        mGameScreenView.stopGettingUserLocation();
+        mGameScreenView.stopLocationService();
     }
 
     /**
