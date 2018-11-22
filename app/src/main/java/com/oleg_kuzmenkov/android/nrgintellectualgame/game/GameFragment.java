@@ -72,7 +72,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game, container, false);
 
-        initMediaPlayer();
+        initMedia();
 
         mQuestionTimerTextView = v.findViewById(R.id.timer_view);
         mQuestionTextView = v.findViewById(R.id.question_text_view);
@@ -338,7 +338,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         super.onDestroy();
     }
 
-    private void initMediaPlayer() {
+    private void initMedia() {
         mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
         mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
         mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
