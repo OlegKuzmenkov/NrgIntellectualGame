@@ -162,7 +162,9 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
+        mPresenter.checkAnswer(mGameButtonsHashMap.get(view.getId()).getText().toString());
+        
+        /*switch (view.getId()) {
             case R.id.first_answer_button:
                 mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
                 break;
@@ -178,7 +180,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             case R.id.fourth_answer_button:
                 mPresenter.checkAnswer(mFourthAnswerButton.getText().toString());
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -229,6 +231,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             return mThirdAnswerButton;
         }
         return mFourthAnswerButton;*/
+        return null;
     }
 
     @Override
