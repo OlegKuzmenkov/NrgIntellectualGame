@@ -163,7 +163,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     @Override
     public void onClick(View view) {
         mPresenter.checkAnswer(mGameButtonsHashMap.get(view.getId()).getText().toString());
-        
+
         /*switch (view.getId()) {
             case R.id.first_answer_button:
                 mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
@@ -263,10 +263,13 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mFirstAnswerButton.setClickable(isEnable);
+                for (Button button : mGameButtonsHashMap.values()) {
+                    button.setClickable(isEnable);
+                }
+                /*mFirstAnswerButton.setClickable(isEnable);
                 mSecondAnswerButton.setClickable(isEnable);
                 mThirdAnswerButton.setClickable(isEnable);
-                mFourthAnswerButton.setClickable(isEnable);
+                mFourthAnswerButton.setClickable(isEnable);*/
             }
         });
     }
@@ -276,10 +279,14 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+                for (Button button : mGameButtonsHashMap.values()) {
+                    button.setBackgroundResource(R.drawable.answer_button_border);;
+                }
+
+                /*mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
                 mSecondAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
                 mThirdAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
+                mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);*/
             }
         });
     }
