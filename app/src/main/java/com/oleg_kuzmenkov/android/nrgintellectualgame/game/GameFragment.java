@@ -214,7 +214,12 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     private Button getAppropriateButton(String buttonText) {
-        if (mFirstAnswerButton.getText().toString().equals(buttonText)) {
+        for (Button button : mGameButtonsHashMap.values()) {
+            if (button.getText().toString().equals(buttonText)) {
+                return button;
+            }
+        }
+        /*if (mFirstAnswerButton.getText().toString().equals(buttonText)) {
             return mFirstAnswerButton;
         }
         if (mSecondAnswerButton.getText().toString().equals(buttonText)) {
@@ -223,7 +228,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         if (mThirdAnswerButton.getText().toString().equals(buttonText)) {
             return mThirdAnswerButton;
         }
-        return mFourthAnswerButton;
+        return mFourthAnswerButton;*/
     }
 
     @Override
