@@ -74,21 +74,13 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
 
         initMedia();
         initControls(v);
-        
+
         if (savedInstanceState == null) {
             // start new game
-            mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
-            mPresenter.setView(this);
-            if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT)) {
-                User user = (User) getArguments().getSerializable(BUNDLE_CONTENT);
-                mPresenter.setUser(user);
-                mPresenter.checkIsExistUserLocation();
-                Log.d(LOG_TAG, "User login" + user.getUserLogin());
-            }
-
+            initPresenter();
             mPresenter.onClickSinglePlayerButton();
         } else {
-            // restore state
+            // restore game
             mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
             restoreState();
         }
@@ -346,6 +338,19 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         mThirdAnswerButton.setOnClickListener(this);
         mFourthAnswerButton = view.findViewById(R.id.fourth_answer_button);
         mFourthAnswerButton.setOnClickListener(this);
+    }
+
+    private void initPresenter() {
+        mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
+        mPresenter.setView(this);
+
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
+            //User user = (User) bundle.getSerializable(BUNDLE_CONTENT);
+            mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
+            mPresenter.checkIsExistUserLocation();
+           // Log.d(LOG_TAG, "User login" + user.getUserLogin());
+        }
     }
 
     private void restoreState() {
