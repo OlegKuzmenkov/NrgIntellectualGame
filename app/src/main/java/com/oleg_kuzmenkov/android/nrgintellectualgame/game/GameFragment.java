@@ -73,19 +73,8 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         final View v = inflater.inflate(R.layout.fragment_game, container, false);
 
         initMedia();
-
-        mQuestionTimerTextView = v.findViewById(R.id.timer_view);
-        mQuestionTextView = v.findViewById(R.id.question_text_view);
-
-        mFirstAnswerButton = v.findViewById(R.id.first_answer_button);
-        mFirstAnswerButton.setOnClickListener(this);
-        mSecondAnswerButton = v.findViewById(R.id.second_answer_button);
-        mSecondAnswerButton.setOnClickListener(this);
-        mThirdAnswerButton = v.findViewById(R.id.third_answer_button);
-        mThirdAnswerButton.setOnClickListener(this);
-        mFourthAnswerButton = v.findViewById(R.id.fourth_answer_button);
-        mFourthAnswerButton.setOnClickListener(this);
-
+        initControls(v);
+        
         if (savedInstanceState == null) {
             // start new game
             mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
@@ -343,6 +332,20 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
         mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
         mMediaPlayerForWrongAnswer.setVolume(VOLUME, VOLUME);
+    }
+
+    private void initControls(@NonNull View view) {
+        mQuestionTimerTextView = view.findViewById(R.id.timer_view);
+        mQuestionTextView = view.findViewById(R.id.question_text_view);
+
+        mFirstAnswerButton = view.findViewById(R.id.first_answer_button);
+        mFirstAnswerButton.setOnClickListener(this);
+        mSecondAnswerButton = view.findViewById(R.id.second_answer_button);
+        mSecondAnswerButton.setOnClickListener(this);
+        mThirdAnswerButton = view.findViewById(R.id.third_answer_button);
+        mThirdAnswerButton.setOnClickListener(this);
+        mFourthAnswerButton = view.findViewById(R.id.fourth_answer_button);
+        mFourthAnswerButton.setOnClickListener(this);
     }
 
     private void restoreState() {
