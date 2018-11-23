@@ -1,12 +1,11 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 
+import java.util.List;
+
 public class Question {
     private  boolean mAnswerTrue;
     private String mQuestionText;
-    private String mFirstCaseAnswer;
-    private String mSecondCaseAnswer;
-    private String mThirdCaseAnswer;
-    private String mFourthCaseAnswer;
+    private List<String> mAnswersList;
     private String mRightAnswer;
 
     Question() { }
@@ -19,36 +18,12 @@ public class Question {
         mQuestionText = questionText;
     }
 
-    public String getFirstCaseAnswer() {
-        return mFirstCaseAnswer;
+    public List<String> getAnswersList() {
+        return mAnswersList;
     }
 
-    public void setFirstCaseAnswer(String firstCaseAnswer) {
-        mFirstCaseAnswer = firstCaseAnswer;
-    }
-
-    public String getSecondCaseAnswer() {
-        return mSecondCaseAnswer;
-    }
-
-    public void setSecondCaseAnswer(String secondCaseAnswer) {
-        mSecondCaseAnswer = secondCaseAnswer;
-    }
-
-    public String getThirdCaseAnswer() {
-        return mThirdCaseAnswer;
-    }
-
-    public void setThirdCaseAnswer(String thirdCaseAnswer) {
-        mThirdCaseAnswer = thirdCaseAnswer;
-    }
-
-    public String getFourthCaseAnswer() {
-        return mFourthCaseAnswer;
-    }
-
-    public void setFourthCaseAnswer(String fourthCaseAnswer) {
-        mFourthCaseAnswer = fourthCaseAnswer;
+    public void setAnswersList(List<String> answersList) {
+        mAnswersList = answersList;
     }
 
     public String getRightAnswer() {

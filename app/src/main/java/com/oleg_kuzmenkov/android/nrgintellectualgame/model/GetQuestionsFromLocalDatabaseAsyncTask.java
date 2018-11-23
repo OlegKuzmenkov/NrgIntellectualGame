@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -43,10 +44,14 @@ class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void>
             do {
                 Question question = new Question();
                 question.setQuestionText(c.getString(questionTextColIndex));
-                question.setFirstCaseAnswer(c.getString(questionFirstAnswerColIndex));
-                question.setSecondCaseAnswer(c.getString(questionSecondAnswerColIndex));
-                question.setThirdCaseAnswer(c.getString(questionThirdAnswerColIndex));
-                question.setFourthCaseAnswer(c.getString(questionFourthAnswerColIndex));
+
+                List<String> answersList = new ArrayList<>();
+                answersList.add(c.getString(questionFirstAnswerColIndex));
+                answersList.add(c.getString(questionSecondAnswerColIndex));
+                answersList.add(c.getString(questionThirdAnswerColIndex));
+                answersList.add(c.getString(questionFourthAnswerColIndex));
+                question.setAnswersList(answersList);
+
                 question.setRightAnswer(c.getString(questionRightAnswerColIndex));
                 mQuestionList.add(question);
             } while (c.moveToNext());
