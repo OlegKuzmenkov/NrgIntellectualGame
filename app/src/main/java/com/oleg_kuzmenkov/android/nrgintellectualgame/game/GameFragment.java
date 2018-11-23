@@ -198,10 +198,15 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             @Override
             public void run() {
                 mQuestionTextView.setText(question.getQuestionText());
-                mFirstAnswerButton.setText(question.getFirstCaseAnswer());
-                mSecondAnswerButton.setText(question.getSecondCaseAnswer());
-                mThirdAnswerButton.setText(question.getThirdCaseAnswer());
-                mFourthAnswerButton.setText(question.getFourthCaseAnswer());
+                int index = 0;
+                for (Button button : mGameButtonsHashMap.values()) {
+                    button.setText(question.getAnswersList().get(index));
+                    index++;
+                }
+               // mFirstAnswerButton.setText(question.getFirstCaseAnswer());
+                ///mSecondAnswerButton.setText(question.getSecondCaseAnswer());
+                //mThirdAnswerButton.setText(question.getThirdCaseAnswer());
+                //mFourthAnswerButton.setText(question.getFourthCaseAnswer());
             }
         });
         //mRightAnswerButton = identifyCorrectAnswerButton(mRightAnswer);
