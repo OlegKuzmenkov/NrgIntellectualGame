@@ -83,7 +83,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             mPresenter.startGame();
         } else {
             // restore game
-            //mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
             restorePresenter(savedInstanceState);
             mPresenter.restoreQuestion();
         }
@@ -167,24 +166,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         if (button != null) {
             mPresenter.checkAnswer(button.getText().toString());
         }
-
-        /*switch (view.getId()) {
-            case R.id.first_answer_button:
-                mPresenter.checkAnswer(mFirstAnswerButton.getText().toString());
-                break;
-
-            case R.id.second_answer_button:
-                mPresenter.checkAnswer(mSecondAnswerButton.getText().toString());
-                break;
-
-            case R.id.third_answer_button:
-                mPresenter.checkAnswer(mThirdAnswerButton.getText().toString());
-                break;
-
-            case R.id.fourth_answer_button:
-                mPresenter.checkAnswer(mFourthAnswerButton.getText().toString());
-                break;
-        }*/
     }
 
     @Override
@@ -207,14 +188,8 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
                     button.setText(question.getAnswersList().get(index));
                     index++;
                 }
-               // mFirstAnswerButton.setText(question.getFirstCaseAnswer());
-                ///mSecondAnswerButton.setText(question.getSecondCaseAnswer());
-                //mThirdAnswerButton.setText(question.getThirdCaseAnswer());
-                //mFourthAnswerButton.setText(question.getFourthCaseAnswer());
             }
         });
-        //mRightAnswerButton = identifyCorrectAnswerButton(mRightAnswer);
-        //startTimerForQuestion(timer);
     }
 
     @Override
@@ -230,16 +205,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
                 return button;
             }
         }
-        /*if (mFirstAnswerButton.getText().toString().equals(buttonText)) {
-            return mFirstAnswerButton;
-        }
-        if (mSecondAnswerButton.getText().toString().equals(buttonText)) {
-            return mSecondAnswerButton;
-        }
-        if (mThirdAnswerButton.getText().toString().equals(buttonText)) {
-            return mThirdAnswerButton;
-        }
-        return mFourthAnswerButton;*/
+
         return null;
     }
 
@@ -275,10 +241,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
                 for (Button button : mGameButtonsHashMap.values()) {
                     button.setClickable(isEnable);
                 }
-                /*mFirstAnswerButton.setClickable(isEnable);
-                mSecondAnswerButton.setClickable(isEnable);
-                mThirdAnswerButton.setClickable(isEnable);
-                mFourthAnswerButton.setClickable(isEnable);*/
             }
         });
     }
@@ -291,11 +253,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
                 for (Button button : mGameButtonsHashMap.values()) {
                     button.setBackgroundResource(R.drawable.answer_button_border);;
                 }
-
-                /*mFirstAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                mSecondAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                mThirdAnswerButton.setBackgroundResource(R.drawable.answer_button_border);
-                mFourthAnswerButton.setBackgroundResource(R.drawable.answer_button_border);*/
             }
         });
     }
@@ -366,14 +323,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         for (Button button : mGameButtonsHashMap.values()) {
             button.setOnClickListener(this);
         }
-        //mFirstAnswerButton = view.findViewById(R.id.first_answer_button);
-        //mFirstAnswerButton.setOnClickListener(this);
-        //mSecondAnswerButton = view.findViewById(R.id.second_answer_button);
-        //mSecondAnswerButton.setOnClickListener(this);
-        //mThirdAnswerButton = view.findViewById(R.id.third_answer_button);
-        //mThirdAnswerButton.setOnClickListener(this);
-        //mFourthAnswerButton = view.findViewById(R.id.fourth_answer_button);
-        //mFourthAnswerButton.setOnClickListener(this);
     }
 
     private void initPresenter() {
