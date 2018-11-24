@@ -34,20 +34,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GameFragment extends Fragment implements GameScreenView, View.OnClickListener {
-    private static final String LOG_TAG = "Message";
-    private static final String BUNDLE_CONTENT = "content";
+    private static final String LOG_TAG = "GAME_FRAGMENT";
+    private static final String BUNDLE_CONTENT = "BUNDLE";
     private static final float VOLUME = 0.01f;
 
-    private TextView mQuestionTimerTextView;
-    private TextView mQuestionTextView;
-    private HashMap <Integer,Button> mGameButtonsHashMap;
+    private TextView mQuestionTimer;
+    private TextView mQuestionText;
+    private HashMap<Integer, Button> mGameButtonsMap;
 
-    private MediaPlayer mMediaPlayerForRightAnswer;
-    private MediaPlayer mMediaPlayerForWrongAnswer;
+    private MediaPlayer mRightAnswerPlayer;
+    private MediaPlayer mWrongAnswerPlayer;
 
     private LocationCallback mLocationCallback;
     private LocationRequest mLocationRequest;
-    private FusedLocationProviderClient mFusedLocationClient;
+    private FusedLocationProviderClient mLocationClient;
 
     private GameScreenPresenter mPresenter;
 
@@ -61,7 +61,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -140,24 +140,24 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         Log.d(LOG_TAG, "startGettingUserLocation");
         createLocationCallback();
         createLocationRequest();
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        mLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 //Location Permission already granted
-                mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             } else {
                 // Send Message to User
                 Log.d(LOG_TAG, "Geolocation is disabled");
             }
         } else {
-            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+            mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }
     }
 
     @Override
-    public void onClick(View view) {
-        Button button = mGameButtonsHashMap.get(view.getId());
+    public void onClick(final View view) {
+        Button button = mGameButtonsMap.get(view.getId());
 
         if (button != null) {
             mPresenter.checkAnswer(button.getText().toString());
@@ -167,8 +167,8 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     @Override
     public void stopLocationService() {
         Log.d(LOG_TAG, "stopGettingUserLocation");
-        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        mFusedLocationClient = null;
+        mLocationClient.removeLocationUpdates(mLocationCallback);
+        mLocationClient = null;
     }
 
     @Override
@@ -178,9 +178,9 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mQuestionTextView.setText(question.getQuestionText());
+                mQuestionText.setText(question.getQuestionText());
                 int index = 0;
-                for (Button button : mGameButtonsHashMap.values()) {
+                for (Button button : mGameButtonsMap.values()) {
                     button.setText(question.getAnswersList().get(index));
                     index++;
                 }
@@ -195,8 +195,9 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
+    @Nullable
     private Button getAppropriateButton(String buttonText) {
-        for (Button button : mGameButtonsHashMap.values()) {
+        for (Button button : mGameButtonsMap.values()) {
             if (button.getText().toString().equals(buttonText)) {
                 return button;
             }
@@ -208,14 +209,14 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     @Override
     public void displayRightAnswerResult(final String rightAnswer) {
         getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
-        mMediaPlayerForRightAnswer.start();
+        mRightAnswerPlayer.start();
     }
 
     @Override
     public void displayWrongAnswerResult(String rightAnswer, String wrongAnswer) {
         getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
         getAppropriateButton(wrongAnswer).setBackgroundResource(R.drawable.wrong_answer_button_border);
-        mMediaPlayerForWrongAnswer.start();
+        mWrongAnswerPlayer.start();
     }
 
     @Override
@@ -224,7 +225,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
             @Override
             public void run() {
                 getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
-                mMediaPlayerForWrongAnswer.start();
+                mWrongAnswerPlayer.start();
             }
         });
     }
@@ -234,7 +235,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (Button button : mGameButtonsHashMap.values()) {
+                for (Button button : mGameButtonsMap.values()) {
                     button.setClickable(isEnable);
                 }
             }
@@ -246,7 +247,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (Button button : mGameButtonsHashMap.values()) {
+                for (Button button : mGameButtonsMap.values()) {
                     button.setBackgroundResource(R.drawable.answer_button_border);;
                 }
             }
@@ -258,7 +259,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mQuestionTimerTextView.setText(Integer.toString(remainTime));
+                mQuestionTimer.setText(Integer.toString(remainTime));
             }
         });
     }
@@ -274,7 +275,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mQuestionTimerTextView.setBackgroundResource(R.drawable.time_green_indicator);
+                mQuestionTimer.setBackgroundResource(R.drawable.time_green_indicator);
             }
         });
     }
@@ -284,7 +285,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mQuestionTimerTextView.setBackgroundResource(R.drawable.time_red_indicator);
+                mQuestionTimer.setBackgroundResource(R.drawable.time_red_indicator);
             }
         });
     }
@@ -292,31 +293,31 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     @Override
     public void onDestroy() {
         Log.d(LOG_TAG, "Fragment: onDestroy");
-        if (mFusedLocationClient != null) {
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        if (mLocationClient != null) {
+            mLocationClient.removeLocationUpdates(mLocationCallback);
         }
         mPresenter.detach();
         super.onDestroy();
     }
 
     private void initMedia() {
-        mMediaPlayerForRightAnswer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
-        mMediaPlayerForRightAnswer.setVolume(VOLUME, VOLUME);
-        mMediaPlayerForWrongAnswer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
-        mMediaPlayerForWrongAnswer.setVolume(VOLUME, VOLUME);
+        mRightAnswerPlayer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
+        mRightAnswerPlayer.setVolume(VOLUME, VOLUME);
+        mWrongAnswerPlayer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
+        mWrongAnswerPlayer.setVolume(VOLUME, VOLUME);
     }
 
     private void initControls(@NonNull View view) {
-        mQuestionTimerTextView = view.findViewById(R.id.timer_view);
-        mQuestionTextView = view.findViewById(R.id.question_text_view);
+        mQuestionTimer = view.findViewById(R.id.timer_view);
+        mQuestionText = view.findViewById(R.id.question_text_view);
 
-        mGameButtonsHashMap = new HashMap();
-        mGameButtonsHashMap.put(R.id.first_answer_button, (Button) view.findViewById(R.id.first_answer_button));
-        mGameButtonsHashMap.put(R.id.second_answer_button, (Button) view.findViewById(R.id.second_answer_button));
-        mGameButtonsHashMap.put(R.id.third_answer_button, (Button) view.findViewById(R.id.third_answer_button));
-        mGameButtonsHashMap.put(R.id.fourth_answer_button, (Button) view.findViewById(R.id.fourth_answer_button));
+        mGameButtonsMap = new HashMap();
+        mGameButtonsMap.put(R.id.first_answer_button, (Button) view.findViewById(R.id.first_answer_button));
+        mGameButtonsMap.put(R.id.second_answer_button, (Button) view.findViewById(R.id.second_answer_button));
+        mGameButtonsMap.put(R.id.third_answer_button, (Button) view.findViewById(R.id.third_answer_button));
+        mGameButtonsMap.put(R.id.fourth_answer_button, (Button) view.findViewById(R.id.fourth_answer_button));
 
-        for (Button button : mGameButtonsHashMap.values()) {
+        for (Button button : mGameButtonsMap.values()) {
             button.setOnClickListener(this);
         }
     }
