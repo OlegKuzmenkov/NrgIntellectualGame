@@ -17,13 +17,13 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 
 public class GameResultsFragment extends Fragment {
-    private static final String BUNDLE_CONTENT_COUNT_QUESTIONS = "count_questions";
-    private static final String BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS = "count_right_answers";
+    private static final String BUNDLE_CONTENT_COUNT_QUESTIONS = "QUESTIONS_COUNT";
+    private static final String BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS = "COUNT_RIGHT_ANSWERS";
 
-    private TextView mGameResultsTextView;
-    private Button mGoToMainMenuButton;
-    private int mCountQuestions;
-    private int mCountRightAnswers;
+    private TextView mGameResult;
+    private Button mExitButton;
+    private int mQuestionsCount;
+    private int mRightAnswersCount;
 
     public static GameResultsFragment newInstance(int countQuestions, final int countRightAnswers) {
         GameResultsFragment fragment = new GameResultsFragment();
@@ -31,6 +31,7 @@ public class GameResultsFragment extends Fragment {
         arguments.putInt(BUNDLE_CONTENT_COUNT_QUESTIONS, countQuestions);
         arguments.putInt(BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS, countRightAnswers);
         fragment.setArguments(arguments);
+
         return fragment;
     }
 
@@ -43,20 +44,19 @@ public class GameResultsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game_results, container, false);
-
-        mGameResultsTextView = v.findViewById(R.id.game_results_text_view);
-        mGoToMainMenuButton = v.findViewById(R.id.go_to_main_menu_button);
-
+        
         if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT_COUNT_QUESTIONS)) {
-            mCountQuestions = getArguments().getInt(BUNDLE_CONTENT_COUNT_QUESTIONS);
-            mCountRightAnswers = getArguments().getInt(BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS);
+            mQuestionsCount = getArguments().getInt(BUNDLE_CONTENT_COUNT_QUESTIONS);
+            mRightAnswersCount = getArguments().getInt(BUNDLE_CONTENT_COUNT_RIGHT_ANSWERS);
         } else {
             throw new IllegalArgumentException("Must be created through newInstance(...)");
         }
 
+        mGameResult = v.findViewById(R.id.game_results_text_view);
         setContent();
 
-        mGoToMainMenuButton.setOnClickListener(new View.OnClickListener() {
+        mExitButton = v.findViewById(R.id.go_to_main_menu_button);
+        mExitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
@@ -71,7 +71,7 @@ public class GameResultsFragment extends Fragment {
      * Animate Button
      */
     private void animateButton() {
-        ObjectAnimator animation = ObjectAnimator.ofFloat(mGoToMainMenuButton, "rotationY",
+        ObjectAnimator animation = ObjectAnimator.ofFloat(mExitButton, "rotationY",
                 0.0f, 360f);
         animation.setDuration(2000);
         animation.setStartDelay(1000);
@@ -84,7 +84,7 @@ public class GameResultsFragment extends Fragment {
      * Set the received content in the fragment's game
      */
     private void setContent() {
-       mGameResultsTextView.setText("You answered correctly for " + mCountRightAnswers + " out of " + mCountQuestions
+       mGameResult.setText("You answered correctly for " + mRightAnswersCount + " out of " + mQuestionsCount
                + " questions. Congratulations!");
     }
 }
