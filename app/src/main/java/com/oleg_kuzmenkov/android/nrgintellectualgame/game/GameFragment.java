@@ -162,7 +162,11 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
 
     @Override
     public void onClick(View view) {
-        mPresenter.checkAnswer(mGameButtonsHashMap.get(view.getId()).getText().toString());
+        Button button = mGameButtonsHashMap.get(view.getId());
+
+        if (button != null) {
+            mPresenter.checkAnswer(button.getText().toString());
+        }
 
         /*switch (view.getId()) {
             case R.id.first_answer_button:
