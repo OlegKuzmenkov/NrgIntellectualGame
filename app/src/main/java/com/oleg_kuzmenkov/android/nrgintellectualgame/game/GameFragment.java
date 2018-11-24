@@ -40,10 +40,6 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
 
     private TextView mQuestionTimerTextView;
     private TextView mQuestionTextView;
-    private Button mFirstAnswerButton;
-    private Button mSecondAnswerButton;
-    private Button mThirdAnswerButton;
-    private Button mFourthAnswerButton;
     private HashMap <Integer,Button> mGameButtonsHashMap;
 
     private MediaPlayer mMediaPlayerForRightAnswer;
