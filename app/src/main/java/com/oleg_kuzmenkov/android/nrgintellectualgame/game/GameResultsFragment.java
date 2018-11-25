@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 public class GameResultsFragment extends Fragment {
-    private static final String BUNDLE_CONTENT_QUESTIONS_COUNT = "QUESTIONS_COUNT";
     private static final String BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT = "RIGHT_ANSWERS_COUNT";
 
     private TextView mGameResult;
@@ -24,10 +23,9 @@ public class GameResultsFragment extends Fragment {
     private int mQuestionsCount;
     private int mRightAnswersCount;
 
-    public static GameResultsFragment newInstance(int countQuestions, final int countRightAnswers) {
+    public static GameResultsFragment newInstance(final int countRightAnswers) {
         GameResultsFragment fragment = new GameResultsFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(BUNDLE_CONTENT_QUESTIONS_COUNT, countQuestions);
         arguments.putInt(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT, countRightAnswers);
         fragment.setArguments(arguments);
 
@@ -44,8 +42,8 @@ public class GameResultsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game_results, container, false);
 
-        if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT_QUESTIONS_COUNT)) {
-            mQuestionsCount = getArguments().getInt(BUNDLE_CONTENT_QUESTIONS_COUNT);
+        if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT)) {
+            mQuestionsCount = GameScreenPresenter.COUNT_QUESTIONS_FOR_GAME;
             mRightAnswersCount = getArguments().getInt(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT);
         } else {
             throw new IllegalArgumentException("Must be created through newInstance(...)");

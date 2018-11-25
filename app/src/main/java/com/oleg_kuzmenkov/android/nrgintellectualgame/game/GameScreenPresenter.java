@@ -15,8 +15,8 @@ import java.util.Random;
 public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable,
         QuestionTimerCallBacks, PauseBetweenQuestionsThreadCallbacks {
 
+    public static final int COUNT_QUESTIONS_FOR_GAME = 3;
     private static final String LOG_TAG = "GameScreenPresenter";
-    private static final int COUNT_QUESTIONS_FOR_GAME = 3;
     private static final int COUNT_SECONDS_FOR_RED_INDICATOR = 3;
     private static final int COUNT_SECONDS_FOR_QUESTION = 10;
 
@@ -121,7 +121,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
      */
     private void finishGame() {
         updateUserStatistics();
-        mGameScreenView.displayResultsOfGame(mGameQuestionsList.size(), mRightAnswersCount);
+        mGameScreenView.displayResultsOfGame(mRightAnswersCount);
     }
 
     private void updateUserStatistics() {

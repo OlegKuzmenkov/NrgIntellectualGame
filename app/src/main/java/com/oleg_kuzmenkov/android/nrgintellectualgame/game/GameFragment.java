@@ -189,9 +189,9 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     @Override
-    public void displayResultsOfGame(int countOfQuestions, int countWriteAnswers) {
+    public void displayResultsOfGame(int rightAnswersCount) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        Fragment fragment = GameResultsFragment.newInstance(countOfQuestions, countWriteAnswers);
+        Fragment fragment = GameResultsFragment.newInstance(rightAnswersCount);
         fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
