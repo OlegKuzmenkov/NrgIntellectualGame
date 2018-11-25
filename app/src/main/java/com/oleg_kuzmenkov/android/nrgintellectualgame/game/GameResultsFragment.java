@@ -18,10 +18,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 public class GameResultsFragment extends Fragment {
     private static final String BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT = "RIGHT_ANSWERS_COUNT";
 
-    private TextView mGameResult;
     private Button mExitButton;
-    private int mQuestionsCount;
-    private int mRightAnswersCount;
 
     public static GameResultsFragment newInstance(final int countRightAnswers) {
         GameResultsFragment fragment = new GameResultsFragment();
@@ -42,12 +39,11 @@ public class GameResultsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game_results, container, false);
 
-        mGameResult = v.findViewById(R.id.game_results_text_view);
         Bundle bundle = getArguments();
 
         if (bundle != null && bundle.containsKey(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT)) {
             int rightAnswersCount = getArguments().getInt(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT);
-            showGameResult(rightAnswersCount);
+            showGameResult(v,rightAnswersCount);
         } else {
             throw new IllegalArgumentException("Must be created through newInstance(...)");
         }
@@ -78,13 +74,14 @@ public class GameResultsFragment extends Fragment {
     }
 
     /**
-     * Show game results
+     * Show game result
      */
-    private void showGameResult(int rightAnswersCount) {
+    private void showGameResult(@NonNull View view, int rightAnswersCount) {
         int questionsCount = GameScreenPresenter.COUNT_QUESTIONS_FOR_GAME;
         String result = String.format("You answered correctly for %d ", rightAnswersCount);
         result = result.concat(String.format("out of %d questions. Congratulations!", questionsCount));
-        mGameResult.setText(result);
+        TextView gameResult = view.findViewById(R.id.game_results_text_view);
+        gameResult.setText(result);
     }
 }
 
