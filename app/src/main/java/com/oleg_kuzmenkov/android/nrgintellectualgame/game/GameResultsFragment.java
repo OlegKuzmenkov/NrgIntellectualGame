@@ -42,15 +42,15 @@ public class GameResultsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game_results, container, false);
 
-        if (getArguments() != null && getArguments().containsKey(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT)) {
-            mQuestionsCount = GameScreenPresenter.COUNT_QUESTIONS_FOR_GAME;
-            mRightAnswersCount = getArguments().getInt(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT);
+        mGameResult = v.findViewById(R.id.game_results_text_view);
+        Bundle bundle = getArguments();
+
+        if (bundle != null && bundle.containsKey(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT)) {
+            int rightAnswersCount = getArguments().getInt(BUNDLE_CONTENT_RIGHT_ANSWERS_COUNT);
+            showGameResult(rightAnswersCount);
         } else {
             throw new IllegalArgumentException("Must be created through newInstance(...)");
         }
-
-        mGameResult = v.findViewById(R.id.game_results_text_view);
-        setContent();
 
         mExitButton = v.findViewById(R.id.go_to_main_menu_button);
         mExitButton.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +59,13 @@ public class GameResultsFragment extends Fragment {
                 getActivity().finish();
             }
         });
-
         animateButton();
+
         return v;
     }
 
     /**
-     * Animate Button
+     * Animate exit button
      */
     private void animateButton() {
         ObjectAnimator animation = ObjectAnimator.ofFloat(mExitButton, "rotationY",
@@ -78,11 +78,12 @@ public class GameResultsFragment extends Fragment {
     }
 
     /**
-     * Set the received content in the fragment's game
+     * Show game results
      */
-    private void setContent() {
-        String result = String.format("You answered correctly for %d ", mRightAnswersCount);
-        result = result.concat(String.format("out of %d questions. Congratulations!", mQuestionsCount));
+    private void showGameResult(int rightAnswersCount) {
+        int questionsCount = GameScreenPresenter.COUNT_QUESTIONS_FOR_GAME;
+        String result = String.format("You answered correctly for %d ", rightAnswersCount);
+        result = result.concat(String.format("out of %d questions. Congratulations!", questionsCount));
         mGameResult.setText(result);
     }
 }
