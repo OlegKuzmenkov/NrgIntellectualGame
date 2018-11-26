@@ -30,8 +30,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MenuScreenActivity extends AppCompatActivity implements MenuScreenView {
-    private static final String BUNDLE_CONTENT = "content";
-    private static final String INTENT_CONTENT = "content";
+    private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
+    private static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String LOG_TAG = "Message";
 
     private Button mSinglePlayerButton;
