@@ -179,12 +179,15 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mQuestionText.setText(question.getQuestionText());
                 int index = 0;
+                List<String> answersList = question.getAnswersList();
+
                 for (Button button : mGameButtonsMap.values()) {
-                    button.setText(question.getAnswersList().get(index));
+                    button.setText(answersList.get(index));
                     index++;
                 }
+
+                mQuestionText.setText(question.getQuestionText());
             }
         });
     }
