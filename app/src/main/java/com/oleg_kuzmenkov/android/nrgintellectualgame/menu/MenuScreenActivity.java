@@ -24,7 +24,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.StatisticsActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.BestPlayersActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameActivity;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.game.UserLoginActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.game.SignInActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -198,7 +198,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
                 } else {
                     // destroy Activity
                     Toast.makeText(this, "Call permission not granted", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                     startActivity(intent);
                     finish();
 

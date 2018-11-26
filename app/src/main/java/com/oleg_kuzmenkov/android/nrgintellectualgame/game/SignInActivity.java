@@ -11,36 +11,36 @@ import android.widget.Toast;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuScreenActivity;
 
-public class UserLoginActivity extends AppCompatActivity {
-    private static final String INTENT_CONTENT = "content";
-    private static final String BUNDLE_CONTENT = "content";
+public class SignInActivity extends AppCompatActivity {
+    private static final String INTENT_CONTENT = "INTENT_CONTENT";
+    private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
 
-    private EditText mUserLoginEditText;
-    private Button mLoginButton;
-    private String mUserLogin;
+    private EditText mUserLogin;
+    private Button mSignInButton;
+    private String mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
-        mUserLoginEditText = findViewById(R.id.login_edit_text);
+        mUserLogin = findViewById(R.id.login_edit_text);
 
         if (savedInstanceState != null) {
-            mUserLogin = savedInstanceState.getString(BUNDLE_CONTENT);
-            mUserLoginEditText.setText(mUserLogin);
+            mLogin = savedInstanceState.getString(BUNDLE_CONTENT);
+            mUserLogin.setText(mLogin);
         }
 
-        mLoginButton = findViewById(R.id.login_button);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
+        mSignInButton = findViewById(R.id.login_button);
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mUserLogin = mUserLoginEditText.getText().toString();
-                if (mUserLogin.equals("")) {
+                mLogin = mUserLogin.getText().toString();
+                if (mLogin.equals("")) {
                     Toast.makeText(getApplicationContext(), "Please enter login", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent startMenuIntent = new Intent(getApplicationContext(), MenuScreenActivity.class);
-                    startMenuIntent.putExtra(INTENT_CONTENT, mUserLogin);
+                    startMenuIntent.putExtra(INTENT_CONTENT, mLogin);
                     startActivity(startMenuIntent);
                     finish();
                 }
@@ -51,6 +51,6 @@ public class UserLoginActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(BUNDLE_CONTENT, mUserLogin);
+        outState.putString(BUNDLE_CONTENT, mLogin);
     }
 }
