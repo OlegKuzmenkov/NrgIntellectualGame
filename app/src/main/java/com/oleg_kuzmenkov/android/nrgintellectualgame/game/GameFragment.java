@@ -33,7 +33,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameFragment extends Fragment implements GameScreenView, View.OnClickListener {
+public class GameFragment extends Fragment implements GameView, View.OnClickListener {
     private static final String LOG_TAG = "GAME_FRAGMENT";
     private static final String BUNDLE_CONTENT = "BUNDLE";
     private static final float VOLUME = 0.01f;
@@ -49,7 +49,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     private LocationRequest mLocationRequest;
     private FusedLocationProviderClient mLocationClient;
 
-    private GameScreenPresenter mPresenter;
+    private GamePresenter mPresenter;
 
     public static GameFragment newInstance(final User user) {
         GameFragment fragment = new GameFragment();
@@ -323,7 +323,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     private void initPresenter() {
-        mPresenter = new GameScreenPresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
+        mPresenter = new GamePresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.setView(this);
         Bundle bundle = getArguments();
 
@@ -334,7 +334,7 @@ public class GameFragment extends Fragment implements GameScreenView, View.OnCli
     }
 
     private void restorePresenter(@NonNull Bundle savedInstanceState) {
-        mPresenter = (GameScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+        mPresenter = (GamePresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         mPresenter.setView(this);
         mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.getUserLocation();

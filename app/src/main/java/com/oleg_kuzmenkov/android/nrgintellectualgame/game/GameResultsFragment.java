@@ -77,7 +77,7 @@ public class GameResultsFragment extends Fragment {
      * Show game result
      */
     private void showGameResult(@NonNull View view, int rightAnswersCount) {
-        int questionsCount = GameScreenPresenter.COUNT_QUESTIONS_FOR_GAME;
+        int questionsCount = GamePresenter.COUNT_QUESTIONS_FOR_GAME;
         String result = String.format("You answered correctly for %d ", rightAnswersCount);
         result = result.concat(String.format("out of %d questions. Congratulations!", questionsCount));
         TextView gameResult = view.findViewById(R.id.game_results_text_view);

@@ -2,7 +2,7 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
 
-public interface GameScreenView {
+public interface GameView {
     void displayQuestion(Question question);
     void displayResultsOfGame(int rightAnswersCount);
     void displayRightAnswerResult(String rightAnswer);
