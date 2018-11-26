@@ -10,11 +10,11 @@ public class QuestionTimer extends TimerTask {
     private static final Long TIMER_PERIOD = 1000L;
 
     private int mRemainTime;
-    private QuestionTimerCallBacks mQuestionTimerCallBacks;
+    private QuestionTimerCallback mQuestionTimerCallback;
 
-    public QuestionTimer(QuestionTimerCallBacks questionTimerCallBacks) {
+    public QuestionTimer(QuestionTimerCallback questionTimerCallback) {
         Log.d(LOG_TAG, "Create Timer!!!!!!!!!!!!!!");
-        mQuestionTimerCallBacks = questionTimerCallBacks;
+        mQuestionTimerCallback = questionTimerCallback;
         Timer t = new Timer();
         t.scheduleAtFixedRate(this, 0, TIMER_PERIOD);
     }
@@ -22,6 +22,6 @@ public class QuestionTimer extends TimerTask {
     @Override
     public void run() {
             //cancel();
-        mQuestionTimerCallBacks.changeRemainQuestionTime();
+        mQuestionTimerCallback.changeRemainQuestionTime();
     }
 }

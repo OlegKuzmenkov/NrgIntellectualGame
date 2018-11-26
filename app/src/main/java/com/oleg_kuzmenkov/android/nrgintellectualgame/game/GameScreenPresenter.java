@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class GameScreenPresenter implements Repository.QuestionOnFinishedListener, Serializable,
-        QuestionTimerCallBacks, PauseBetweenQuestionsThreadCallbacks {
+        QuestionTimerCallback, QuestionPauseCallback {
 
     public static final int COUNT_QUESTIONS_FOR_GAME = 3;
     private static final String LOG_TAG = "GameScreenPresenter";
@@ -25,7 +25,7 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
     private int mQuestionRemainTime;
     private boolean mAnswerIsDone;
     private QuestionTimer mQuestionTimer;
-    private PauseBetweenQuestionsThread mPauseBetweenQuestionsThread;
+    private QuestionPause mQuestionPause;
     private List<Question> mGameQuestionsList;
     private User mCurrentUser;
 
@@ -151,8 +151,8 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         }
 
 
-        mPauseBetweenQuestionsThread = new PauseBetweenQuestionsThread(this);
-        mPauseBetweenQuestionsThread.start();
+        mQuestionPause = new QuestionPause(this);
+        mQuestionPause.start();
     }
 
     /**
@@ -189,8 +189,8 @@ public class GameScreenPresenter implements Repository.QuestionOnFinishedListene
         if (mQuestionRemainTime == 0) {
             mQuestionTimer.cancel();
             mGameScreenView.displayRightAnswer(mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer());
-            mPauseBetweenQuestionsThread = new PauseBetweenQuestionsThread(this);
-            mPauseBetweenQuestionsThread.start();
+            mQuestionPause = new QuestionPause(this);
+            mQuestionPause.start();
         }
     }
 
