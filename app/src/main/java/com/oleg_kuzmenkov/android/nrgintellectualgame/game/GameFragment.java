@@ -74,13 +74,13 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         mWrongAnswerPlayer = initMedia(R.raw.wrong_answer_sound);
         initControls(v);
 
+        setupPresenter(savedInstanceState);
+
         if (savedInstanceState == null) {
             // start new game
-            initPresenter();
             mPresenter.startGame();
         } else {
             // restore game
-            restorePresenter(savedInstanceState);
             mPresenter.restoreQuestion();
         }
 
@@ -325,21 +325,22 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         }
     }
 
-    private void initPresenter() {
-        mPresenter = new GamePresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
-        mPresenter.setView(this);
-        Bundle bundle = getArguments();
+    private void setupPresenter(final Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            // create presenter
+            mPresenter = new GamePresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
+            Bundle bundle = getArguments();
 
-        if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
-            mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
-            mPresenter.getUserLocation();
+            if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
+                mPresenter.setUser((User) bundle.getSerializable(BUNDLE_CONTENT));
+            }
+        } else {
+            // restore presenter
+            mPresenter = (GamePresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+            mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
         }
-    }
 
-    private void restorePresenter(@NonNull Bundle savedInstanceState) {
-        mPresenter = (GamePresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         mPresenter.setView(this);
-        mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
         mPresenter.getUserLocation();
     }
 }
