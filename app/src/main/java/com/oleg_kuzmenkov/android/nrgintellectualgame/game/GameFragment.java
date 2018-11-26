@@ -36,7 +36,7 @@ import java.util.List;
 public class GameFragment extends Fragment implements GameView, View.OnClickListener {
     private static final String LOG_TAG = "GAME_FRAGMENT";
     private static final String BUNDLE_CONTENT = "BUNDLE";
-    private static final float VOLUME = 0.01f;
+    private static final float VOLUME = 0.05f;
 
     private TextView mQuestionTimer;
     private TextView mQuestionText;
@@ -70,7 +70,8 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_game, container, false);
 
-        initMedia();
+        mRightAnswerPlayer = initMedia(R.raw.right_answer_sound);
+        mWrongAnswerPlayer = initMedia(R.raw.wrong_answer_sound);
         initControls(v);
 
         if (savedInstanceState == null) {
@@ -300,11 +301,10 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         super.onDestroy();
     }
 
-    private void initMedia() {
-        mRightAnswerPlayer = MediaPlayer.create(getActivity(), R.raw.right_answer_sound);
-        mRightAnswerPlayer.setVolume(VOLUME, VOLUME);
-        mWrongAnswerPlayer = MediaPlayer.create(getActivity(), R.raw.wrong_answer_sound);
-        mWrongAnswerPlayer.setVolume(VOLUME, VOLUME);
+    private MediaPlayer initMedia(int id) {
+        MediaPlayer media = MediaPlayer.create(getActivity(), id);
+        media.setVolume(VOLUME, VOLUME);
+        return media;
     }
 
     private void initControls(@NonNull View view) {
