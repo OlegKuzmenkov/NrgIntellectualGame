@@ -4,7 +4,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
-public interface MenuScreenView {
+public interface MenuView {
     void displayUserLogin(User user);
     void startGameActivity(User user);
     void startStatisticsActivity(User user);

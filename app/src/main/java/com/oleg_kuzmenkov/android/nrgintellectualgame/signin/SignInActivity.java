@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuScreenActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuActivity;
 
 public class SignInActivity extends AppCompatActivity implements SignInView{
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView{
      */
     @Override
     public void displayMenu(String userLogin) {
-        Intent startMenu = new Intent(getApplicationContext(), MenuScreenActivity.class);
+        Intent startMenu = new Intent(getApplicationContext(), MenuActivity.class);
         startMenu.putExtra(INTENT_CONTENT, userLogin);
         startActivity(startMenu);
         finish();

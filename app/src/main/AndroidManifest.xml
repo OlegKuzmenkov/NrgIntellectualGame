@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".menu.MenuScreenActivity" />
+        <activity android:name=".menu.MenuActivity" />
         <activity android:name=".statistics.BestPlayersActivity" />
         <activity android:name=".game.GameActivity" />
         <activity android:name=".statistics.StatisticsActivity" />

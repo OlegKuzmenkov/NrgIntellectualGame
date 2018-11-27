@@ -29,7 +29,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.signin.SignInActivity;
 import java.io.Serializable;
 import java.util.List;
 
-public class MenuScreenActivity extends AppCompatActivity implements MenuScreenView {
+public class MenuActivity extends AppCompatActivity implements MenuView {
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
     private static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String LOG_TAG = "Message";
@@ -40,7 +40,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     private Button mNews;
     private Button mExit;
     private TextView mCurrentUser;
-    private MenuScreenPresenter mPresenter;
+    private MenuPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +95,9 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
         Log.d(LOG_TAG, "UserLogin - " + userLogin);
 
         if (savedInstanceState == null) {
-            mPresenter = new MenuScreenPresenter();
+            mPresenter = new MenuPresenter();
         } else {
-            mPresenter = (MenuScreenPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+            mPresenter = (MenuPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         }
         // Set View and Repository in presenter
         mPresenter.setView(this);
@@ -179,7 +179,7 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "MenuScreenActivity:onSaveInstanceState");
+        Log.d(LOG_TAG, "MenuActivity:onSaveInstanceState");
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 

@@ -9,21 +9,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuScreenPresenter implements Repository.UsersOnFinishedListener, Serializable {
+public class MenuPresenter implements Repository.UsersOnFinishedListener, Serializable {
     private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
     private String mUserLogin;
 
-    private transient MenuScreenView mMenuScreenView;
+    private transient MenuView mMenuView;
     private transient Repository mRepository;
 
 
-    public MenuScreenPresenter() {
+    public MenuPresenter() {
     }
 
-    public void setView(MenuScreenView menuScreenView) {
-        mMenuScreenView = menuScreenView;
+    public void setView(MenuView menuView) {
+        mMenuView = menuView;
     }
 
     public void setRepository(Repository repository) {
@@ -31,31 +31,31 @@ public class MenuScreenPresenter implements Repository.UsersOnFinishedListener, 
     }
 
     public void detach() {
-        mMenuScreenView = null;
+        mMenuView = null;
         mRepository = null;
     }
 
     public void checkUsers(String userLogin) {
         mUserLogin = userLogin;
         if (mCurrentUser == null) {
-            mMenuScreenView.hideMenu();
+            mMenuView.hideMenu();
             mRepository.getCurrentUserData(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
-            mMenuScreenView.displayUserLogin(mCurrentUser);
+            mMenuView.displayUserLogin(mCurrentUser);
         }
     }
 
     public void startGameActivity() {
-        mMenuScreenView.startGameActivity(mCurrentUser);
+        mMenuView.startGameActivity(mCurrentUser);
     }
 
     public void startStatisticsActivity() {
-        mMenuScreenView.startStatisticsActivity(mCurrentUser);
+        mMenuView.startStatisticsActivity(mCurrentUser);
     }
 
     public void startNewsActivity() {
-        mMenuScreenView.startNewsActivity();
+        mMenuView.startNewsActivity();
     }
 
     public void startBestPlayersActivity() {
@@ -72,7 +72,7 @@ public class MenuScreenPresenter implements Repository.UsersOnFinishedListener, 
         }
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players
-        mMenuScreenView.startBestPlayersActivity(bestPlayersList);
+        mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 
     @Override
@@ -97,9 +97,9 @@ public class MenuScreenPresenter implements Repository.UsersOnFinishedListener, 
             mRepository.addNewUserToDatabase(mCurrentUser);
         } else {
             // user is exist in firebase
-            if (mMenuScreenView != null) {
-                mMenuScreenView.displayMenu();
-                mMenuScreenView.displayUserLogin(mCurrentUser);
+            if (mMenuView != null) {
+                mMenuView.displayMenu();
+                mMenuView.displayUserLogin(mCurrentUser);
             }
         }
     }
