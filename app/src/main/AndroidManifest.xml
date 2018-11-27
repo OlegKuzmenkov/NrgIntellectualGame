@@ -18,7 +18,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAPTCncgb4ZykHVAHJlP-YLwPecQ16sq6E" />
 
-        <activity android:name=".game.SignInActivity">
+        <activity android:name=".signin.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

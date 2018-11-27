@@ -24,7 +24,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.StatisticsActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.BestPlayersActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameActivity;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.game.SignInActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.signin.SignInActivity;
 
 import java.io.Serializable;
 import java.util.List;

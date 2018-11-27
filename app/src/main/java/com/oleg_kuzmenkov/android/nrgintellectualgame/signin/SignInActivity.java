@@ -1,4 +1,4 @@
-package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
+package com.oleg_kuzmenkov.android.nrgintellectualgame.signin;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
