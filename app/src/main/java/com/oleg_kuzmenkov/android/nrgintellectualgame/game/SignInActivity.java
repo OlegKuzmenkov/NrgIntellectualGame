@@ -11,39 +11,44 @@ import android.widget.Toast;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuScreenActivity;
 
-public class SignInActivity extends AppCompatActivity {
-    private static final String INTENT_CONTENT = "INTENT_CONTENT";
+public class SignInActivity extends AppCompatActivity implements SignInView{
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
+    private static final String INTENT_CONTENT = "INTENT_CONTENT";
+
+    private SignInPresenter mPresenter;
 
     private EditText mUserLogin;
     private Button mSignInButton;
-    private String mLogin;
+
+    @Override
+    public void displayNotification() {
+        Toast.makeText(getApplicationContext(), "Please enter login", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Start MenuActivity. Send user login in it.
+     */
+    @Override
+    public void displayMenu(String userLogin) {
+        Intent startMenu = new Intent(getApplicationContext(), MenuScreenActivity.class);
+        startMenu.putExtra(INTENT_CONTENT, userLogin);
+        startActivity(startMenu);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
 
+        setupPresenter(savedInstanceState);
+
         mUserLogin = findViewById(R.id.login_edit_text);
-
-        if (savedInstanceState != null) {
-            mLogin = savedInstanceState.getString(BUNDLE_CONTENT);
-            mUserLogin.setText(mLogin);
-        }
-
         mSignInButton = findViewById(R.id.login_button);
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mLogin = mUserLogin.getText().toString();
-                if (mLogin.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Please enter login", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent startMenuIntent = new Intent(getApplicationContext(), MenuScreenActivity.class);
-                    startMenuIntent.putExtra(INTENT_CONTENT, mLogin);
-                    startActivity(startMenuIntent);
-                    finish();
-                }
+                mPresenter.checkUserLogin(mUserLogin.getText().toString());
             }
         });
     }
@@ -51,6 +56,24 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(BUNDLE_CONTENT, mLogin);
+        outState.putSerializable(BUNDLE_CONTENT, mPresenter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.detach();
+        super.onDestroy();
+    }
+
+    /**
+     * Setup presenter. Create or restore it.
+     */
+    private void setupPresenter(final Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            mPresenter = new SignInPresenter();
+        } else {
+            mPresenter = (SignInPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+        }
+        mPresenter.setView(this);
     }
 }
