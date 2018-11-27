@@ -15,10 +15,10 @@ import java.util.Random;
 public class GamePresenter implements Repository.QuestionOnFinishedListener, Serializable,
         QuestionTimerCallback, QuestionPauseCallback {
 
-    public static final int COUNT_QUESTIONS_FOR_GAME = 3;
+    public static final int GAME_QUESTIONS_COUNT = 3;
     private static final String LOG_TAG = "GamePresenter";
-    private static final int COUNT_SECONDS_FOR_RED_INDICATOR = 3;
-    private static final int COUNT_SECONDS_FOR_QUESTION = 10;
+    private static final int RED_INDICATOR_TIME = 3;
+    private static final int QUESTION_AVAILABLE_TIME = 10;
 
     private int mCurrentQuestionIndex;
     private int mRightAnswersCount;
@@ -63,7 +63,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
         } else {
             //get new question
             mCurrentQuestionIndex++;
-            mQuestionRemainTime = COUNT_SECONDS_FOR_QUESTION;
+            mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
             mGameView.setGreenTimeIndicator();
             getCurrentQuestion();
         }
@@ -163,7 +163,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
         int max = list.size();
         mGameQuestionsList = new ArrayList();
 
-        while (mGameQuestionsList.size() < COUNT_QUESTIONS_FOR_GAME) {
+        while (mGameQuestionsList.size() < GAME_QUESTIONS_COUNT) {
             int index = gen.nextInt(max);
             if (mGameQuestionsList.contains(list.get(index)) == false) {
                 mGameQuestionsList.add(list.get(index));
@@ -181,7 +181,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
         Log.d(LOG_TAG, "Remain time = " + mQuestionRemainTime);
         mGameView.setQuestionRemainTime(mQuestionRemainTime);
 
-        if (mQuestionRemainTime == COUNT_SECONDS_FOR_RED_INDICATOR) {
+        if (mQuestionRemainTime == RED_INDICATOR_TIME) {
             mGameView.setRedTimeIndicator();
             return;
         }
@@ -214,7 +214,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
         mCurrentQuestionIndex = 0;
         mRightAnswersCount = 0;
         //refresh timer
-        mQuestionRemainTime = COUNT_SECONDS_FOR_QUESTION;
+        mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
         getCurrentQuestion();
     }
 }

@@ -34,12 +34,12 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
     private static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String LOG_TAG = "Message";
 
-    private Button mSinglePlayerButton;
-    private Button mStatisticsButton;
-    private Button mBestPlayersButton;
-    private Button mNewsButton;
-    private Button mExitButton;
-    private TextView mCurrentUserTextView;
+    private Button mSinglePlayer;
+    private Button mStatistics;
+    private Button mBestPlayers;
+    private Button mNews;
+    private Button mExit;
+    private TextView mCurrentUser;
     private MenuScreenPresenter mPresenter;
 
     @Override
@@ -47,42 +47,42 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCurrentUserTextView = findViewById(R.id.current_user_text_view);
+        mCurrentUser = findViewById(R.id.current_user_text_view);
 
-        mSinglePlayerButton = findViewById(R.id.single_player_button);
-        mSinglePlayerButton.setOnClickListener(new View.OnClickListener() {
+        mSinglePlayer = findViewById(R.id.single_player_button);
+        mSinglePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.startGameActivity();
             }
         });
 
-        mStatisticsButton = findViewById(R.id.statistics_button);
-        mStatisticsButton.setOnClickListener(new View.OnClickListener() {
+        mStatistics = findViewById(R.id.statistics_button);
+        mStatistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.startStatisticsActivity();
             }
         });
 
-        mBestPlayersButton = findViewById(R.id.best_players_button);
-        mBestPlayersButton.setOnClickListener(new View.OnClickListener() {
+        mBestPlayers = findViewById(R.id.best_players_button);
+        mBestPlayers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.startBestPlayersActivity();
             }
         });
 
-        mNewsButton = findViewById(R.id.news_button);
-        mNewsButton.setOnClickListener(new View.OnClickListener() {
+        mNews = findViewById(R.id.news_button);
+        mNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.startNewsActivity();
             }
         });
 
-        mExitButton = findViewById(R.id.exit_button);
-        mExitButton.setOnClickListener(new View.OnClickListener() {
+        mExit = findViewById(R.id.exit_button);
+        mExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -112,25 +112,25 @@ public class MenuScreenActivity extends AppCompatActivity implements MenuScreenV
 
     @Override
     public void hideMenu() {
-        mSinglePlayerButton.setVisibility(View.GONE);
-        mStatisticsButton.setVisibility(View.GONE);
-        mBestPlayersButton.setVisibility(View.GONE);
-        mNewsButton.setVisibility(View.GONE);
-        mExitButton.setVisibility(View.GONE);
+        mSinglePlayer.setVisibility(View.GONE);
+        mStatistics.setVisibility(View.GONE);
+        mBestPlayers.setVisibility(View.GONE);
+        mNews.setVisibility(View.GONE);
+        mExit.setVisibility(View.GONE);
     }
 
     @Override
     public void displayMenu() {
-        mSinglePlayerButton.setVisibility(View.VISIBLE);
-        mStatisticsButton.setVisibility(View.VISIBLE);
-        mBestPlayersButton.setVisibility(View.VISIBLE);
-        mNewsButton.setVisibility(View.VISIBLE);
-        mExitButton.setVisibility(View.VISIBLE);
+        mSinglePlayer.setVisibility(View.VISIBLE);
+        mStatistics.setVisibility(View.VISIBLE);
+        mBestPlayers.setVisibility(View.VISIBLE);
+        mNews.setVisibility(View.VISIBLE);
+        mExit.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void displayUserLogin(User user) {
-        mCurrentUserTextView.setText("Login:" + user.getUserLogin());
+        mCurrentUser.setText("Login:" + user.getUserLogin());
     }
 
     @Override
