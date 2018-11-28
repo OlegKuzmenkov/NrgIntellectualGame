@@ -27,7 +27,6 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.signin.SignInActivity;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         //get data from intent
         String userLogin = getIntent().getStringExtra(INTENT_CONTENT);
         //get user data
-        mPresenter.checkUsers(userLogin);
+        mPresenter.getUserData(userLogin);
 
         checkPermission();
 
@@ -76,8 +75,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     }
 
     @Override
-    public void displayUserLogin(User user) {
-        mCurrentUser.setText("Login:" + user.getUserLogin());
+    public void displayUserLogin(String userLogin) {
+        mCurrentUser.setText(String.format("Login:%s ", userLogin));
     }
 
     @Override

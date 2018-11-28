@@ -35,14 +35,14 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         mRepository = null;
     }
 
-    public void checkUsers(String userLogin) {
+    public void getUserData(String userLogin) {
         mUserLogin = userLogin;
         if (mCurrentUser == null) {
             mMenuView.enableMenu(false);
             mRepository.getCurrentUserData(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
-            mMenuView.displayUserLogin(mCurrentUser);
+            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
         }
     }
 
@@ -99,7 +99,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
             // user is exist in firebase
             if (mMenuView != null) {
                 mMenuView.enableMenu(true);
-                mMenuView.displayUserLogin(mCurrentUser);
+                mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
             }
         }
     }
