@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,8 +47,9 @@ public class BestPlayersActivity extends AppCompatActivity implements OnMapReady
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
         Log.d(LOG_TAG, "OnMapReady");
         Log.d(LOG_TAG, "Best players count = " + mBestPlayersList.size());
-        for (int i = 0; i < mBestPlayersList.size(); i++) {
-            LatLng userPlace = new LatLng(mBestPlayersList.get(i).getLatitude(), mBestPlayersList.get(i).getLongitude());
+
+        for (User user : mBestPlayersList) {
+            LatLng userPlace = new LatLng(user.getLatitude(), user.getLongitude());
             mGoogleMap.addMarker(new MarkerOptions().position(userPlace).title("Very good player"));
         }
     }
