@@ -59,17 +59,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     }
 
     public void onClickBestPlayersButton() {
-        List<User> allPlayersList = mRepository.getAllUsers();
-        List<User> bestPlayersList = new ArrayList();
-        // select the best players
-        for (int i = 0; i < allPlayersList.size(); i++) {
-            if (allPlayersList.get(i).getCountAnswers() != 0) {
-                int percentRightAnswers = (int) (allPlayersList.get(i).getCountRightAnswers() * 100.0f) / allPlayersList.get(i).getCountAnswers();
-                if (percentRightAnswers > 50) {
-                    bestPlayersList.add(allPlayersList.get(i));
-                }
-            }
-        }
+        List<User> bestPlayersList = chooseBestPlayers(mRepository.getAllUsers());
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players
         mMenuView.startBestPlayersActivity(bestPlayersList);
@@ -93,6 +83,31 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
             // user is exist in firebase
             showMenu();
         }
+    }
+
+    private List<User> chooseBestPlayers(List<User> playersList) {
+        List<User> bestPlayersList = new ArrayList();
+
+        for (User user : playersList) {
+            int rightAnswersPercent = calculateRightAnswersPercentage(user.getCountAnswers(),
+                    user.getCountRightAnswers());
+
+            if (rightAnswersPercent > 50) {
+                bestPlayersList.add(user);
+            }
+        }
+
+        return bestPlayersList;
+    }
+
+    private int calculateRightAnswersPercentage(int answersCount, int rightAnswersCount) {
+        int rightAnswersPercent = 0;
+
+        if (answersCount != 0) {
+            rightAnswersPercent = (int) (rightAnswersCount * 100.0f) / answersCount;
+        }
+
+        return rightAnswersPercent;
     }
 
     private void createNewUser() {
