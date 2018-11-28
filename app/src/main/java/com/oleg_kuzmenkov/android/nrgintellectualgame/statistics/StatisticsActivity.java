@@ -28,18 +28,10 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        mUserIdTextView = findViewById(R.id.id_text_view);
-        mUserLoginTextView = findViewById(R.id.login_text_view);
-        mUserCountAnswersTextView = findViewById(R.id.count_answers_text_view);
-        mUserCountRightAnswersTextView = findViewById(R.id.count_right_answers_text_view);
-        mUserPercentRightAnswersTextView = findViewById(R.id.percent_right_answers_text_view);
+        User user = (User) getIntent().getSerializableExtra(INTENT_CONTENT);
+        setUserStatistics(user);
+
         mGoToMainMenuButton = findViewById(R.id.go_to_main_menu_button);
-
-        Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra(INTENT_CONTENT);
-
-        setContent(user);
-
         mGoToMainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,20 +57,37 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     /**
-     * Set the received content in the game
+     * Set the current user statistics
      */
-    private void setContent(User user) {
+    private void setUserStatistics(User user) {
         if (user != null) {
-            mUserIdTextView.setText("ID: " + user.getUserId());
-            mUserLoginTextView.setText("Login: " + user.getUserLogin());
-            mUserCountAnswersTextView.setText("Count answers: " + Integer.toString(user.getCountAnswers()));
-            mUserCountRightAnswersTextView.setText("Count right answers: " + Integer.toString(user.getCountRightAnswers()));
-            if (user.getCountAnswers() != 0) {
-                int percent = (int) (user.getCountRightAnswers() * 100.0f) / user.getCountAnswers();
-                mUserPercentRightAnswersTextView.setText(Integer.toString(percent));
-            } else {
-                mUserPercentRightAnswersTextView.setText("0");
-            }
+            mUserIdTextView = findViewById(R.id.id_text_view);
+            mUserIdTextView.setText(String.format("ID: %s", user.getUserId()));
+
+            mUserLoginTextView = findViewById(R.id.login_text_view);
+            mUserLoginTextView.setText(String.format("Login: %s", user.getUserLogin()));
+
+            mUserCountAnswersTextView = findViewById(R.id.count_answers_text_view);
+            int answersCount = user.getCountAnswers();
+            mUserCountAnswersTextView.setText(String.format("Count answers: %d", answersCount));
+
+            mUserCountRightAnswersTextView = findViewById(R.id.count_right_answers_text_view);
+            int rightAnswersCount = user.getCountRightAnswers();
+            mUserCountRightAnswersTextView.setText(String.format("Count right answers: %d", rightAnswersCount));
+
+            mUserPercentRightAnswersTextView = findViewById(R.id.percent_right_answers_text_view);
+            int rightAnswersPercent = calculateRightAnswersPercentage(answersCount,rightAnswersCount);
+            mUserPercentRightAnswersTextView.setText(String.format("%d", rightAnswersPercent));
         }
+    }
+
+    private int calculateRightAnswersPercentage(int answersCount, int rightAnswersCount) {
+        int rightAnswersPercent = 0;
+
+        if (answersCount != 0) {
+            rightAnswersPercent = (int) (rightAnswersCount * 100.0f) / answersCount;
+        }
+
+        return rightAnswersPercent;
     }
 }
