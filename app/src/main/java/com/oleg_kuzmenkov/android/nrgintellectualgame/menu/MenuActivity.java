@@ -34,6 +34,7 @@ import java.util.List;
 public class MenuActivity extends AppCompatActivity implements MenuView, View.OnClickListener {
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
     private static final String INTENT_CONTENT = "INTENT_CONTENT";
+    private static final int PERMISSION_REQUEST_CODE = 1;
     private static final String LOG_TAG = "Message";
 
     private MenuPresenter mPresenter;
@@ -55,9 +56,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         //get user data
         mPresenter.checkUsers(userLogin);
 
-        if (checkPermission() == false) {
-            startRequestForPermission();
-        }
+        checkPermission();
+
     }
 
     @Override
@@ -146,7 +146,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
                     }
-
                 })
                 .setNegativeButton("No", null)
                 .show();
@@ -168,16 +167,14 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 1:
+            case PERMISSION_REQUEST_CODE:
                 if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Log.d(LOG_TAG, "Permission Granted");
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
                 } else {
-                    // destroy Activity
                     Toast.makeText(this, "Call permission not granted", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
                     startActivity(intent);
                     finish();
-
                 }
                 break;
 
@@ -187,29 +184,16 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     }
 
     /**
-     * Check permission
+     * Check user permission
      */
-    private boolean checkPermission() {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                //location Permission already granted
-                return true;
-            } else {
-                return false;
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //permission not granted
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
             }
-        } else {
-            //location Permission already granted
-            return true;
-        }
-    }
-
-    /**
-     * Request permission
-     */
-    private void startRequestForPermission() {
-        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
 
