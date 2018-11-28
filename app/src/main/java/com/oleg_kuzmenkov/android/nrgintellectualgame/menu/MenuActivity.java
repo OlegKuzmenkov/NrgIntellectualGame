@@ -27,82 +27,32 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.game.GameActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.signin.SignInActivity;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
-public class MenuActivity extends AppCompatActivity implements MenuView {
+public class MenuActivity extends AppCompatActivity implements MenuView, View.OnClickListener {
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
     private static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String LOG_TAG = "Message";
 
-    private Button mSinglePlayer;
-    private Button mStatistics;
-    private Button mBestPlayers;
-    private Button mNews;
-    private Button mExit;
-    private TextView mCurrentUser;
     private MenuPresenter mPresenter;
+
+    private TextView mCurrentUser;
+    private LinkedHashMap<Integer, Button> mMenuButtonsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCurrentUser = findViewById(R.id.current_user_text_view);
+        initControls();
 
-        mSinglePlayer = findViewById(R.id.single_player_button);
-        mSinglePlayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.startGameActivity();
-            }
-        });
+        setupPresenter(savedInstanceState);
 
-        mStatistics = findViewById(R.id.statistics_button);
-        mStatistics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.startStatisticsActivity();
-            }
-        });
-
-        mBestPlayers = findViewById(R.id.best_players_button);
-        mBestPlayers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.startBestPlayersActivity();
-            }
-        });
-
-        mNews = findViewById(R.id.news_button);
-        mNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.startNewsActivity();
-            }
-        });
-
-        mExit = findViewById(R.id.exit_button);
-        mExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        //get Data From intent
-        Intent intent = getIntent();
-        String userLogin = intent.getStringExtra(INTENT_CONTENT);
-        Log.d(LOG_TAG, "UserLogin - " + userLogin);
-
-        if (savedInstanceState == null) {
-            mPresenter = new MenuPresenter();
-        } else {
-            mPresenter = (MenuPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
-        }
-        // Set View and Repository in presenter
-        mPresenter.setView(this);
-        mPresenter.setRepository(RepositoryImpl.get(this));
-        //get User Data
+        //get data from intent
+        String userLogin = getIntent().getStringExtra(INTENT_CONTENT);
+        //get user data
         mPresenter.checkUsers(userLogin);
 
         if (checkPermission() == false) {
@@ -111,26 +61,52 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     }
 
     @Override
-    public void hideMenu() {
-        mSinglePlayer.setVisibility(View.GONE);
-        mStatistics.setVisibility(View.GONE);
-        mBestPlayers.setVisibility(View.GONE);
-        mNews.setVisibility(View.GONE);
-        mExit.setVisibility(View.GONE);
-    }
+    public void enableMenu(boolean isEnable) {
+        int state;
 
-    @Override
-    public void displayMenu() {
-        mSinglePlayer.setVisibility(View.VISIBLE);
-        mStatistics.setVisibility(View.VISIBLE);
-        mBestPlayers.setVisibility(View.VISIBLE);
-        mNews.setVisibility(View.VISIBLE);
-        mExit.setVisibility(View.VISIBLE);
+        if (isEnable) {
+            state = View.VISIBLE;
+        } else {
+            state = View.GONE;
+        }
+
+        for (Button button : mMenuButtonsMap.values()) {
+            button.setVisibility(state);
+        }
     }
 
     @Override
     public void displayUserLogin(User user) {
         mCurrentUser.setText("Login:" + user.getUserLogin());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.single_player_button:
+                mPresenter.startGameActivity();
+                break;
+
+            case R.id.statistics_button:
+                mPresenter.startStatisticsActivity();
+                break;
+
+            case R.id.best_players_button:
+                mPresenter.startBestPlayersActivity();
+                break;
+
+            case R.id.news_button:
+                mPresenter.startNewsActivity();
+                break;
+
+            case R.id.exit_button:
+                finish();
+                break;
+
+            default:
+                Log.i(LOG_TAG, "onClick() from another view");
+                break;
+        }
     }
 
     @Override
@@ -235,5 +211,33 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+    }
+
+    private void initControls() {
+        mCurrentUser = findViewById(R.id.current_user_text_view);
+
+        mMenuButtonsMap = new LinkedHashMap<>();
+        mMenuButtonsMap.put(R.id.single_player_button, (Button) findViewById(R.id.single_player_button));
+        mMenuButtonsMap.put(R.id.statistics_button, (Button) findViewById(R.id.statistics_button));
+        mMenuButtonsMap.put(R.id.best_players_button, (Button) findViewById(R.id.best_players_button));
+        mMenuButtonsMap.put(R.id.news_button, (Button) findViewById(R.id.news_button));
+        mMenuButtonsMap.put(R.id.exit_button, (Button) findViewById(R.id.exit_button));
+
+        for (Button button : mMenuButtonsMap.values()) {
+            button.setOnClickListener(this);
+        }
+    }
+
+    private void setupPresenter(final Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            // create presenter
+            mPresenter = new MenuPresenter();
+        } else {
+            // restore presenter
+            mPresenter = (MenuPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+        }
+
+        mPresenter.setView(this);
+        mPresenter.setRepository(RepositoryImpl.get(this));
     }
 }

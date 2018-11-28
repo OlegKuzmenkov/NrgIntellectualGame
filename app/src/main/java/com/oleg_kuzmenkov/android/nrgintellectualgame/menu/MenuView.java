@@ -10,6 +10,5 @@ public interface MenuView {
     void startStatisticsActivity(User user);
     void startBestPlayersActivity(List<User> list);
     void startNewsActivity();
-    void hideMenu();
-    void displayMenu();
+    void enableMenu(boolean isEnable);
 }

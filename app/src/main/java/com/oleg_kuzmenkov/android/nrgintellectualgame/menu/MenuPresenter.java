@@ -38,7 +38,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     public void checkUsers(String userLogin) {
         mUserLogin = userLogin;
         if (mCurrentUser == null) {
-            mMenuView.hideMenu();
+            mMenuView.enableMenu(false);
             mRepository.getCurrentUserData(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
@@ -98,7 +98,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         } else {
             // user is exist in firebase
             if (mMenuView != null) {
-                mMenuView.displayMenu();
+                mMenuView.enableMenu(true);
                 mMenuView.displayUserLogin(mCurrentUser);
             }
         }
