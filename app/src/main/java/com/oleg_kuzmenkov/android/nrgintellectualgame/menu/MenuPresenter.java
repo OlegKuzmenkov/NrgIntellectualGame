@@ -36,8 +36,8 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     }
 
     public void getUserData(String userLogin) {
-        mUserLogin = userLogin;
         if (mCurrentUser == null) {
+            mUserLogin = userLogin;
             mMenuView.enableMenu(false);
             mRepository.getCurrentUserData(this);
         } else {
@@ -46,19 +46,19 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         }
     }
 
-    public void startGameActivity() {
+    public void onClickSinglePlayerButton() {
         mMenuView.startGameActivity(mCurrentUser);
     }
 
-    public void startStatisticsActivity() {
+    public void onClickStatisticsButton() {
         mMenuView.startStatisticsActivity(mCurrentUser);
     }
 
-    public void startNewsActivity() {
+    public void onClickReadNewsButton() {
         mMenuView.startNewsActivity();
     }
 
-    public void startBestPlayersActivity() {
+    public void onClickBestPlayersButton() {
         List<User> allPlayersList = mRepository.getAllUsers();
         List<User> bestPlayersList = new ArrayList();
         // select the best players
@@ -76,32 +76,40 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     }
 
     @Override
-    public void onFinishedGettingUsers(final List<User> list) {
+    public void onFinishedGettingUsers(final List<User> userslist) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
 
-        for (int i = 0; i < list.size(); i++) {
-            Log.d(LOG_TAG, "----------------------------------------");
-            if (mUserLogin.equals(list.get(i).getUserLogin())) {
-                mCurrentUser = list.get(i);
+        for (User user : userslist) {
+            if (mUserLogin.equals(user.getUserLogin())) {
+                mCurrentUser = user;
                 break;
             }
         }
+
         if (mCurrentUser == null) {
-            // add user to firebase
-            mCurrentUser = new User();
-            mCurrentUser.setUserLogin(mUserLogin);
-            mCurrentUser.setCountAnswers(0);
-            mCurrentUser.setCountRightAnswers(0);
-            mCurrentUser.setLatitude(0);
-            mCurrentUser.setLongitude(0);
-            mRepository.addNewUserToDatabase(mCurrentUser);
+            // create and save new user
+            createNewUser();
         } else {
             // user is exist in firebase
-            if (mMenuView != null) {
-                mMenuView.enableMenu(true);
-                mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
-            }
+            showMenu();
+        }
+    }
+
+    private void createNewUser() {
+        User newUser = new User();
+        newUser.setUserLogin(mUserLogin);
+        newUser.setCountAnswers(0);
+        newUser.setCountRightAnswers(0);
+        newUser.setLatitude(0);
+        newUser.setLongitude(0);
+
+        mRepository.addNewUserToDatabase(newUser);
+    }
+
+    private void showMenu() {
+        if (mMenuView != null) {
+            mMenuView.enableMenu(true);
+            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
         }
     }
 }
-

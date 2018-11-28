@@ -83,19 +83,19 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.single_player_button:
-                mPresenter.startGameActivity();
+                mPresenter.onClickSinglePlayerButton();
                 break;
 
             case R.id.statistics_button:
-                mPresenter.startStatisticsActivity();
+                mPresenter.onClickStatisticsButton();
                 break;
 
             case R.id.best_players_button:
-                mPresenter.startBestPlayersActivity();
+                mPresenter.onClickBestPlayersButton();
                 break;
 
             case R.id.news_button:
-                mPresenter.startNewsActivity();
+                mPresenter.onClickReadNewsButton();
                 break;
 
             case R.id.exit_button:
