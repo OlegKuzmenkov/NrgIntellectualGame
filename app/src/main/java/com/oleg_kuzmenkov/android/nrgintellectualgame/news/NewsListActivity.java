@@ -46,35 +46,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
 
         setupPresenter(savedInstanceState);
 
-        findViewById(R.id.floating_action_button).setVisibility(View.INVISIBLE);
-        mRecyclerView = findViewById(R.id.news_recycler_view);
         mLoadingTextView = findViewById(R.id.loading_text_view);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    Log.d(LOG_TAG, "Scrolling up");
-                    findViewById(R.id.floating_action_button).setVisibility(View.VISIBLE);
-                    // Scrolling up
-                } else {
-                    Log.d(LOG_TAG, "Scrolling down");
-                    findViewById(R.id.floating_action_button).setVisibility(View.INVISIBLE);
-                    // Scrolling down
-                }
-            }
-        });
-
-        mFloatingActionButton = findViewById(R.id.floating_action_button);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mRecyclerView.smoothScrollToPosition(0);
-            }
-        });
-
+        initControls();
+        
         // create and register BroadcastReceiver
         createBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
@@ -147,5 +121,35 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
 
         mPresenter.setView(this);
         mPresenter.setRepository(RepositoryImpl.get(this));
+    }
+
+    private void initControls() {
+        mFloatingActionButton = findViewById(R.id.floating_action_button);
+        mFloatingActionButton.setVisibility(View.INVISIBLE);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRecyclerView.smoothScrollToPosition(0);
+            }
+        });
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView = findViewById(R.id.news_recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    // scrolling up
+                    mFloatingActionButton.setVisibility(View.VISIBLE);
+                } else {
+                    // scrolling down
+                    mFloatingActionButton.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 }
