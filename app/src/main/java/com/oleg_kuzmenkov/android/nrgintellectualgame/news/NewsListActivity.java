@@ -44,16 +44,12 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
             mIsStartLoadingNews = savedInstanceState.getBoolean(BUNDLE_CONTENT);
         }
 
-        setupPresenter(savedInstanceState);
-
-        mLoadingTextView = findViewById(R.id.loading_text_view);
         initControls();
         
-        // create and register BroadcastReceiver
         createBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
-        registerReceiver(mBroadcastReceiver, intentFilter);
+        registerBroadcastReceiver();
 
+        setupPresenter(savedInstanceState);
         mPresenter.getNews();
     }
 
@@ -109,6 +105,11 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         };
     }
 
+    private void registerBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
+        registerReceiver(mBroadcastReceiver, intentFilter);
+    }
+
     /**
      * Setup presenter. Create or restore it.
      */
@@ -124,6 +125,8 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     }
 
     private void initControls() {
+        mLoadingTextView = findViewById(R.id.loading_text_view);
+
         mFloatingActionButton = findViewById(R.id.floating_action_button);
         mFloatingActionButton.setVisibility(View.INVISIBLE);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +135,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
                 mRecyclerView.smoothScrollToPosition(0);
             }
         });
+
         initRecyclerView();
     }
 
