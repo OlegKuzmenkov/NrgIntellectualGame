@@ -11,7 +11,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 
 public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private static final String INTENT_CONTENT = "url";
+    private static final String INTENT_CONTENT = "URL";
 
     private TextView mIdNewsTextView;
     private TextView mTitleNewsTextView;

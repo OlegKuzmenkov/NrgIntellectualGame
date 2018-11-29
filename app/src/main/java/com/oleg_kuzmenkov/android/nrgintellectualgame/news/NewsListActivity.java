@@ -23,9 +23,9 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
 import java.util.List;
 
 public class NewsListActivity extends AppCompatActivity implements NewsView {
-    private static final String BROADCAST_ACTION = "download_news";
-    private static final String BUNDLE_CONTENT = "content";
-    private static final String LOG_TAG = "Message";
+    private static final String BROADCAST_ACTION = "DOWNLOAD_NEWS";
+    private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
+    private static final String LOG_TAG = "NEWS_LIST_ACTIVITY";
 
     private RecyclerView mRecyclerView;
     private NewsListAdapter mAdapter;
@@ -44,8 +44,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
             mIsStartLoadingNews = savedInstanceState.getBoolean(BUNDLE_CONTENT);
         }
 
-        mPresenter = new NewsPresenter(RepositoryImpl.get(this));
-        mPresenter.setView(this);
+        setupPresenter(savedInstanceState);
 
         findViewById(R.id.floating_action_button).setVisibility(View.INVISIBLE);
         mRecyclerView = findViewById(R.id.news_recycler_view);
@@ -113,14 +112,15 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         super.onSaveInstanceState(outState);
         Log.d(LOG_TAG, "NewsListActivity:onSaveInstanceState");
         outState.putBoolean(BUNDLE_CONTENT, mIsStartLoadingNews);
+        outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
     @Override
     protected void onDestroy() {
         mPresenter.detach();
-        super.onDestroy();
         // unregister BroadcastReceiver
         unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 
     /**
@@ -133,5 +133,19 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
                 mPresenter.getNews();
             }
         };
+    }
+
+    /**
+     * Setup presenter. Create or restore it.
+     */
+    private void setupPresenter(final Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            mPresenter = new NewsPresenter();
+        } else {
+            mPresenter = (NewsPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+        }
+
+        mPresenter.setView(this);
+        mPresenter.setRepository(RepositoryImpl.get(this));
     }
 }

@@ -14,13 +14,16 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
 
     private NewsView mNewsView;
     private Repository mRepository;
+    private boolean mIsLoading;
 
-    public NewsPresenter(@NonNull Repository repository) {
-        mRepository = repository;
-    }
+    NewsPresenter() { }
 
     public void setView(NewsView newsView) {
         mNewsView = newsView;
+    }
+
+    public void setRepository(Repository repository) {
+        mRepository = repository;
     }
 
     public void detach() {

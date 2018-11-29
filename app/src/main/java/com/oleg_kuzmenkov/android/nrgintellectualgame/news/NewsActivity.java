@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 public class NewsActivity extends AppCompatActivity {
-    private static final String INTENT_CONTENT = "url";
+    private static final String INTENT_CONTENT = "URL";
     private WebView mWebView;
 
     @Override

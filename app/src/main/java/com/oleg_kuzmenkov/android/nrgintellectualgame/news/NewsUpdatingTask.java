@@ -23,8 +23,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
+    private static final String BROADCAST_ACTION = "DOWNLOAD_NEWS";
     private static final String LOG_TAG = "Message";
-    private static final String BROADCAST_ACTION = "download_news";
     private static final String TABLE = "news";
 
     private Context mContext;
