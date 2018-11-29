@@ -2,7 +2,6 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.statistics;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +15,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 public class StatisticsActivity extends AppCompatActivity {
     private static final String INTENT_CONTENT = "1";
 
-    private TextView mUserIdTextView;
-    private TextView mUserLoginTextView;
-    private TextView mUserCountAnswersTextView;
-    private TextView mUserCountRightAnswersTextView;
-    private TextView mUserPercentRightAnswersTextView;
-    private Button mGoToMainMenuButton;
+    private Button mExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +25,10 @@ public class StatisticsActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra(INTENT_CONTENT);
         setUserStatistics(user);
 
-        mGoToMainMenuButton = findViewById(R.id.go_to_main_menu_button);
-        mGoToMainMenuButton.setOnClickListener(new View.OnClickListener() {
+        mExit = findViewById(R.id.go_to_main_menu_button);
+        mExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent startMainMenuIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                //startActivity(startMainMenuIntent);
                 finish();
             }
         });
@@ -48,7 +40,7 @@ public class StatisticsActivity extends AppCompatActivity {
      * Animate Button
      */
     private void animateButton() {
-        ObjectAnimator animation = ObjectAnimator.ofFloat(mGoToMainMenuButton, "rotationY", 0.0f, 360f);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(mExit, "rotationY", 0.0f, 360f);
         animation.setDuration(2000);
         animation.setStartDelay(1000);
         animation.setRepeatCount(ValueAnimator.INFINITE);
@@ -61,23 +53,23 @@ public class StatisticsActivity extends AppCompatActivity {
      */
     private void setUserStatistics(User user) {
         if (user != null) {
-            mUserIdTextView = findViewById(R.id.id_text_view);
-            mUserIdTextView.setText(String.format("ID: %s", user.getUserId()));
+            TextView userId = findViewById(R.id.id_text_view);
+            userId.setText(String.format("ID: %s", user.getUserId()));
 
-            mUserLoginTextView = findViewById(R.id.login_text_view);
-            mUserLoginTextView.setText(String.format("Login: %s", user.getUserLogin()));
+            TextView userLogin = findViewById(R.id.login_text_view);
+            userLogin.setText(String.format("Login: %s", user.getUserLogin()));
 
-            mUserCountAnswersTextView = findViewById(R.id.count_answers_text_view);
+            TextView userAnswersCount = findViewById(R.id.count_answers_text_view);
             int answersCount = user.getCountAnswers();
-            mUserCountAnswersTextView.setText(String.format("Count answers: %d", answersCount));
+            userAnswersCount.setText(String.format("Count answers: %d", answersCount));
 
-            mUserCountRightAnswersTextView = findViewById(R.id.count_right_answers_text_view);
+            TextView userRightAnswersCount = findViewById(R.id.count_right_answers_text_view);
             int rightAnswersCount = user.getCountRightAnswers();
-            mUserCountRightAnswersTextView.setText(String.format("Count right answers: %d", rightAnswersCount));
+            userRightAnswersCount.setText(String.format("Count right answers: %d", rightAnswersCount));
 
-            mUserPercentRightAnswersTextView = findViewById(R.id.percent_right_answers_text_view);
+            TextView userRightAnswersPercent = findViewById(R.id.percent_right_answers_text_view);
             int rightAnswersPercent = calculateRightAnswersPercentage(answersCount,rightAnswersCount);
-            mUserPercentRightAnswersTextView.setText(String.format("%d", rightAnswersPercent));
+            userRightAnswersPercent.setText(String.format("%d", rightAnswersPercent));
         }
     }
 
