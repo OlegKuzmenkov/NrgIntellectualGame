@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.news.OriginalNewsActivity;
 
-public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private static final String INTENT_CONTENT = "url";
 
     private TextView mIdNewsTextView;
@@ -21,7 +20,7 @@ public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements V
     private ImageView mImageNewsView;
     private News mNews;
 
-    public NewsRecyclerViewHolder(View itemView) {
+    public NewsListHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 
@@ -52,7 +51,7 @@ public class NewsRecyclerViewHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), OriginalNewsActivity.class);
+        Intent intent = new Intent(view.getContext(), NewsActivity.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(INTENT_CONTENT, mNews.getUrl());
         view.getContext().startActivity(intent);

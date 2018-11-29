@@ -4,13 +4,13 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.util.Log;
 
-public class UpdateNewsJobSchedulerService extends JobService {
+public class NewsUpdatingService extends JobService {
     private static final String LOG_TAG = "Message";
 
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.d(LOG_TAG, "onStartJob ");
-        new RequestTask(getApplicationContext()).execute();
+        new NewsUpdatingTask(getApplicationContext()).execute();
         return false;
     }
 

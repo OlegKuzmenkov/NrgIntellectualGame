@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.news.NewsActivity;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.news.NewsListActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
@@ -131,7 +131,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
 
     @Override
     public void startNewsActivity() {
-        Intent startNewsActivityIntent = new Intent(getApplicationContext(), NewsActivity.class);
+        Intent startNewsActivityIntent = new Intent(getApplicationContext(), NewsListActivity.class);
         startActivity(startNewsActivityIntent);
     }
 

@@ -11,24 +11,24 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 
 import java.util.List;
 
-public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewHolder> {
+public class NewsListAdapter extends RecyclerView.Adapter<NewsListHolder> {
     private final Context context;
     private List<News> mNews;
 
-    public NewsRecyclerViewAdapter(final Context context, List<News> news) {
+    public NewsListAdapter(final Context context, List<News> news) {
         this.context = context;
         mNews = news;
     }
 
     @Override
-    public NewsRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.news_view, parent, false);
-        return new NewsRecyclerViewHolder(view);
+        return new NewsListHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsRecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(NewsListHolder holder, int position) {
         News news = mNews.get(position);
         holder.bindNews(news, position);
     }

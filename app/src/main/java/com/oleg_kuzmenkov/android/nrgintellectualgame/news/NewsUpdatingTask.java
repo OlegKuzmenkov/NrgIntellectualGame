@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-class RequestTask extends AsyncTask<Void, Void, Void> {
+class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "Message";
     private static final String BROADCAST_ACTION = "download_news";
     private static final String TABLE = "news";
@@ -30,7 +30,7 @@ class RequestTask extends AsyncTask<Void, Void, Void> {
     private Context mContext;
     private QuestionsDatabase mDatabase;
 
-    RequestTask(final Context context) {
+    NewsUpdatingTask(final Context context) {
         mContext = context;
         mDatabase = new QuestionsDatabase(mContext);
     }

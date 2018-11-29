@@ -9,13 +9,13 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 import java.io.Serializable;
 import java.util.List;
 
-public class NewsViewPresenter implements Repository.NewsOnFinishedListener, Serializable {
+public class NewsPresenter implements Repository.NewsOnFinishedListener, Serializable {
     private static final String LOG_TAG = "Message";
 
     private NewsView mNewsView;
     private Repository mRepository;
 
-    public NewsViewPresenter(@NonNull Repository repository) {
+    public NewsPresenter(@NonNull Repository repository) {
         mRepository = repository;
     }
 
