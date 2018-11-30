@@ -1,6 +1,5 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
@@ -14,7 +13,7 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
 
     private NewsView mNewsView;
     private Repository mRepository;
-    private boolean mIsLoading;
+    private boolean mIsServiceStart;
 
     NewsPresenter() { }
 
@@ -32,20 +31,18 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
     }
 
     public void getNews() {
-        mRepository.getNewsFromDatabase(this);
+        if (!mIsServiceStart) {
+            //start updating of the news
+            mIsServiceStart = true;
+            mNewsView.startNewsUpdating();
+        } else {
+            mRepository.getNewsFromDatabase(this);
+        }
     }
 
     @Override
     public void onFinishedGettingNews(List<News> list) {
         Log.d(LOG_TAG, "Count of news = " + list.size());
-        if (list.size() < 10) {
-            //start updating of the news
-            mNewsView.startNewsUpdating();
-        } else {
-            if (list.size() == 10) {
-                //display news
-                mNewsView.displayNews(list);
-            }
-        }
+        mNewsView.displayNews(list);
     }
 }

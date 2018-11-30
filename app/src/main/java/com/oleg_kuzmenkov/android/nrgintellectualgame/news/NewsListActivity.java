@@ -33,16 +33,11 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     private BroadcastReceiver mBroadcastReceiver;
     private NewsPresenter mPresenter;
     private TextView mLoadingTextView;
-    private boolean mIsStartLoadingNews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-
-        if (savedInstanceState != null) {
-            mIsStartLoadingNews = savedInstanceState.getBoolean(BUNDLE_CONTENT);
-        }
 
         initControls();
         
@@ -55,8 +50,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void startNewsUpdating() {
-        if (mIsStartLoadingNews == false) {
-            mIsStartLoadingNews = true;
             JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
             ComponentName componentName = new ComponentName(NewsListActivity.this, NewsUpdatingService.class);
             JobInfo.Builder jobInfo = new JobInfo.Builder(101, componentName);
@@ -64,16 +57,16 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
             //jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
             jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
             jobScheduler.schedule(jobInfo.build());
-        }
     }
 
     @Override
     public void displayNews(List<News> newsList) {
         mLoadingTextView.setText("List of all news:");
-        mIsStartLoadingNews = false;
+
         if (mAdapter == null) {
             mAdapter = new NewsListAdapter(this, newsList);
         }
+
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -81,7 +74,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(LOG_TAG, "NewsListActivity:onSaveInstanceState");
-        outState.putBoolean(BUNDLE_CONTENT, mIsStartLoadingNews);
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
