@@ -3,23 +3,23 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 import java.util.List;
 
 public interface Repository {
+    
+    void getQuestionsList(QuestionsReadingCallback listener);
+    void getNewsList(NewsReadingCallback listener);
+    void getCurrentUser(UsersReadingCallback listener);
+    List<User> getUsersList();
+    void updateUser(User user);
+    void addNewUser(User user);
 
-    interface QuestionOnFinishedListener {
+    interface QuestionsReadingCallback {
         void onFinishedGettingQuestions(List<Question> list);
     }
 
-    interface UsersOnFinishedListener {
+    interface UsersReadingCallback {
         void onFinishedGettingUsers(List<User> list);
     }
 
-    interface NewsOnFinishedListener {
+    interface NewsReadingCallback {
         void onFinishedGettingNews(List<News> list);
     }
-
-    void getQuestionsFromDatabase(QuestionOnFinishedListener listener);
-    void getNewsFromDatabase(NewsOnFinishedListener listener);
-    void getCurrentUserData(UsersOnFinishedListener listener);
-    List<User> getAllUsers();
-    void updateUserData(User user);
-    void addNewUserToDatabase(User user);
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GamePresenter implements Repository.QuestionOnFinishedListener, Serializable,
+public class GamePresenter implements Repository.QuestionsReadingCallback, Serializable,
         QuestionTimerCallback, QuestionPauseCallback {
 
     public static final int GAME_QUESTIONS_COUNT = 3;
@@ -54,7 +54,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
     }
 
     public void startGame() {
-            mRepository.getQuestionsFromDatabase(this);
+            mRepository.getQuestionsList(this);
     }
 
     private void getNextQuestion() {
@@ -127,7 +127,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
     private void updateUserStatistics() {
         mCurrentUser.setRightAnswersCount(mCurrentUser.getRightAnswersCount() + mRightAnswersCount);
         mCurrentUser.setAnswersCount(mCurrentUser.getAnswersCount() + mGameQuestionsList.size());
-        mRepository.updateUserData(mCurrentUser);
+        mRepository.updateUser(mCurrentUser);
     }
 
     /**

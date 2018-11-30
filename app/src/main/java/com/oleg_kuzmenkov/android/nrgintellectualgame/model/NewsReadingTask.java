@@ -13,10 +13,10 @@ class NewsReadingTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
-    private Repository.NewsOnFinishedListener mListener;
+    private Repository.NewsReadingCallback mListener;
     private List<News> mNewsList;
 
-    NewsReadingTask(final SQLiteDatabase database, final List<News> news, Repository.NewsOnFinishedListener listener) {
+    NewsReadingTask(final SQLiteDatabase database, final List<News> news, Repository.NewsReadingCallback listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;

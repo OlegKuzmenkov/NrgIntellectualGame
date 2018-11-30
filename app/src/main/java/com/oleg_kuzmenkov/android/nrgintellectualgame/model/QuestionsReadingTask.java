@@ -12,10 +12,10 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
-    private Repository.QuestionOnFinishedListener mListener;
+    private Repository.QuestionsReadingCallback mListener;
     private List<Question> mQuestionList;
 
-    QuestionsReadingTask(final SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
+    QuestionsReadingTask(final SQLiteDatabase database, List<Question> questions, Repository.QuestionsReadingCallback listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;

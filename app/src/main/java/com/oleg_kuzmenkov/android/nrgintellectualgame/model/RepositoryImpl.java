@@ -41,7 +41,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getQuestionsFromDatabase(QuestionOnFinishedListener listener) {
+    public void getQuestionsList(QuestionsReadingCallback listener) {
         if (mQuestionList == null) {
             mQuestionList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading questions.");
@@ -55,7 +55,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getNewsFromDatabase(NewsOnFinishedListener listener) {
+    public void getNewsList(NewsReadingCallback listener) {
         if (mNewsList == null) {
             //mNewsList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading news.");
@@ -68,8 +68,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getCurrentUserData(UsersOnFinishedListener listener) {
-        Log.d(LOG_TAG, "getCurrentUserData");
+    public void getCurrentUser(UsersReadingCallback listener) {
+        Log.d(LOG_TAG, "getCurrentUser");
         if (mNewsList == null) {
             Log.d(LOG_TAG, "Start loading all users");
             readFromRemoteDatabase(listener);
@@ -80,7 +80,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getUsersList() {
         Log.d(LOG_TAG, "Send all users");
         return mUserList;
     }
@@ -94,20 +94,20 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void updateUserData(User user) {
+    public void updateUser(User user) {
         User newUser = new User(user.getLogin(), user.getRightAnswersCount(), user.getAnswersCount(),
                 user.getLatitude(), user.getLongitude());
         mRemoteDatabase.child("users").child(user.getId()).setValue(newUser);
     }
 
     @Override
-    public void addNewUserToDatabase(User user) {
+    public void addNewUser(User user) {
         DatabaseReference postsRef = mRemoteDatabase.child("users");
         DatabaseReference newPostRef = postsRef.push();
         newPostRef.setValue(user);
     }
 
-    private void readFromRemoteDatabase(final UsersOnFinishedListener listener) {
+    private void readFromRemoteDatabase(final UsersReadingCallback listener) {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

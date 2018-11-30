@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuPresenter implements Repository.UsersOnFinishedListener, Serializable {
+public class MenuPresenter implements Repository.UsersReadingCallback, Serializable {
     private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
@@ -39,7 +39,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
-            mRepository.getCurrentUserData(this);
+            mRepository.getCurrentUser(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
             mMenuView.displayUserLogin(mCurrentUser.getLogin());
@@ -59,7 +59,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     }
 
     public void onClickBestPlayersButton() {
-        List<User> bestPlayersList = chooseBestPlayers(mRepository.getAllUsers());
+        List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsersList());
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players
         mMenuView.startBestPlayersActivity(bestPlayersList);
@@ -118,7 +118,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         newUser.setLatitude(0);
         newUser.setLongitude(0);
 
-        mRepository.addNewUserToDatabase(newUser);
+        mRepository.addNewUser(newUser);
     }
 
     private void showMenu() {
