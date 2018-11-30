@@ -50,24 +50,21 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     /**
      * Parse json from API
      */
-    private String saveNews(String json) {
-        SQLiteDatabase db = mDatabase.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+    private void saveNews(String json) {
+        SQLiteDatabase database = mDatabase.getWritableDatabase();
         //clear table
-        db.delete(TABLE, null, null);
-        String result = "";
+        database.delete(TABLE, null, null);
 
+        ContentValues cv = new ContentValues();
         try {
-            final JSONObject object = new JSONObject(json);
-            final JSONArray jsonArray = object.getJSONArray("articles");
+            JSONObject object = new JSONObject(json);
+            JSONArray jsonArray = object.getJSONArray("articles");
+
             if (jsonArray != null && jsonArray.length() > 0) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    // save only ten news
-                    if (i == 10) {
-                        break;
-                    }
+                // save only ten news
+                for (int i = 0; i < 10; i++) {
                     JSONObject newsObj = jsonArray.getJSONObject(i);
-                    final JSONObject sourceObj = newsObj.getJSONObject("source");
+                    JSONObject sourceObj = newsObj.getJSONObject("source");
                     cv.put(QuestionsDatabase.COLUMN_NEWS_SOURCE, sourceObj.getString("name"));
                     cv.put(QuestionsDatabase.COLUMN_NEWS_TITLE, newsObj.getString("title"));
                     cv.put(QuestionsDatabase.COLUMN_NEWS_DESCRIPTION, newsObj.getString("description"));
@@ -75,23 +72,18 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
 
                     Bitmap bitmap = downloadImage(newsObj.getString("urlToImage"));
                     //convert bitmap into blob
-                    if (bitmap != null) {
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                        byte[] bArray = bos.toByteArray();
-                        cv.put(QuestionsDatabase.COLUMN_NEWS_IMAGE, bArray);
-                    } else {
-                        byte[] bArray = null;
-                        cv.put(QuestionsDatabase.COLUMN_NEWS_IMAGE, bArray);
-                    }
-                    db.insert(TABLE, null, cv);
+                    byte[] byteArray = getBitmapBlob(bitmap);
+                    cv.put(QuestionsDatabase.COLUMN_NEWS_IMAGE, byteArray);
+
+                    database.insert(TABLE, null, cv);
                 }
             }
         } catch (Exception e) {
-            Log.e("Error of parcing", e.getMessage());
+            Log.e(LOG_TAG, "Error of news saving");
             e.printStackTrace();
         }
-        return result;
+
+        database.close();
     }
 
     /**
@@ -132,5 +124,20 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
         }
 
         return bitmap;
+    }
+
+    /**
+     * Convert bitmap to blob
+     */
+    private byte[] getBitmapBlob(Bitmap bitmap) {
+        byte[] byteArray = null;
+
+        if (bitmap != null) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            byteArray = bos.toByteArray();
+        }
+
+        return byteArray;
     }
 }
