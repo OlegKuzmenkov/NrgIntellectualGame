@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,15 +37,16 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
      */
     public void bindNews(News news, int position) {
         mNews = news;
-        position++;
-        mNewsId.setText("News # " + position);
+
+        mNewsId.setText(String.format("News # %d",(++position)));
         mNewsTitle.setText(mNews.getTitle());
         mNewsDescription.setText(mNews.getDescription());
         mNewsSource.setText(mNews.getSourceName());
-        if (mNews.getImage() == null) {
-            // remain standart image
-        } else {
-            Bitmap scaledBitmap = scaleBitmap(mNewsImage, mNews.getImage());
+
+        Bitmap newsImage = mNews.getImage();
+
+        if (newsImage != null) {
+            Bitmap scaledBitmap = scaleBitmap(mNewsImage, newsImage);
             mNewsImage.setImageBitmap(scaledBitmap);
         }
     }
@@ -62,11 +64,15 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
      */
     private Bitmap scaleBitmap(ImageView imageView, Bitmap bitmap) {
         Bitmap scaledBitmap = null;
+
         if (imageView != null && bitmap != null) {
-            int wantedWidth = imageView.getLayoutParams().width;
-            int wantedHeight = imageView.getLayoutParams().height;
-            scaledBitmap = Bitmap.createScaledBitmap(bitmap, wantedWidth, wantedHeight, false);
+            ViewGroup.LayoutParams params =  imageView.getLayoutParams();
+            int requiredWidth = params.width;
+            int requiredHeight = params.height;
+            
+            scaledBitmap = Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, false);
         }
+
         return scaledBitmap;
     }
 }
