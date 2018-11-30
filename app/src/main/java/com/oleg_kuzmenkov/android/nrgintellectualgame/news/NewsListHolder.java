@@ -33,7 +33,7 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
 
     /**
-     * Bind news content
+     * Bind news
      */
     public void bindNews(News news, int position) {
         mNews = news;

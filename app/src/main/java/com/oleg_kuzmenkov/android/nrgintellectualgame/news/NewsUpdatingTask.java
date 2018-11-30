@@ -48,7 +48,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     }
 
     /**
-     * Parse json from API
+     * Parse Json and save news in database
      */
     private void saveNews(String json) {
         SQLiteDatabase database = mDatabase.getWritableDatabase();
@@ -87,7 +87,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     }
 
     /**
-     * Get Json from API
+     * Get Json by url
      */
     private String getJson() {
         String serverResponse = "";
@@ -110,7 +110,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     }
 
     /**
-     * Get Image by URL and set into bitmap
+     * Download image by url and set it into bitmap
      */
     private Bitmap downloadImage(final String url) {
         Bitmap bitmap = null;
@@ -127,7 +127,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     }
 
     /**
-     * Convert bitmap to blob
+     * Convert bitmap to a blob
      */
     private byte[] getBitmapBlob(Bitmap bitmap) {
         byte[] byteArray = null;

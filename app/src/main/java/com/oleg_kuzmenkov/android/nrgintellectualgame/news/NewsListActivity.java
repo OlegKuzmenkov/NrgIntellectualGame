@@ -95,6 +95,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         };
     }
 
+    /**
+     * Register BroadcastReceiver
+     */
     private void registerBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
         registerReceiver(mReceiver, intentFilter);
@@ -114,6 +117,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         mPresenter.setRepository(RepositoryImpl.get(this));
     }
 
+    /**
+     * Initialize all controls
+     */
     private void initControls() {
         mNotification = findViewById(R.id.loading_text_view);
 
@@ -129,6 +135,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         initRecyclerView();
     }
 
+    /**
+     * Initialize RecyclerView
+     */
     private void initRecyclerView() {
         mRecycler = findViewById(R.id.news_recycler_view);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));

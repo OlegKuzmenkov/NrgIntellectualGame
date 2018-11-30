@@ -31,6 +31,9 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
         mRepository = null;
     }
 
+    /**
+     * Get list of news from Internet or local database
+     */
     public void getNews() {
         if (!mIsServiceStart) {
             //start updating of the news
