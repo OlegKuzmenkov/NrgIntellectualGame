@@ -11,8 +11,8 @@ import java.util.List;
 public class NewsPresenter implements Repository.NewsOnFinishedListener, Serializable {
     private static final String LOG_TAG = "Message";
 
-    private NewsView mNewsView;
-    private Repository mRepository;
+    private transient NewsView mNewsView;
+    private transient Repository mRepository;
 
     private boolean mIsServiceStart;
 
