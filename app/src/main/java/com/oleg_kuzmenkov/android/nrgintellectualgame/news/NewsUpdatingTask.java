@@ -24,8 +24,7 @@ import okhttp3.Response;
 
 class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private static final String BROADCAST_ACTION = "DOWNLOAD_NEWS";
-    private static final String LOG_TAG = "Message";
-    private static final String TABLE = "news";
+    private static final String LOG_TAG = "NEWS_UPDATING_TASK";
 
     private Context mContext;
     private QuestionsDatabase mDatabase;
@@ -53,7 +52,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private void saveNews(String json) {
         SQLiteDatabase database = mDatabase.getWritableDatabase();
         //clear table
-        database.delete(TABLE, null, null);
+        database.delete(QuestionsDatabase.TABLE_NEWS, null, null);
 
         ContentValues cv = new ContentValues();
         try {
@@ -75,7 +74,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
                     byte[] byteArray = getBitmapBlob(bitmap);
                     cv.put(QuestionsDatabase.COLUMN_NEWS_IMAGE, byteArray);
 
-                    database.insert(TABLE, null, cv);
+                    database.insert(QuestionsDatabase.TABLE_NEWS, null, cv);
                 }
             }
         } catch (Exception e) {
