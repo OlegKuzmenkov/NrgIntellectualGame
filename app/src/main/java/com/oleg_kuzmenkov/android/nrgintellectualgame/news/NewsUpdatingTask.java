@@ -25,6 +25,7 @@ import okhttp3.Response;
 class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private static final String BROADCAST_ACTION = "DOWNLOAD_NEWS";
     private static final String LOG_TAG = "NEWS_UPDATING_TASK";
+    private static final int REQUIRED_NEWS_COUNT = 10;
 
     private Context mContext;
     private QuestionsDatabase mDatabase;
@@ -61,7 +62,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
 
             if (jsonArray != null && jsonArray.length() > 0) {
                 // save only ten news
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < REQUIRED_NEWS_COUNT; i++) {
                     JSONObject newsObj = jsonArray.getJSONObject(i);
                     JSONObject sourceObj = newsObj.getJSONObject("source");
                     cv.put(QuestionsDatabase.COLUMN_NEWS_SOURCE, sourceObj.getString("name"));
