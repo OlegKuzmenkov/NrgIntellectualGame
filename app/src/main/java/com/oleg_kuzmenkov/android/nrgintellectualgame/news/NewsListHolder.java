@@ -13,22 +13,22 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private static final String INTENT_CONTENT = "URL";
 
-    private TextView mIdNewsTextView;
-    private TextView mTitleNewsTextView;
-    private TextView mDescriptionNewsrView;
-    private TextView mSourceNewsView;
-    private ImageView mImageNewsView;
+    private TextView mNewsId;
+    private TextView mNewsTitle;
+    private TextView mNewsDescription;
+    private TextView mNewsSource;
+    private ImageView mNewsImage;
     private News mNews;
 
     public NewsListHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 
-        mIdNewsTextView = itemView.findViewById(R.id.news_id);
-        mTitleNewsTextView = itemView.findViewById(R.id.news_title);
-        mDescriptionNewsrView = itemView.findViewById(R.id.news_description);
-        mSourceNewsView = itemView.findViewById(R.id.news_source);
-        mImageNewsView = itemView.findViewById(R.id.news_image);
+        mNewsId = itemView.findViewById(R.id.news_id);
+        mNewsTitle = itemView.findViewById(R.id.news_title);
+        mNewsDescription = itemView.findViewById(R.id.news_description);
+        mNewsSource = itemView.findViewById(R.id.news_source);
+        mNewsImage = itemView.findViewById(R.id.news_image);
     }
 
     /**
@@ -37,15 +37,15 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void bindNews(News news, int position) {
         mNews = news;
         position++;
-        mIdNewsTextView.setText("News # " + position);
-        mTitleNewsTextView.setText(mNews.getTitle());
-        mDescriptionNewsrView.setText(mNews.getDescription());
-        mSourceNewsView.setText(mNews.getSourceName());
+        mNewsId.setText("News # " + position);
+        mNewsTitle.setText(mNews.getTitle());
+        mNewsDescription.setText(mNews.getDescription());
+        mNewsSource.setText(mNews.getSourceName());
         if (mNews.getImage() == null) {
             // remain standart image
         } else {
-            Bitmap scaledBitmap = scaleBitmap(mImageNewsView, mNews.getImage());
-            mImageNewsView.setImageBitmap(scaledBitmap);
+            Bitmap scaledBitmap = scaleBitmap(mNewsImage, mNews.getImage());
+            mNewsImage.setImageBitmap(scaledBitmap);
         }
     }
 

@@ -12,17 +12,17 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListHolder> {
-    private final Context context;
+    private final Context mContext;
     private List<News> mNews;
 
     public NewsListAdapter(final Context context, List<News> news) {
-        this.context = context;
+        mContext = context;
         mNews = news;
     }
 
     @Override
     public NewsListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater.inflate(R.layout.news_view, parent, false);
         return new NewsListHolder(view);
     }
