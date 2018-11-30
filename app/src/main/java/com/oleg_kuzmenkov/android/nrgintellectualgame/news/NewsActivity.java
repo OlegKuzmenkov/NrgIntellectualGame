@@ -10,19 +10,17 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 
 public class NewsActivity extends AppCompatActivity {
     private static final String INTENT_CONTENT = "URL";
-    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_original_news);
+        
+        String  url = getIntent().getStringExtra(INTENT_CONTENT);
 
-        Intent intent = getIntent();
-        String  url = intent.getStringExtra(INTENT_CONTENT);
-
-        mWebView = findViewById(R.id.news_web_view);
-        mWebView.setWebViewClient(new WebViewClient());
-        mWebView .getSettings().setJavaScriptEnabled(true);
-        mWebView.loadUrl(url);
+        WebView web = findViewById(R.id.news_web_view);
+        web.setWebViewClient(new WebViewClient());
+        web.getSettings().setJavaScriptEnabled(true);
+        web.loadUrl(url);
     }
 }

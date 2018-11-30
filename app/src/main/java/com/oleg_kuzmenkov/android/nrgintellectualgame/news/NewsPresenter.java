@@ -13,7 +13,7 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
 
     private NewsView mNewsView;
     private Repository mRepository;
-    
+
     private boolean mIsServiceStart;
 
     NewsPresenter() { }
