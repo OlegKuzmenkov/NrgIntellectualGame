@@ -2,7 +2,6 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.content.Intent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -15,7 +14,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_original_news);
-        
+
         String  url = getIntent().getStringExtra(INTENT_CONTENT);
 
         WebView web = findViewById(R.id.news_web_view);
