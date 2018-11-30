@@ -36,8 +36,8 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected Void doInBackground(Void... params) {
-        String response = getResponseFromAPI();
-        parseJSON(response);
+        String response = getJson();
+        saveNews(response);
         return null;
     }
 
@@ -50,7 +50,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     /**
      * Parse json from API
      */
-    private String parseJSON(String json) {
+    private String saveNews(String json) {
         SQLiteDatabase db = mDatabase.getWritableDatabase();
         ContentValues cv = new ContentValues();
         //clear table
@@ -73,7 +73,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
                     cv.put(QuestionsDatabase.COLUMN_NEWS_DESCRIPTION, newsObj.getString("description"));
                     cv.put(QuestionsDatabase.COLUMN_NEWS_URL, newsObj.getString("url"));
 
-                    Bitmap bitmap = getImageByURL(newsObj.getString("urlToImage"));
+                    Bitmap bitmap = downloadImage(newsObj.getString("urlToImage"));
                     //convert bitmap into blob
                     if (bitmap != null) {
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -97,14 +97,15 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     /**
      * Get Json from API
      */
-    private String getResponseFromAPI() {
+    private String getJson() {
         String serverResponse = "";
-        final OkHttpClient client = new OkHttpClient();
+
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://newsapi.org/v2/top-headlines").newBuilder();
         urlBuilder.addQueryParameter("country", "ru");
         urlBuilder.addQueryParameter("apikey", "cbf087cac2c449ada1880fdf9a4587ab");
         String url = urlBuilder.build().toString();
         Request request = new Request.Builder().url(url).build();
+        OkHttpClient client = new OkHttpClient();
 
         try {
             Response response = client.newCall(request).execute();
@@ -112,14 +113,16 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return serverResponse;
     }
 
     /**
      * Get Image by URL and set into bitmap
      */
-    private Bitmap getImageByURL(final String url) {
+    private Bitmap downloadImage(final String url) {
         Bitmap bitmap = null;
+
         try {
             InputStream in = new java.net.URL(url).openStream();
             bitmap = BitmapFactory.decodeStream(in);
@@ -127,6 +130,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
             Log.e(LOG_TAG, e.getMessage());
             e.printStackTrace();
         }
+
         return bitmap;
     }
 }

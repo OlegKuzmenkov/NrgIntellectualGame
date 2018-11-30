@@ -69,7 +69,7 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
             ViewGroup.LayoutParams params =  imageView.getLayoutParams();
             int requiredWidth = params.width;
             int requiredHeight = params.height;
-            
+
             scaledBitmap = Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, false);
         }
 
