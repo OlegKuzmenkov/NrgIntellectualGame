@@ -27,12 +27,12 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
     private static final String LOG_TAG = "NEWS_LIST_ACTIVITY";
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecycler;
     private NewsListAdapter mAdapter;
-    private FloatingActionButton mFloatingActionButton;
-    private BroadcastReceiver mBroadcastReceiver;
+    private FloatingActionButton mFab;
+    private BroadcastReceiver mReceiver;
     private NewsPresenter mPresenter;
-    private TextView mLoadingTextView;
+    private TextView mNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +61,13 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
 
     @Override
     public void displayNews(List<News> newsList) {
-        mLoadingTextView.setText("List of all news:");
+        mNotification.setText("List of all news:");
 
         if (mAdapter == null) {
             mAdapter = new NewsListAdapter(this, newsList);
         }
 
-        mRecyclerView.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     protected void onDestroy() {
         mPresenter.detach();
         // unregister BroadcastReceiver
-        unregisterReceiver(mBroadcastReceiver);
+        unregisterReceiver(mReceiver);
         super.onDestroy();
     }
 
@@ -89,7 +89,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
      * Create BroadcastReceiver
      */
     private void createBroadcastReceiver() {
-        mBroadcastReceiver = new BroadcastReceiver() {
+        mReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
                 Log.d(LOG_TAG, "OnReceive");
                 mPresenter.getNews();
@@ -99,7 +99,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
 
     private void registerBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
-        registerReceiver(mBroadcastReceiver, intentFilter);
+        registerReceiver(mReceiver, intentFilter);
     }
 
     /**
@@ -117,14 +117,14 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     }
 
     private void initControls() {
-        mLoadingTextView = findViewById(R.id.loading_text_view);
+        mNotification = findViewById(R.id.loading_text_view);
 
-        mFloatingActionButton = findViewById(R.id.floating_action_button);
-        mFloatingActionButton.setVisibility(View.INVISIBLE);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mFab = findViewById(R.id.floating_action_button);
+        mFab.setVisibility(View.INVISIBLE);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mRecyclerView.smoothScrollToPosition(0);
+                mRecycler.smoothScrollToPosition(0);
             }
         });
 
@@ -132,18 +132,18 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     }
 
     private void initRecyclerView() {
-        mRecyclerView = findViewById(R.id.news_recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecycler = findViewById(R.id.news_recycler_view);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     // scrolling up
-                    mFloatingActionButton.setVisibility(View.VISIBLE);
+                    mFab.setVisibility(View.VISIBLE);
                 } else {
                     // scrolling down
-                    mFloatingActionButton.setVisibility(View.INVISIBLE);
+                    mFab.setVisibility(View.INVISIBLE);
                 }
             }
         });
