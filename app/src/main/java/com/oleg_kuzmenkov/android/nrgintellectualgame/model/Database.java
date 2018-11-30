@@ -118,14 +118,5 @@ public class Database extends SQLiteOpenHelper {
         cv.put(COLUMN_ANSWER_FOURTH, "1932");
         cv.put(COLUMN_RIGHT_ANSWER, "1923");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
-
-        /*cv.put(COLUMN_NEWS_SOURCE, "2");
-        cv.put(COLUMN_NEWS_TITLE, "2");
-        cv.put(COLUMN_NEWS_DESCRIPTION, "2");
-        cv.put(COLUMN_NEWS_URL, "2");
-        cv.put(COLUMN_NEWS_IMAGE, "2");
-        sqLiteDatabase.insert(TABLE_NEWS, null, cv);*/
-
-
     }
 }
