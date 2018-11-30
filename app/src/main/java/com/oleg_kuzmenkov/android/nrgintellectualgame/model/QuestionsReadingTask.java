@@ -22,7 +22,7 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected Void doInBackground(Void... params) {
-        getQuestionsFromDatabase();
+        readQuestions();
         return null;
     }
 
@@ -31,9 +31,10 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
         mListener.onFinishedGettingQuestions(mQuestionList);
     }
 
-    private void getQuestionsFromDatabase() {
-        Cursor c = mDatabase.query(Database.TABLE_QUESTION, null, null, null,
-                null, null, null);
+    private void readQuestions() {
+        Cursor c = mDatabase.query(Database.TABLE_QUESTION, null, null,
+                null, null, null, null);
+
         if (c.moveToFirst()) {
             int questionTextColIndex = c.getColumnIndex(Database.COLUMN_QUESTION_TEXT);
             int questionFirstAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_FIRST);
@@ -41,9 +42,11 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
             int questionThirdAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_THIRD);
             int questionFourthAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_FOURTH);
             int questionRightAnswerColIndex = c.getColumnIndex(Database.COLUMN_RIGHT_ANSWER);
+
             do {
                 Question question = new Question();
                 question.setQuestionText(c.getString(questionTextColIndex));
+                question.setRightAnswer(c.getString(questionRightAnswerColIndex));
 
                 List<String> answersList = new ArrayList<>();
                 answersList.add(c.getString(questionFirstAnswerColIndex));
@@ -52,13 +55,10 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
                 answersList.add(c.getString(questionFourthAnswerColIndex));
                 question.setAnswersList(answersList);
 
-                question.setRightAnswer(c.getString(questionRightAnswerColIndex));
                 mQuestionList.add(question);
             } while (c.moveToNext());
-        } else {
-            // table is empty
-            Log.d(LOG_TAG, "Count of questions is 0");
         }
+
         c.close();
     }
 }
