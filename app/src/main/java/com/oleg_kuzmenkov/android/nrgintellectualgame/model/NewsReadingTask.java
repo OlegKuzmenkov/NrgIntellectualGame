@@ -46,7 +46,7 @@ class NewsReadingTask extends AsyncTask<Void, Void, Void> {
             do {
                 News news = new News();
                 try {
-                    news.setSourceName(c.getString(newsSourceColIndex));
+                    news.setSource(c.getString(newsSourceColIndex));
                     news.setTitle(c.getString(newsTitleColIndex));
                     news.setDescription(c.getString(newsDescriptionColIndex));
                     news.setUrl(c.getString(newsURLColIndex));

@@ -3,7 +3,7 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 import android.graphics.Bitmap;
 
 public class News {
-    private String mSourceName;
+    private String mSource;
     private String mTitle;
     private String mDescription;
     private String mUrl;
@@ -11,12 +11,12 @@ public class News {
 
     News() { }
 
-    public String getSourceName() {
-        return mSourceName;
+    public String getSource() {
+        return mSource;
     }
 
-    public void setSourceName(String sourceName) {
-        mSourceName = sourceName;
+    public void setSource(String source) {
+        mSource = source;
     }
 
     public String getTitle() {

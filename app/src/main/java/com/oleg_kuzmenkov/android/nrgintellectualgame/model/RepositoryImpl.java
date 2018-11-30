@@ -95,9 +95,9 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void updateUserData(User user) {
-        User newUser = new User(user.getUserLogin(), user.getCountRightAnswers(), user.getCountAnswers(),
+        User newUser = new User(user.getLogin(), user.getRightAnswersCount(), user.getAnswersCount(),
                 user.getLatitude(), user.getLongitude());
-        mRemoteDatabase.child("users").child(user.getUserId()).setValue(newUser);
+        mRemoteDatabase.child("users").child(user.getId()).setValue(newUser);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class RepositoryImpl implements Repository {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     //Log.d(LOG_TAG, "Key is: " + noteDataSnapshot.getKey());
                     User user = noteDataSnapshot.getValue(User.class);
-                    user.setUserId(noteDataSnapshot.getKey());
+                    user.setId(noteDataSnapshot.getKey());
                     mUserList.add(user);
                 }
                 Log.d(LOG_TAG, "Count of Users = " + mUserList.size());

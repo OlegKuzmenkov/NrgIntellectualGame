@@ -125,8 +125,8 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
     }
 
     private void updateUserStatistics() {
-        mCurrentUser.setCountRightAnswers(mCurrentUser.getCountRightAnswers() + mRightAnswersCount);
-        mCurrentUser.setCountAnswers(mCurrentUser.getCountAnswers() + mGameQuestionsList.size());
+        mCurrentUser.setRightAnswersCount(mCurrentUser.getRightAnswersCount() + mRightAnswersCount);
+        mCurrentUser.setAnswersCount(mCurrentUser.getAnswersCount() + mGameQuestionsList.size());
         mRepository.updateUserData(mCurrentUser);
     }
 

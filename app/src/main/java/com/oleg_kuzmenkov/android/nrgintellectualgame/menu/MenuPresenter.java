@@ -42,7 +42,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
             mRepository.getCurrentUserData(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
-            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
+            mMenuView.displayUserLogin(mCurrentUser.getLogin());
         }
     }
 
@@ -70,7 +70,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
 
         for (User user : userslist) {
-            if (mUserLogin.equals(user.getUserLogin())) {
+            if (mUserLogin.equals(user.getLogin())) {
                 mCurrentUser = user;
                 break;
             }
@@ -89,8 +89,8 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         List<User> bestPlayersList = new ArrayList();
 
         for (User user : playersList) {
-            int rightAnswersPercent = calculateRightAnswersPercentage(user.getCountAnswers(),
-                    user.getCountRightAnswers());
+            int rightAnswersPercent = calculateRightAnswersPercentage(user.getAnswersCount(),
+                    user.getRightAnswersCount());
 
             if (rightAnswersPercent > 50) {
                 bestPlayersList.add(user);
@@ -112,9 +112,9 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
 
     private void createNewUser() {
         User newUser = new User();
-        newUser.setUserLogin(mUserLogin);
-        newUser.setCountAnswers(0);
-        newUser.setCountRightAnswers(0);
+        newUser.setLogin(mUserLogin);
+        newUser.setAnswersCount(0);
+        newUser.setRightAnswersCount(0);
         newUser.setLatitude(0);
         newUser.setLongitude(0);
 
@@ -124,7 +124,7 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     private void showMenu() {
         if (mMenuView != null) {
             mMenuView.enableMenu(true);
-            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
+            mMenuView.displayUserLogin(mCurrentUser.getLogin());
         }
     }
 }
