@@ -18,7 +18,7 @@ public class RepositoryImpl implements Repository {
     private static final String LOG_TAG = "Message";
     private static RepositoryImpl sRepository;
     //local database
-    private QuestionsDatabase mDatabase;
+    private Database mDatabase;
     //remote database
     private DatabaseReference mRemoteDatabase;
 
@@ -36,7 +36,7 @@ public class RepositoryImpl implements Repository {
 
     private RepositoryImpl(Context context) {
         mContext = context;
-        mDatabase = new QuestionsDatabase(mContext);
+        mDatabase = new Database(mContext);
         mRemoteDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -46,7 +46,7 @@ public class RepositoryImpl implements Repository {
             mQuestionList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading questions.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new GetQuestionsFromLocalDatabaseAsyncTask(db, mQuestionList, listener).execute();
+            new QuestionsReadingTask(db, mQuestionList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
             Log.d(LOG_TAG, "List of questions size is - " + mQuestionList.size());
@@ -60,7 +60,7 @@ public class RepositoryImpl implements Repository {
             //mNewsList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading news.");
             SQLiteDatabase db = mDatabase.getWritableDatabase();
-            new GetNewsFromLocalDatabaseAsyncTask(db, mNewsList, listener).execute();
+            new NewsReadingTask(db, mNewsList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
             listener.onFinishedGettingNews(mNewsList);

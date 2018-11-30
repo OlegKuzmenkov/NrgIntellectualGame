@@ -10,14 +10,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
+class NewsReadingTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.NewsOnFinishedListener mListener;
     private List<News> mNewsList;
 
-    GetNewsFromLocalDatabaseAsyncTask(final SQLiteDatabase database, final List<News> news, Repository.NewsOnFinishedListener listener) {
+    NewsReadingTask(final SQLiteDatabase database, final List<News> news, Repository.NewsOnFinishedListener listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;
@@ -35,14 +35,14 @@ class GetNewsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private void getNewsFromDatabase() {
         mNewsList = new ArrayList<>();
-        Cursor c = mDatabase.query(QuestionsDatabase.TABLE_NEWS, null, null, null,
+        Cursor c = mDatabase.query(Database.TABLE_NEWS, null, null, null,
                 null, null, null);
         if (c.moveToFirst()) {
-            int newsSourceColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_SOURCE);
-            int newsTitleColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_TITLE);
-            int newsDescriptionColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_DESCRIPTION);
-            int newsURLColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_URL);
-            int newsImageColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_NEWS_IMAGE);
+            int newsSourceColIndex = c.getColumnIndex(Database.COLUMN_NEWS_SOURCE);
+            int newsTitleColIndex = c.getColumnIndex(Database.COLUMN_NEWS_TITLE);
+            int newsDescriptionColIndex = c.getColumnIndex(Database.COLUMN_NEWS_DESCRIPTION);
+            int newsURLColIndex = c.getColumnIndex(Database.COLUMN_NEWS_URL);
+            int newsImageColIndex = c.getColumnIndex(Database.COLUMN_NEWS_IMAGE);
             do {
                 News news = new News();
                 try {

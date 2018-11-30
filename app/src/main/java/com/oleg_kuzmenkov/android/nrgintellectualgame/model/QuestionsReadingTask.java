@@ -8,14 +8,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void> {
+class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "Message";
 
     private SQLiteDatabase mDatabase;
     private Repository.QuestionOnFinishedListener mListener;
     private List<Question> mQuestionList;
 
-    GetQuestionsFromLocalDatabaseAsyncTask(final SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
+    QuestionsReadingTask(final SQLiteDatabase database, List<Question> questions, Repository.QuestionOnFinishedListener listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;
@@ -32,15 +32,15 @@ class GetQuestionsFromLocalDatabaseAsyncTask extends AsyncTask<Void, Void, Void>
     }
 
     private void getQuestionsFromDatabase() {
-        Cursor c = mDatabase.query(QuestionsDatabase.TABLE_QUESTION, null, null, null,
+        Cursor c = mDatabase.query(Database.TABLE_QUESTION, null, null, null,
                 null, null, null);
         if (c.moveToFirst()) {
-            int questionTextColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_QUESTION_TEXT);
-            int questionFirstAnswerColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_ANSWER_FIRST);
-            int questionSecondAnswerColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_ANSWER_SECOND);
-            int questionThirdAnswerColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_ANSWER_THIRD);
-            int questionFourthAnswerColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_ANSWER_FOURTH);
-            int questionRightAnswerColIndex = c.getColumnIndex(QuestionsDatabase.COLUMN_RIGHT_ANSWER);
+            int questionTextColIndex = c.getColumnIndex(Database.COLUMN_QUESTION_TEXT);
+            int questionFirstAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_FIRST);
+            int questionSecondAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_SECOND);
+            int questionThirdAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_THIRD);
+            int questionFourthAnswerColIndex = c.getColumnIndex(Database.COLUMN_ANSWER_FOURTH);
+            int questionRightAnswerColIndex = c.getColumnIndex(Database.COLUMN_RIGHT_ANSWER);
             do {
                 Question question = new Question();
                 question.setQuestionText(c.getString(questionTextColIndex));

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-public class QuestionsDatabase extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
     private static final String LOG_TAG = "Message";
     private static final String DB_NAME = "questions.db";
     private static final int DATABASE_VERSION = 1;
@@ -58,7 +58,7 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
             + COLUMN_NEWS_IMAGE + " blob"
             + ");";
 
-    public QuestionsDatabase(Context context) {
+    public Database(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
     }
 
