@@ -29,11 +29,11 @@
         <activity android:name=".statistics.BestPlayersActivity" />
         <activity android:name=".game.GameActivity" />
         <activity android:name=".statistics.StatisticsActivity" />
+        <activity android:name=".news.NewsListActivity" />
         <activity android:name=".news.NewsActivity" />
-        <activity android:name=".news.OriginalNewsActivity" />
 
         <service
-            android:name=".news.UpdateNewsJobSchedulerService"
+            android:name=".news.NewsUpdatingService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
