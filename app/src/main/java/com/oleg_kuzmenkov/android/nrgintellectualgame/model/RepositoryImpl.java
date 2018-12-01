@@ -97,14 +97,6 @@ public class RepositoryImpl implements Repository {
         newPostRef.setValue(user);
     }
 
-    private void writeNewUser(String userId, String userLogin, int countRightAnswers, int countAnswers, double latitude, double longitude) {
-        User user = new User(userLogin, countRightAnswers, countAnswers, latitude, longitude);
-        //mRemoteDatabase.child("users").child(userId).setValue(user);
-        DatabaseReference postsRef = mRemoteDatabase.child("users");
-        DatabaseReference newPostRef = postsRef.push();
-        newPostRef.setValue(user);
-    }
-
     private void readUsersList(final UsersReadingCallback listener) {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -124,7 +116,6 @@ public class RepositoryImpl implements Repository {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Getting Post failed, log a message
                 Log.d(LOG_TAG, "loading is onCancelled", databaseError.toException());
             }
         };
