@@ -45,7 +45,7 @@ public class NewsPresenter implements Repository.NewsReadingCallback, Serializab
     }
 
     @Override
-    public void onFinishedGettingNews(List<News> list) {
+    public void onFinishedReadingNews(List<News> list) {
         Log.d(LOG_TAG, "Count of news = " + list.size());
         mNewsView.displayNews(list);
     }

@@ -12,14 +12,14 @@ public interface Repository {
     void addNewUser(User user);
 
     interface QuestionsReadingCallback {
-        void onFinishedGettingQuestions(List<Question> list);
+        void onFinishedReadingQuestions(List<Question> list);
     }
 
     interface UsersReadingCallback {
-        void onFinishedGettingUsers(List<User> list);
+        void onFinishedReadingUsers(List<User> list);
     }
 
     interface NewsReadingCallback {
-        void onFinishedGettingNews(List<News> list);
+        void onFinishedReadingNews(List<News> list);
     }
 }

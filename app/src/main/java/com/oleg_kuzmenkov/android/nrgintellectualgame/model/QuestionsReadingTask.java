@@ -28,7 +28,7 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         Log.d(LOG_TAG, "Loading Questions is finished");
-        mListener.onFinishedGettingQuestions(mQuestionList);
+        mListener.onFinishedReadingQuestions(mQuestionList);
     }
 
     private void readQuestions() {

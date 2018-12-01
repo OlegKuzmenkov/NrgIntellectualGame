@@ -209,7 +209,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
      * Start the Game
      */
     @Override
-    public void onFinishedGettingQuestions(final List<Question> list) {
+    public void onFinishedReadingQuestions(final List<Question> list) {
         chooseRandomQuestions(list);
         mCurrentQuestionIndex = 0;
         mRightAnswersCount = 0;

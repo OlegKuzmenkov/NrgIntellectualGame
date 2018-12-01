@@ -29,7 +29,7 @@ class NewsReadingTask extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         Log.d(LOG_TAG, "Loading News is finished");
-        mListener.onFinishedGettingNews(mNewsList);
+        mListener.onFinishedReadingNews(mNewsList);
     }
 
     private void readNews() {

@@ -66,7 +66,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
     }
 
     @Override
-    public void onFinishedGettingUsers(final List<User> userslist) {
+    public void onFinishedReadingUsers(final List<User> userslist) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
 
         for (User user : userslist) {

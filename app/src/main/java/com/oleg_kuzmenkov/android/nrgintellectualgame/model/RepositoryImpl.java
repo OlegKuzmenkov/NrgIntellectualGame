@@ -48,7 +48,7 @@ public class RepositoryImpl implements Repository {
             new QuestionsReadingTask(database, mQuestionList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
-            listener.onFinishedGettingQuestions(mQuestionList);
+            listener.onFinishedReadingQuestions(mQuestionList);
         }
     }
 
@@ -61,7 +61,7 @@ public class RepositoryImpl implements Repository {
             new NewsReadingTask(database, mNewsList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
-            listener.onFinishedGettingNews(mNewsList);
+            listener.onFinishedReadingNews(mNewsList);
         }
     }
 
@@ -70,10 +70,10 @@ public class RepositoryImpl implements Repository {
         Log.d(LOG_TAG, "readUsers");
         if (mNewsList == null) {
             Log.d(LOG_TAG, "Start loading all users");
-            readUsersList(listener);
+            readRemoteDatabase(listener);
         } else {
             Log.d(LOG_TAG, "List of users is exist. Loading is not started.");
-            listener.onFinishedGettingUsers(mUserList);
+            listener.onFinishedReadingUsers(mUserList);
         }
     }
 
@@ -97,7 +97,7 @@ public class RepositoryImpl implements Repository {
         newPostRef.setValue(user);
     }
 
-    private void readUsersList(final UsersReadingCallback listener) {
+    private void readRemoteDatabase(final UsersReadingCallback listener) {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,7 +111,7 @@ public class RepositoryImpl implements Repository {
                 }
 
                 Log.d(LOG_TAG, "Count of Users = " + mUserList.size());
-                listener.onFinishedGettingUsers(mUserList);
+                listener.onFinishedReadingUsers(mUserList);
             }
 
             @Override
