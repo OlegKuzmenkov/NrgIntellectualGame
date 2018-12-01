@@ -54,7 +54,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
     }
 
     public void startGame() {
-            mRepository.getQuestionsList(this);
+            mRepository.readQuestions(this);
     }
 
     private void getNextQuestion() {

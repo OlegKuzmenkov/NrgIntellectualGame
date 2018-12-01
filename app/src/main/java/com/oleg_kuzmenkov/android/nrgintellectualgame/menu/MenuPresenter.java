@@ -39,7 +39,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
-            mRepository.getCurrentUser(this);
+            mRepository.readUsers(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
             mMenuView.displayUserLogin(mCurrentUser.getLogin());

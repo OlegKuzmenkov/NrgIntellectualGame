@@ -40,7 +40,7 @@ public class NewsPresenter implements Repository.NewsReadingCallback, Serializab
             mIsServiceStart = true;
             mNewsView.startNewsUpdating();
         } else {
-            mRepository.getNewsList(this);
+            mRepository.readNews(this);
         }
     }
 

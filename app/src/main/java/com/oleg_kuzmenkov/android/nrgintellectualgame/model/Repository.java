@@ -3,10 +3,10 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 import java.util.List;
 
 public interface Repository {
-    
-    void getQuestionsList(QuestionsReadingCallback listener);
-    void getNewsList(NewsReadingCallback listener);
-    void getCurrentUser(UsersReadingCallback listener);
+
+    void readQuestions(QuestionsReadingCallback listener);
+    void readNews(NewsReadingCallback listener);
+    void readUsers(UsersReadingCallback listener);
     List<User> getUsersList();
     void updateUser(User user);
     void addNewUser(User user);
