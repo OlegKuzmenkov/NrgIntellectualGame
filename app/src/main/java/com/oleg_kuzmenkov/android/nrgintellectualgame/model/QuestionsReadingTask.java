@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "QUESTIONS_READING_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.QuestionsReadingCallback mListener;

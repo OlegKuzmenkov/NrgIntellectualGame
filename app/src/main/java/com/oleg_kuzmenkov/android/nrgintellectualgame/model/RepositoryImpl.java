@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositoryImpl implements Repository {
-    private static final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "REPOSITORY";
     private static RepositoryImpl sRepository;
 
     private Database mLocalDatabase;

@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.List;
 
 class NewsReadingTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "NEWS_READING_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.NewsReadingCallback mListener;

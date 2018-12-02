@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
-    private static final String LOG_TAG = "Message";
     private static final String DB_NAME = "questions.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -64,7 +63,6 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d(LOG_TAG, "onCreate database");
         sqLiteDatabase.execSQL(TABLE_QUESTION_CREATE);
         sqLiteDatabase.execSQL(TABLE_NEWS_CREATE);
         addQuestions(sqLiteDatabase);
