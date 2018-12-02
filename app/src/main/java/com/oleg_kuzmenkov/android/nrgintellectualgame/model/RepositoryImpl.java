@@ -76,7 +76,6 @@ public class RepositoryImpl implements Repository {
      */
     @Override
     public void readUsers(UsersReadingCallback listener) {
-        Log.d(LOG_TAG, "readUsers");
         if (mNewsList == null) {
             Log.d(LOG_TAG, "Start loading all users");
             readRemoteDatabase(listener);
@@ -131,7 +130,7 @@ public class RepositoryImpl implements Repository {
                     mUserList.add(user);
                 }
 
-                Log.d(LOG_TAG, "Count of Users = " + mUserList.size());
+                Log.d(LOG_TAG, String.format("Count of users - %d", mUserList.size()));
                 listener.onFinishedReadingUsers(mUserList);
             }
 

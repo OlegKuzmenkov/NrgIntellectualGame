@@ -60,7 +60,7 @@ class NewsReadingTask extends AsyncTask<Void, Void, Void> {
                 }
 
                 mNewsList.add(news);
-                Log.d(LOG_TAG, "Count of news is " + mNewsList.size());
+                Log.d(LOG_TAG, String.format("Count of news is - %d", mNewsList.size()));
             } while (c.moveToNext());
         }
 
