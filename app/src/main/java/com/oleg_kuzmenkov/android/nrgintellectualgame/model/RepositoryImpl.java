@@ -39,6 +39,9 @@ public class RepositoryImpl implements Repository {
         mRemoteDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
+    /**
+     * Read questions list from local database
+     */
     @Override
     public void readQuestions(QuestionsReadingCallback listener) {
         if (mQuestionList == null) {
@@ -52,6 +55,9 @@ public class RepositoryImpl implements Repository {
         }
     }
 
+    /**
+     * Read news list from local database
+     */
     @Override
     public void readNews(NewsReadingCallback listener) {
         if (mNewsList == null) {
@@ -65,6 +71,9 @@ public class RepositoryImpl implements Repository {
         }
     }
 
+    /**
+     * Read users list from remote database
+     */
     @Override
     public void readUsers(UsersReadingCallback listener) {
         Log.d(LOG_TAG, "readUsers");
@@ -77,12 +86,18 @@ public class RepositoryImpl implements Repository {
         }
     }
 
+    /**
+     * Get users list
+     */
     @Override
     public List<User> getUsersList() {
         Log.d(LOG_TAG, "Send all users");
         return mUserList;
     }
 
+    /**
+     * Update user data
+     */
     @Override
     public void updateUser(User user) {
         User newUser = new User(user.getLogin(), user.getRightAnswersCount(),
@@ -90,6 +105,9 @@ public class RepositoryImpl implements Repository {
         mRemoteDatabase.child("users").child(user.getId()).setValue(newUser);
     }
 
+    /**
+     * Add new user to remote database
+     */
     @Override
     public void addNewUser(User user) {
         DatabaseReference postsRef = mRemoteDatabase.child("users");
@@ -97,6 +115,9 @@ public class RepositoryImpl implements Repository {
         newPostRef.setValue(user);
     }
 
+    /**
+     * Read users list from remote database
+     */
     private void readRemoteDatabase(final UsersReadingCallback listener) {
         ValueEventListener postListener = new ValueEventListener() {
             @Override

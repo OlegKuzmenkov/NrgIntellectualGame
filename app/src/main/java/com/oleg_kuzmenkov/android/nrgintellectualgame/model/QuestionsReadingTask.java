@@ -31,6 +31,9 @@ class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
         mListener.onFinishedReadingQuestions(mQuestionList);
     }
 
+    /**
+     * Read questions list from database
+     */
     private void readQuestions() {
         Cursor c = mDatabase.query(Database.TABLE_QUESTION, null, null,
                 null, null, null, null);

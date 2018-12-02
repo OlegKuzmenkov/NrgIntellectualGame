@@ -75,6 +75,9 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Add questions list to database
+     */
     private void addSomeDataToDatabase(@NonNull final SQLiteDatabase sqLiteDatabase) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_QUESTION_TEXT, "How many people live in Belarus?");

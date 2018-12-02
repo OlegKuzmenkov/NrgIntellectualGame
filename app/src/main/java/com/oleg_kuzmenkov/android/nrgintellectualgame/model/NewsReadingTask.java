@@ -32,6 +32,9 @@ class NewsReadingTask extends AsyncTask<Void, Void, Void> {
         mListener.onFinishedReadingNews(mNewsList);
     }
 
+    /**
+     * Read news list from database
+     */
     private void readNews() {
         Cursor c = mDatabase.query(Database.TABLE_NEWS, null, null,
                 null, null, null, null);
