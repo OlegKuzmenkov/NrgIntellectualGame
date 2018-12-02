@@ -252,7 +252,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
             @Override
             public void run() {
                 for (Button button : mGameButtonsMap.values()) {
-                    button.setBackgroundResource(R.drawable.answer_button_border);;
+                    button.setBackgroundResource(R.drawable.answer_button_border);
                 }
             }
         });

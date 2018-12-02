@@ -16,7 +16,8 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
         QuestionTimerCallback, QuestionPauseCallback {
 
     static final int GAME_QUESTIONS_COUNT = 3;
-    private static final String LOG_TAG = "GamePresenter";
+
+    private static final String LOG_TAG = "GAME_PRESENTER";
     private static final int RED_INDICATOR_TIME = 3;
     private static final int QUESTION_AVAILABLE_TIME = 10;
 
