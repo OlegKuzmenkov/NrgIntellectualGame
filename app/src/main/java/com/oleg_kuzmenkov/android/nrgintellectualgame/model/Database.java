@@ -5,10 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
-    private static final String DB_NAME = "questions.db";
+    private static final String DATABASE_NAME = "questions.db";
     private static final int DATABASE_VERSION = 1;
 
     // Question table
@@ -58,7 +57,7 @@ public class Database extends SQLiteOpenHelper {
             + ");";
 
     public Database(Context context) {
-        super(context, DB_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
