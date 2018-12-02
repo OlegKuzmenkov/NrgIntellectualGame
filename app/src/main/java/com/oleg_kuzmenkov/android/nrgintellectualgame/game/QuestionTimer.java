@@ -12,7 +12,7 @@ public class QuestionTimer extends TimerTask {
     private int mRemainTime;
     private QuestionTimerCallback mQuestionTimerCallback;
 
-    public QuestionTimer(QuestionTimerCallback questionTimerCallback) {
+    QuestionTimer(QuestionTimerCallback questionTimerCallback) {
         Log.d(LOG_TAG, "Create Timer!!!!!!!!!!!!!!");
         mQuestionTimerCallback = questionTimerCallback;
         Timer t = new Timer();

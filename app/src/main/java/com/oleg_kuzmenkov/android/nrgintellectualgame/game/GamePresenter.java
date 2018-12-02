@@ -15,7 +15,7 @@ import java.util.Random;
 public class GamePresenter implements Repository.QuestionsReadingCallback, Serializable,
         QuestionTimerCallback, QuestionPauseCallback {
 
-    public static final int GAME_QUESTIONS_COUNT = 3;
+    static final int GAME_QUESTIONS_COUNT = 3;
     private static final String LOG_TAG = "GamePresenter";
     private static final int RED_INDICATOR_TIME = 3;
     private static final int QUESTION_AVAILABLE_TIME = 10;
@@ -36,24 +36,24 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
         mRepository = repository;
     }
 
-    public void setView(final GameView gameView) {
+    void setView(final GameView gameView) {
         mGameView = gameView;
     }
 
-    public void setRepository(final Repository repository) {
+    void setRepository(final Repository repository) {
         mRepository = repository;
     }
 
     /**
      * Detach View and presenter
      */
-    public void detach() {
+    void detach() {
         mQuestionTimer.cancel();
         mGameView = null;
         mRepository = null;
     }
 
-    public void startGame() {
+    void startGame() {
             mRepository.readQuestions(this);
     }
 
@@ -74,7 +74,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
             mGameView.displayQuestion(mGameQuestionsList.get(mCurrentQuestionIndex));
     }
 
-    public void restoreQuestion() {
+    void restoreQuestion() {
         if (mAnswerIsDone) {
             getNextQuestion();
             return;
@@ -94,11 +94,11 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
         //mQuestionTimer = new QuestionTimer(this);
     }
 
-    public void setUser(final User user) {
+    void setUser(final User user) {
         mCurrentUser = user;
     }
 
-    public void getUserLocation() {
+    void getUserLocation() {
         if (mCurrentUser.getLatitude() == 0) {
             Log.d(LOG_TAG, "It is a new User. We must get his location!!!");
             //get location
@@ -109,7 +109,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
     /**
      * Set user's location
      */
-    public void setUserLocation(double latitude, double longitude) {
+    void setUserLocation(double latitude, double longitude) {
         mCurrentUser.setLatitude(latitude);
         mCurrentUser.setLongitude(longitude);
         // stop getting user's location
@@ -133,7 +133,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
     /**
      * Check user's answer
      */
-    public void checkAnswer(String answer) {
+    void checkAnswer(String answer) {
         Log.d(LOG_TAG, "Answer is = " + answer);
         mQuestionTimer.cancel();
         mAnswerIsDone = true;

@@ -22,11 +22,11 @@ public class NewsPresenter implements Repository.NewsReadingCallback, Serializab
         mNewsView = newsView;
     }
 
-    public void setRepository(Repository repository) {
+    void setRepository(Repository repository) {
         mRepository = repository;
     }
 
-    public void detach() {
+    void detach() {
         mNewsView = null;
         mRepository = null;
     }
@@ -34,7 +34,7 @@ public class NewsPresenter implements Repository.NewsReadingCallback, Serializab
     /**
      * Get list of news from Internet or local database
      */
-    public void getNews() {
+     void getNews() {
         if (!mIsServiceStart) {
             //start updating of the news
             mIsServiceStart = true;

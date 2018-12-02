@@ -18,24 +18,22 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
     private transient MenuView mMenuView;
     private transient Repository mRepository;
 
+    MenuPresenter() { }
 
-    public MenuPresenter() {
-    }
-
-    public void setView(MenuView menuView) {
+    void setView(MenuView menuView) {
         mMenuView = menuView;
     }
 
-    public void setRepository(Repository repository) {
+    void setRepository(Repository repository) {
         mRepository = repository;
     }
 
-    public void detach() {
+    void detach() {
         mMenuView = null;
         mRepository = null;
     }
 
-    public void getUserData(String userLogin) {
+    void getUserData(String userLogin) {
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
@@ -46,19 +44,19 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         }
     }
 
-    public void onClickSinglePlayerButton() {
+    void onClickSinglePlayerButton() {
         mMenuView.startGameActivity(mCurrentUser);
     }
 
-    public void onClickStatisticsButton() {
+    void onClickStatisticsButton() {
         mMenuView.startStatisticsActivity(mCurrentUser);
     }
 
-    public void onClickReadNewsButton() {
+    void onClickReadNewsButton() {
         mMenuView.startNewsActivity();
     }
 
-    public void onClickBestPlayersButton() {
+    void onClickBestPlayersButton() {
         List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsersList());
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players

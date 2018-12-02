@@ -9,24 +9,23 @@ public class SignInPresenter implements Serializable {
 
     SignInPresenter() { }
 
-    public void setView(final SignInView signInView) {
+    void setView(final SignInView signInView) {
         mSignInView = signInView;
     }
 
     /**
      * Detach View and presenter
      */
-    public void detach() {
+    void detach() {
         mSignInView = null;
     }
 
-    public void checkUserLogin(String userLogin) {
+    void checkUserLogin(String userLogin) {
         if (userLogin.equals("")) {
             mSignInView.displayNotification();
         } else {
             mSignInView.displayMenu(userLogin);
         }
     }
-
-
 }
+

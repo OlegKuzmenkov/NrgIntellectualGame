@@ -8,7 +8,7 @@ public class QuestionPause extends Thread {
 
     private QuestionPauseCallback mQuestionPauseCallback;
 
-    public QuestionPause(QuestionPauseCallback questionPauseCallback) {
+    QuestionPause(QuestionPauseCallback questionPauseCallback) {
         mQuestionPauseCallback = questionPauseCallback;
     }
 

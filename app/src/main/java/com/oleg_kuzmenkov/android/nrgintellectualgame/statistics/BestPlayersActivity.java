@@ -20,7 +20,7 @@ public class BestPlayersActivity extends AppCompatActivity implements OnMapReady
     private static final String INTENT_CONTENT = "1";
     private static final String LOG_TAG = "Message";
 
-    private GoogleMap mGoogleMap;;
+    private GoogleMap mGoogleMap;
     private MapFragment mMapFragment;
     private List<User> mBestPlayersList;
 

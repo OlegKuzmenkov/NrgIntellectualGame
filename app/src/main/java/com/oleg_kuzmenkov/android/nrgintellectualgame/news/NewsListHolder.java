@@ -21,7 +21,7 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
     private ImageView mNewsImage;
     private News mNews;
 
-    public NewsListHolder(View itemView) {
+    NewsListHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
 
@@ -35,7 +35,7 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
     /**
      * Bind news
      */
-    public void bindNews(News news, int position) {
+    void bindNews(News news, int position) {
         mNews = news;
 
         mNewsId.setText(String.format("News # %d",(++position)));

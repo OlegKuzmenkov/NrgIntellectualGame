@@ -1,6 +1,7 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListHolder> {
     private final Context mContext;
     private List<News> mNews;
 
-    public NewsListAdapter(final Context context, List<News> news) {
+    NewsListAdapter(final Context context, List<News> news) {
         mContext = context;
         mNews = news;
     }
@@ -28,7 +29,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListHolder> {
     }
 
     @Override
-    public void onBindViewHolder(NewsListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsListHolder holder, int position) {
         News news = mNews.get(position);
         holder.bindNews(news, position);
     }
