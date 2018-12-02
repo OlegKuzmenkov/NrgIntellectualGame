@@ -67,7 +67,7 @@ public class Database extends SQLiteOpenHelper {
         Log.d(LOG_TAG, "onCreate database");
         sqLiteDatabase.execSQL(TABLE_QUESTION_CREATE);
         sqLiteDatabase.execSQL(TABLE_NEWS_CREATE);
-        addSomeDataToDatabase(sqLiteDatabase);
+        addQuestions(sqLiteDatabase);
     }
 
     @Override
@@ -76,9 +76,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
     /**
-     * Add questions list to database
+     * Add questions to database
      */
-    private void addSomeDataToDatabase(@NonNull final SQLiteDatabase sqLiteDatabase) {
+    private void addQuestions(@NonNull final SQLiteDatabase sqLiteDatabase) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_QUESTION_TEXT, "How many people live in Belarus?");
         cv.put(COLUMN_ANSWER_FIRST, "4 millions");
