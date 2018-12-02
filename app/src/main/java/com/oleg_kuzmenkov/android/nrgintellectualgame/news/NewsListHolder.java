@@ -41,7 +41,7 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
         mNewsId.setText(String.format("News # %d",(++position)));
         mNewsTitle.setText(mNews.getTitle());
         mNewsDescription.setText(mNews.getDescription());
-        mNewsSource.setText(mNews.getSourceName());
+        mNewsSource.setText(mNews.getSource());
 
         Bitmap newsImage = mNews.getImage();
 

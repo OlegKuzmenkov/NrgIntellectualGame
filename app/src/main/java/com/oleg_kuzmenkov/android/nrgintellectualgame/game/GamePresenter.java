@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GamePresenter implements Repository.QuestionOnFinishedListener, Serializable,
+public class GamePresenter implements Repository.QuestionsReadingCallback, Serializable,
         QuestionTimerCallback, QuestionPauseCallback {
 
     public static final int GAME_QUESTIONS_COUNT = 3;
@@ -54,7 +54,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
     }
 
     public void startGame() {
-            mRepository.getQuestionsFromDatabase(this);
+            mRepository.readQuestions(this);
     }
 
     private void getNextQuestion() {
@@ -125,9 +125,9 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
     }
 
     private void updateUserStatistics() {
-        mCurrentUser.setCountRightAnswers(mCurrentUser.getCountRightAnswers() + mRightAnswersCount);
-        mCurrentUser.setCountAnswers(mCurrentUser.getCountAnswers() + mGameQuestionsList.size());
-        mRepository.updateUserData(mCurrentUser);
+        mCurrentUser.setRightAnswersCount(mCurrentUser.getRightAnswersCount() + mRightAnswersCount);
+        mCurrentUser.setAnswersCount(mCurrentUser.getAnswersCount() + mGameQuestionsList.size());
+        mRepository.updateUser(mCurrentUser);
     }
 
     /**
@@ -209,7 +209,7 @@ public class GamePresenter implements Repository.QuestionOnFinishedListener, Ser
      * Start the Game
      */
     @Override
-    public void onFinishedGettingQuestions(final List<Question> list) {
+    public void onFinishedReadingQuestions(final List<Question> list) {
         chooseRandomQuestions(list);
         mCurrentQuestionIndex = 0;
         mRightAnswersCount = 0;

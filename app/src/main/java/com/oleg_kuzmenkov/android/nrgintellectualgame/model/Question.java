@@ -3,7 +3,6 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 import java.util.List;
 
 public class Question {
-    private  boolean mAnswerTrue;
     private String mQuestionText;
     private List<String> mAnswersList;
     private String mRightAnswer;
@@ -32,14 +31,6 @@ public class Question {
 
     public void setRightAnswer(String rightAnswer) {
         mRightAnswer = rightAnswer;
-    }
-
-    public boolean isAnswerTrue() {
-        return mAnswerTrue;
-    }
-
-    public void setAnswerTrue(boolean answerTrue) {
-        mAnswerTrue = answerTrue;
     }
 }
 

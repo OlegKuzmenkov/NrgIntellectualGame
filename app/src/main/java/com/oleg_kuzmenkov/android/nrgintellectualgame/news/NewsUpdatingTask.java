@@ -9,7 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.QuestionsDatabase;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Database;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,11 +28,11 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private static final int REQUIRED_NEWS_COUNT = 10;
 
     private Context mContext;
-    private QuestionsDatabase mDatabase;
+    private Database mDatabase;
 
     NewsUpdatingTask(final Context context) {
         mContext = context;
-        mDatabase = new QuestionsDatabase(mContext);
+        mDatabase = new Database(mContext);
     }
 
     protected Void doInBackground(Void... params) {
@@ -53,7 +53,7 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
     private void saveNews(String json) {
         SQLiteDatabase database = mDatabase.getWritableDatabase();
         //clear table
-        database.delete(QuestionsDatabase.TABLE_NEWS, null, null);
+        database.delete(Database.TABLE_NEWS, null, null);
 
         ContentValues cv = new ContentValues();
         try {
@@ -65,17 +65,17 @@ class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
                 for (int i = 0; i < REQUIRED_NEWS_COUNT; i++) {
                     JSONObject newsObj = jsonArray.getJSONObject(i);
                     JSONObject sourceObj = newsObj.getJSONObject("source");
-                    cv.put(QuestionsDatabase.COLUMN_NEWS_SOURCE, sourceObj.getString("name"));
-                    cv.put(QuestionsDatabase.COLUMN_NEWS_TITLE, newsObj.getString("title"));
-                    cv.put(QuestionsDatabase.COLUMN_NEWS_DESCRIPTION, newsObj.getString("description"));
-                    cv.put(QuestionsDatabase.COLUMN_NEWS_URL, newsObj.getString("url"));
+                    cv.put(Database.COLUMN_NEWS_SOURCE, sourceObj.getString("name"));
+                    cv.put(Database.COLUMN_NEWS_TITLE, newsObj.getString("title"));
+                    cv.put(Database.COLUMN_NEWS_DESCRIPTION, newsObj.getString("description"));
+                    cv.put(Database.COLUMN_NEWS_URL, newsObj.getString("url"));
 
                     Bitmap bitmap = downloadImage(newsObj.getString("urlToImage"));
                     //convert bitmap into blob
                     byte[] byteArray = getBitmapBlob(bitmap);
-                    cv.put(QuestionsDatabase.COLUMN_NEWS_IMAGE, byteArray);
+                    cv.put(Database.COLUMN_NEWS_IMAGE, byteArray);
 
-                    database.insert(QuestionsDatabase.TABLE_NEWS, null, cv);
+                    database.insert(Database.TABLE_NEWS, null, cv);
                 }
             }
         } catch (Exception e) {

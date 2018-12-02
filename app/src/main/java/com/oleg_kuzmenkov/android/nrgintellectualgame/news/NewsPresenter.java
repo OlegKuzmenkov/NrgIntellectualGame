@@ -8,7 +8,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 import java.io.Serializable;
 import java.util.List;
 
-public class NewsPresenter implements Repository.NewsOnFinishedListener, Serializable {
+public class NewsPresenter implements Repository.NewsReadingCallback, Serializable {
     private static final String LOG_TAG = "Message";
 
     private transient NewsView mNewsView;
@@ -40,12 +40,12 @@ public class NewsPresenter implements Repository.NewsOnFinishedListener, Seriali
             mIsServiceStart = true;
             mNewsView.startNewsUpdating();
         } else {
-            mRepository.getNewsFromDatabase(this);
+            mRepository.readNews(this);
         }
     }
 
     @Override
-    public void onFinishedGettingNews(List<News> list) {
+    public void onFinishedReadingNews(List<News> list) {
         Log.d(LOG_TAG, "Count of news = " + list.size());
         mNewsView.displayNews(list);
     }

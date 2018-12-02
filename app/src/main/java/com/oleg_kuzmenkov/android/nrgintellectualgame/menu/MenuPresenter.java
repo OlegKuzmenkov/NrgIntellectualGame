@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuPresenter implements Repository.UsersOnFinishedListener, Serializable {
+public class MenuPresenter implements Repository.UsersReadingCallback, Serializable {
     private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
@@ -39,10 +39,10 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
-            mRepository.getCurrentUserData(this);
+            mRepository.readUsers(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
-            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
+            mMenuView.displayUserLogin(mCurrentUser.getLogin());
         }
     }
 
@@ -59,18 +59,18 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
     }
 
     public void onClickBestPlayersButton() {
-        List<User> bestPlayersList = chooseBestPlayers(mRepository.getAllUsers());
+        List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsersList());
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players
         mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 
     @Override
-    public void onFinishedGettingUsers(final List<User> userslist) {
+    public void onFinishedReadingUsers(final List<User> userslist) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
 
         for (User user : userslist) {
-            if (mUserLogin.equals(user.getUserLogin())) {
+            if (mUserLogin.equals(user.getLogin())) {
                 mCurrentUser = user;
                 break;
             }
@@ -89,8 +89,8 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
         List<User> bestPlayersList = new ArrayList();
 
         for (User user : playersList) {
-            int rightAnswersPercent = calculateRightAnswersPercentage(user.getCountAnswers(),
-                    user.getCountRightAnswers());
+            int rightAnswersPercent = calculateRightAnswersPercentage(user.getAnswersCount(),
+                    user.getRightAnswersCount());
 
             if (rightAnswersPercent > 50) {
                 bestPlayersList.add(user);
@@ -112,19 +112,19 @@ public class MenuPresenter implements Repository.UsersOnFinishedListener, Serial
 
     private void createNewUser() {
         User newUser = new User();
-        newUser.setUserLogin(mUserLogin);
-        newUser.setCountAnswers(0);
-        newUser.setCountRightAnswers(0);
+        newUser.setLogin(mUserLogin);
+        newUser.setAnswersCount(0);
+        newUser.setRightAnswersCount(0);
         newUser.setLatitude(0);
         newUser.setLongitude(0);
 
-        mRepository.addNewUserToDatabase(newUser);
+        mRepository.addNewUser(newUser);
     }
 
     private void showMenu() {
         if (mMenuView != null) {
             mMenuView.enableMenu(true);
-            mMenuView.displayUserLogin(mCurrentUser.getUserLogin());
+            mMenuView.displayUserLogin(mCurrentUser.getLogin());
         }
     }
 }

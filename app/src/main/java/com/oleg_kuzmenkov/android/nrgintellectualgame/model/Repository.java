@@ -4,22 +4,22 @@ import java.util.List;
 
 public interface Repository {
 
-    interface QuestionOnFinishedListener {
-        void onFinishedGettingQuestions(List<Question> list);
+    void readQuestions(QuestionsReadingCallback listener);
+    void readNews(NewsReadingCallback listener);
+    void readUsers(UsersReadingCallback listener);
+    List<User> getUsersList();
+    void updateUser(User user);
+    void addNewUser(User user);
+
+    interface QuestionsReadingCallback {
+        void onFinishedReadingQuestions(List<Question> list);
     }
 
-    interface UsersOnFinishedListener {
-        void onFinishedGettingUsers(List<User> list);
+    interface UsersReadingCallback {
+        void onFinishedReadingUsers(List<User> list);
     }
 
-    interface NewsOnFinishedListener {
-        void onFinishedGettingNews(List<News> list);
+    interface NewsReadingCallback {
+        void onFinishedReadingNews(List<News> list);
     }
-
-    void getQuestionsFromDatabase(QuestionOnFinishedListener listener);
-    void getNewsFromDatabase(NewsOnFinishedListener listener);
-    void getCurrentUserData(UsersOnFinishedListener listener);
-    List<User> getAllUsers();
-    void updateUserData(User user);
-    void addNewUserToDatabase(User user);
 }

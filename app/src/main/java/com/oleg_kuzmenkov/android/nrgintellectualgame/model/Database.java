@@ -5,23 +5,18 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-public class QuestionsDatabase extends SQLiteOpenHelper {
-    private static final String LOG_TAG = "Message";
-    private static final String DB_NAME = "questions.db";
-    private static final int DATABASE_VERSION = 1;
-
+public class Database extends SQLiteOpenHelper {
     // Question table
-    public static final String TABLE_QUESTION = "question";
-    public static final String COLUMN_ID_QUESTION = "_id";
-    public static final String COLUMN_QUESTION_TEXT = "question_text";
-    public static final String COLUMN_ANSWER_FIRST = "question_answer_first";
-    public static final String COLUMN_ANSWER_SECOND = "question_answer_second";
-    public static final String COLUMN_ANSWER_THIRD = "question_answer_third";
-    public static final String COLUMN_ANSWER_FOURTH = "question_answer_fourth";
-    public static final String COLUMN_RIGHT_ANSWER = "right_answer";
-    public static final String COLUMN_DETAILS = "details";
+    static final String TABLE_QUESTION = "question";
+    static final String COLUMN_QUESTION_TEXT = "question_text";
+    static final String COLUMN_ANSWER_FIRST = "question_answer_first";
+    static final String COLUMN_ANSWER_SECOND = "question_answer_second";
+    static final String COLUMN_ANSWER_THIRD = "question_answer_third";
+    static final String COLUMN_ANSWER_FOURTH = "question_answer_fourth";
+    static final String COLUMN_RIGHT_ANSWER = "right_answer";
+    private static final String COLUMN_ID_QUESTION = "_id";
+    private  static final String COLUMN_DETAILS = "details";
 
     // Question table creation SQL statement
     private static final String TABLE_QUESTION_CREATE = "create table "
@@ -39,12 +34,12 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
 
     // News table
     public static final String TABLE_NEWS = "news";
-    public static final String COLUMN_ID_NEWS = "_id";
     public static final String COLUMN_NEWS_SOURCE = "news_source";
     public static final String COLUMN_NEWS_TITLE  = "news_title";
     public static final String COLUMN_NEWS_DESCRIPTION = "news_description";
     public static final String COLUMN_NEWS_URL = "news_url";
     public static final String COLUMN_NEWS_IMAGE = "news_image";
+    private static final String COLUMN_ID_NEWS = "_id";
 
     // News table creation SQL statement
     private static final String TABLE_NEWS_CREATE = "create table "
@@ -58,16 +53,18 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
             + COLUMN_NEWS_IMAGE + " blob"
             + ");";
 
-    public QuestionsDatabase(Context context) {
-        super(context, DB_NAME, null, DATABASE_VERSION);
+    private static final String DATABASE_NAME = "questions.db";
+    private static final int DATABASE_VERSION = 1;
+
+    public Database(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d(LOG_TAG, "onCreate database");
         sqLiteDatabase.execSQL(TABLE_QUESTION_CREATE);
         sqLiteDatabase.execSQL(TABLE_NEWS_CREATE);
-        addSomeDataToDatabase(sqLiteDatabase);
+        addQuestions(sqLiteDatabase);
     }
 
     @Override
@@ -75,7 +72,10 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
 
     }
 
-    private void addSomeDataToDatabase(@NonNull final SQLiteDatabase sqLiteDatabase) {
+    /**
+     * Add questions to database
+     */
+    private void addQuestions(@NonNull final SQLiteDatabase sqLiteDatabase) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_QUESTION_TEXT, "How many people live in Belarus?");
         cv.put(COLUMN_ANSWER_FIRST, "4 millions");
@@ -118,14 +118,5 @@ public class QuestionsDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_ANSWER_FOURTH, "1932");
         cv.put(COLUMN_RIGHT_ANSWER, "1923");
         sqLiteDatabase.insert(TABLE_QUESTION, null, cv);
-
-        /*cv.put(COLUMN_NEWS_SOURCE, "2");
-        cv.put(COLUMN_NEWS_TITLE, "2");
-        cv.put(COLUMN_NEWS_DESCRIPTION, "2");
-        cv.put(COLUMN_NEWS_URL, "2");
-        cv.put(COLUMN_NEWS_IMAGE, "2");
-        sqLiteDatabase.insert(TABLE_NEWS, null, cv);*/
-
-
     }
 }

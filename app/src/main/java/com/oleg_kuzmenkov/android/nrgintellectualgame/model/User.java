@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 @IgnoreExtraProperties
 public class User implements Serializable {
-    private String mUserId;
-    private String mUserLogin;
-    private int mCountRightAnswers;
-    private int mCountAnswers;
+    private String mId;
+    private String mLogin;
+    private int mRightAnswersCount;
+    private int mAnswersCount;
     private double mLatitude;
     private double mLongitude;
 
@@ -17,43 +17,43 @@ public class User implements Serializable {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String userLogin, int countRightAnswers, int countAnswers, double latitude, double longitude) {
-        mUserLogin = userLogin;
-        mCountRightAnswers = countRightAnswers;
-        mCountAnswers = countAnswers;
+    public User(String login, int rightAnswersCount, int answersCount, double latitude, double longitude) {
+        mLogin = login;
+        mRightAnswersCount = rightAnswersCount;
+        mAnswersCount = answersCount;
         mLatitude = latitude;
         mLongitude = longitude;
     }
-    public String getUserId() {
-        return mUserId;
+    public String getId() {
+        return mId;
     }
 
-    public void setUserId(String userId) {
-        mUserId = userId;
+    public void setId(String id) {
+        mId = id;
     }
 
-    public String getUserLogin() {
-        return mUserLogin;
+    public String getLogin() {
+        return mLogin;
     }
 
-    public void setUserLogin(String userLogin) {
-        mUserLogin = userLogin;
+    public void setLogin(String login) {
+        mLogin = login;
     }
 
-    public int getCountRightAnswers() {
-        return mCountRightAnswers;
+    public int getRightAnswersCount() {
+        return mRightAnswersCount;
     }
 
-    public void setCountRightAnswers(int countRightAnswers) {
-        mCountRightAnswers = countRightAnswers;
+    public void setRightAnswersCount(int rightAnswersCount) {
+        mRightAnswersCount = rightAnswersCount;
     }
 
-    public int getCountAnswers() {
-        return mCountAnswers;
+    public int getAnswersCount() {
+        return mAnswersCount;
     }
 
-    public void setCountAnswers(int countAnswers) {
-        mCountAnswers = countAnswers;
+    public void setAnswersCount(int answersCount) {
+        mAnswersCount = answersCount;
     }
 
     public double getLatitude() {

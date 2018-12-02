@@ -54,17 +54,17 @@ public class StatisticsActivity extends AppCompatActivity {
     private void setUserStatistics(User user) {
         if (user != null) {
             TextView userId = findViewById(R.id.id_text_view);
-            userId.setText(String.format("ID: %s", user.getUserId()));
+            userId.setText(String.format("ID: %s", user.getId()));
 
             TextView userLogin = findViewById(R.id.login_text_view);
-            userLogin.setText(String.format("Login: %s", user.getUserLogin()));
+            userLogin.setText(String.format("Login: %s", user.getLogin()));
 
             TextView userAnswersCount = findViewById(R.id.count_answers_text_view);
-            int answersCount = user.getCountAnswers();
+            int answersCount = user.getAnswersCount();
             userAnswersCount.setText(String.format("Count answers: %d", answersCount));
 
             TextView userRightAnswersCount = findViewById(R.id.count_right_answers_text_view);
-            int rightAnswersCount = user.getCountRightAnswers();
+            int rightAnswersCount = user.getRightAnswersCount();
             userRightAnswersCount.setText(String.format("Count right answers: %d", rightAnswersCount));
 
             TextView userRightAnswersPercent = findViewById(R.id.percent_right_answers_text_view);
