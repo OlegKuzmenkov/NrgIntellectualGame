@@ -29,7 +29,7 @@ public class RepositoryImpl implements Repository {
         if (sRepository == null) {
             sRepository = new RepositoryImpl(context);
         }
-        
+
         return sRepository;
     }
 

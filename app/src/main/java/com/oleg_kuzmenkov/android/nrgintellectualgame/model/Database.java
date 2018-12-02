@@ -7,19 +7,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 
 public class Database extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "questions.db";
-    private static final int DATABASE_VERSION = 1;
-
     // Question table
-    public static final String TABLE_QUESTION = "question";
-    public static final String COLUMN_ID_QUESTION = "_id";
-    public static final String COLUMN_QUESTION_TEXT = "question_text";
-    public static final String COLUMN_ANSWER_FIRST = "question_answer_first";
-    public static final String COLUMN_ANSWER_SECOND = "question_answer_second";
-    public static final String COLUMN_ANSWER_THIRD = "question_answer_third";
-    public static final String COLUMN_ANSWER_FOURTH = "question_answer_fourth";
-    public static final String COLUMN_RIGHT_ANSWER = "right_answer";
-    public static final String COLUMN_DETAILS = "details";
+    static final String TABLE_QUESTION = "question";
+    static final String COLUMN_QUESTION_TEXT = "question_text";
+    static final String COLUMN_ANSWER_FIRST = "question_answer_first";
+    static final String COLUMN_ANSWER_SECOND = "question_answer_second";
+    static final String COLUMN_ANSWER_THIRD = "question_answer_third";
+    static final String COLUMN_ANSWER_FOURTH = "question_answer_fourth";
+    static final String COLUMN_RIGHT_ANSWER = "right_answer";
+    private static final String COLUMN_ID_QUESTION = "_id";
+    private  static final String COLUMN_DETAILS = "details";
 
     // Question table creation SQL statement
     private static final String TABLE_QUESTION_CREATE = "create table "
@@ -37,12 +34,12 @@ public class Database extends SQLiteOpenHelper {
 
     // News table
     public static final String TABLE_NEWS = "news";
-    public static final String COLUMN_ID_NEWS = "_id";
     public static final String COLUMN_NEWS_SOURCE = "news_source";
     public static final String COLUMN_NEWS_TITLE  = "news_title";
     public static final String COLUMN_NEWS_DESCRIPTION = "news_description";
     public static final String COLUMN_NEWS_URL = "news_url";
     public static final String COLUMN_NEWS_IMAGE = "news_image";
+    private static final String COLUMN_ID_NEWS = "_id";
 
     // News table creation SQL statement
     private static final String TABLE_NEWS_CREATE = "create table "
@@ -55,6 +52,9 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_NEWS_URL + " text,"
             + COLUMN_NEWS_IMAGE + " blob"
             + ");";
+
+    private static final String DATABASE_NAME = "questions.db";
+    private static final int DATABASE_VERSION = 1;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
