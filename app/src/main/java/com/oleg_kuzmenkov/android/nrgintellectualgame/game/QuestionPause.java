@@ -1,7 +1,5 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.game;
 
-import android.util.Log;
-
 public class QuestionPause extends Thread {
     private static final Long PAUSE_PERIOD = 2000L;
 
