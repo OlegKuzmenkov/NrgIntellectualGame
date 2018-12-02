@@ -161,16 +161,19 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
      */
     private void chooseRandomQuestions(@NonNull final List<Question> list) {
         Random gen = new Random();
-        int max = list.size();
         mGameQuestionsList = new ArrayList<>();
+        int max = list.size();
+        int questionsCount = 0;
 
-        while (mGameQuestionsList.size() < GAME_QUESTIONS_COUNT) {
+        while (questionsCount < GAME_QUESTIONS_COUNT) {
             int index = gen.nextInt(max);
-            if (mGameQuestionsList.contains(list.get(index)) == false) {
+
+            if (!mGameQuestionsList.contains(list.get(index))) {
+                //question doesn't exist in the list
                 mGameQuestionsList.add(list.get(index));
+                questionsCount++;
             }
         }
-        Log.d(LOG_TAG, "Count of questions = " + mGameQuestionsList.size());
     }
 
     /**
