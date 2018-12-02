@@ -83,16 +83,14 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
 
         if (mQuestionRemainTime == 0) {
             //time is left
-            //mGameView.
             return;
         }
 
         if (mQuestionRemainTime < 4) {
             mGameView.setRedTimeIndicator();
         }
+
         getCurrentQuestion();
-        //mGameView.displayQuestion(mQuestionListForGame.get(mNumberOfCurrentQuestion));
-        //mQuestionTimer = new QuestionTimer(this);
     }
 
     void setUser(final User user) {
@@ -135,22 +133,18 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
      * Check user's answer
      */
     void checkAnswer(String answer) {
-        Log.d(LOG_TAG, "Answer is = " + answer);
         mQuestionTimer.cancel();
         mAnswerIsDone = true;
         mGameView.enableAnswerButtons(false);
 
         if (mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer().equals(answer)) {
             //answer is true
-            Log.d(LOG_TAG, "Answer is true = " + answer);
             mRightAnswersCount++;
             mGameView.displayRightAnswerResult(answer);
         } else {
             //answer is wrong
-            Log.d(LOG_TAG, "Answer is wrong = " + answer);
             mGameView.displayWrongAnswerResult(mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer(), answer);
         }
-
 
         mQuestionPause = new QuestionPause(this);
         mQuestionPause.start();
@@ -182,7 +176,6 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
     @Override
     public void changeRemainQuestionTime() {
         mQuestionRemainTime--;
-        Log.d(LOG_TAG, "Remain time = " + mQuestionRemainTime);
         mGameView.setQuestionRemainTime(mQuestionRemainTime);
 
         if (mQuestionRemainTime == RED_INDICATOR_TIME) {
