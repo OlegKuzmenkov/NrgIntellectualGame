@@ -84,7 +84,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
     }
 
     private List<User> chooseBestPlayers(List<User> playersList) {
-        List<User> bestPlayersList = new ArrayList();
+        List<User> bestPlayersList = new ArrayList<>();
 
         for (User user : playersList) {
             int rightAnswersPercent = calculateRightAnswersPercentage(user.getAnswersCount(),

@@ -314,7 +314,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         mQuestionTimer = view.findViewById(R.id.timer_view);
         mQuestionText = view.findViewById(R.id.question_text_view);
 
-        mGameButtonsMap = new HashMap();
+        mGameButtonsMap = new HashMap<>();
         mGameButtonsMap.put(R.id.first_answer_button, (Button) view.findViewById(R.id.first_answer_button));
         mGameButtonsMap.put(R.id.second_answer_button, (Button) view.findViewById(R.id.second_answer_button));
         mGameButtonsMap.put(R.id.third_answer_button, (Button) view.findViewById(R.id.third_answer_button));

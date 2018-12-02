@@ -162,7 +162,7 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
     private void chooseRandomQuestions(@NonNull final List<Question> list) {
         Random gen = new Random();
         int max = list.size();
-        mGameQuestionsList = new ArrayList();
+        mGameQuestionsList = new ArrayList<>();
 
         while (mGameQuestionsList.size() < GAME_QUESTIONS_COUNT) {
             int index = gen.nextInt(max);
