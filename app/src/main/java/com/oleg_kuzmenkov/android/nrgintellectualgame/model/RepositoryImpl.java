@@ -24,18 +24,17 @@ public class RepositoryImpl implements Repository {
     private List<Question> mQuestionList;
     private List<User> mUserList;
     private List<News> mNewsList;
-    private Context mContext;
 
     public static RepositoryImpl get(Context context) {
         if (sRepository == null) {
             sRepository = new RepositoryImpl(context);
         }
+        
         return sRepository;
     }
 
     private RepositoryImpl(Context context) {
-        mContext = context;
-        mLocalDatabase = new Database(mContext);
+        mLocalDatabase = new Database(context);
         mRemoteDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
