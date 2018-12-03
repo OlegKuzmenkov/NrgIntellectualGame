@@ -137,13 +137,14 @@ public class GamePresenter implements Repository.QuestionsReadingCallback, Seria
         mAnswerIsDone = true;
         mGameView.enableAnswerButtons(false);
 
-        if (mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer().equals(answer)) {
+        String rightAnswer = mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer();
+        if (rightAnswer.equals(answer)) {
             //answer is true
             mRightAnswersCount++;
             mGameView.displayRightAnswerResult(answer);
         } else {
             //answer is wrong
-            mGameView.displayWrongAnswerResult(mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer(), answer);
+            mGameView.displayWrongAnswerResult(rightAnswer, answer);
         }
 
         mQuestionPause = new QuestionPause(this);
