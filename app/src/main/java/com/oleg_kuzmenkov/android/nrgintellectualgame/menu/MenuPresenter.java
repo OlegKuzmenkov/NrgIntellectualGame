@@ -70,6 +70,22 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
         Log.d(LOG_TAG, "Request code - "+requestCode);
 
+        switch (requestCode) {
+            case AUTHORIZATION_REQUEST_CODE:
+                authorizeUser(userslist);
+                break;
+
+            case BEST_PLAYERS_REQUEST_CODE:
+                Log.i(LOG_TAG, "Best player request code");
+                break;
+
+            default:
+                Log.i(LOG_TAG, "Unknown request");
+                break;
+        }
+    }
+
+    private void authorizeUser(final List<User> userslist) {
         for (User user : userslist) {
             if (mUserLogin.equals(user.getLogin())) {
                 mCurrentUser = user;
