@@ -14,9 +14,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositoryImpl implements Repository {
-    private static final String LOG_TAG = "REPOSITORY";
-    private static RepositoryImpl sRepository;
+public class GameData implements Repository {
+    private static final String LOG_TAG = "GAME_DATA";
+    private static GameData sRepository;
 
     private Database mLocalDatabase;
     private DatabaseReference mRemoteDatabase;
@@ -25,15 +25,15 @@ public class RepositoryImpl implements Repository {
     private List<User> mUserList;
     private List<News> mNewsList;
 
-    public static RepositoryImpl get(Context context) {
+    public static GameData get(Context context) {
         if (sRepository == null) {
-            sRepository = new RepositoryImpl(context);
+            sRepository = new GameData(context);
         }
 
         return sRepository;
     }
 
-    private RepositoryImpl(Context context) {
+    private GameData(Context context) {
         mLocalDatabase = new Database(context);
         mRemoteDatabase = FirebaseDatabase.getInstance().getReference();
     }

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.news.NewsListActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.GameData;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.StatisticsActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.statistics.BestPlayersActivity;
@@ -217,6 +217,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         }
 
         mPresenter.setView(this);
-        mPresenter.setRepository(RepositoryImpl.get(this));
+        mPresenter.setRepository(GameData.get(this));
     }
 }

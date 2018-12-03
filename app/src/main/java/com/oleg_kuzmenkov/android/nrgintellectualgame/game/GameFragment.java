@@ -27,7 +27,7 @@ import com.google.android.gms.location.LocationServices;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Question;
 
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.GameData;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.HashMap;
@@ -328,7 +328,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
     private void setupPresenter(final Bundle savedInstanceState){
         if (savedInstanceState == null) {
             // create presenter
-            mPresenter = new GamePresenter(RepositoryImpl.get(getActivity().getApplicationContext()));
+            mPresenter = new GamePresenter(GameData.get(getActivity().getApplicationContext()));
             Bundle bundle = getArguments();
 
             if (bundle != null && bundle.containsKey(BUNDLE_CONTENT)) {
@@ -337,7 +337,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         } else {
             // restore presenter
             mPresenter = (GamePresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
-            mPresenter.setRepository(RepositoryImpl.get(getActivity().getApplicationContext()));
+            mPresenter.setRepository(GameData.get(getActivity().getApplicationContext()));
         }
 
         mPresenter.setView(this);

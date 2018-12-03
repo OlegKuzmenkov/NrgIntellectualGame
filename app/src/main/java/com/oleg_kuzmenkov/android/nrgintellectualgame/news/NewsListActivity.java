@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
-import com.oleg_kuzmenkov.android.nrgintellectualgame.model.RepositoryImpl;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.model.GameData;
 
 import java.util.List;
 
@@ -114,7 +114,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         }
 
         mPresenter.setView(this);
-        mPresenter.setRepository(RepositoryImpl.get(this));
+        mPresenter.setRepository(GameData.get(this));
     }
 
     /**
