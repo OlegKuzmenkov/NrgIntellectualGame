@@ -87,7 +87,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         List<User> bestPlayersList = new ArrayList<>();
 
         for (User user : playersList) {
-            int rightAnswersPercent = calculateRightAnswersPercentage(user.getAnswersCount(),
+            int rightAnswersPercent = calculatePercentage(user.getAnswersCount(),
                     user.getRightAnswersCount());
 
             if (rightAnswersPercent > 50) {
@@ -98,14 +98,8 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         return bestPlayersList;
     }
 
-    private int calculateRightAnswersPercentage(int answersCount, int rightAnswersCount) {
-        int rightAnswersPercent = 0;
-
-        if (answersCount != 0) {
-            rightAnswersPercent = (int) (rightAnswersCount * 100.0f) / answersCount;
-        }
-
-        return rightAnswersPercent;
+    private int calculatePercentage(int answersCount, int rightAnswersCount) {
+        return answersCount > 0 ? rightAnswersCount * 100 / answersCount : 0;
     }
 
     private void createNewUser() {

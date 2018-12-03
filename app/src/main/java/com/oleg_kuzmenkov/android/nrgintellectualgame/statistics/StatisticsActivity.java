@@ -68,18 +68,12 @@ public class StatisticsActivity extends AppCompatActivity {
             userRightAnswersCount.setText(String.format("Count right answers: %d", rightAnswersCount));
 
             TextView userRightAnswersPercent = findViewById(R.id.percent_right_answers_text_view);
-            int rightAnswersPercent = calculateRightAnswersPercentage(answersCount,rightAnswersCount);
+            int rightAnswersPercent = calculatePercentage(answersCount,rightAnswersCount);
             userRightAnswersPercent.setText(String.format("%d", rightAnswersPercent));
         }
     }
 
-    private int calculateRightAnswersPercentage(int answersCount, int rightAnswersCount) {
-        int rightAnswersPercent = 0;
-
-        if (answersCount != 0) {
-            rightAnswersPercent = (int) (rightAnswersCount * 100.0f) / answersCount;
-        }
-
-        return rightAnswersPercent;
+    private int calculatePercentage(int answersCount, int rightAnswersCount) {
+        return answersCount > 0 ? rightAnswersCount * 100 / answersCount : 0;
     }
 }
