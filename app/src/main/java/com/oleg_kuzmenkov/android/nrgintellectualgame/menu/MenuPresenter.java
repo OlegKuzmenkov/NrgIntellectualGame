@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuPresenter implements Repository.ReadUsersCallback, Serializable {
+    private static final int AUTHORIZATION_REQUEST_CODE = 1;
+    private static final int BEST_PLAYERS_REQUEST_CODE = 2;
     private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
@@ -37,7 +39,7 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
-            mRepository.getUsersList(this);
+            mRepository.getUsersList(AUTHORIZATION_REQUEST_CODE,this);
         } else {
             Log.d(LOG_TAG, "Display user login");
             mMenuView.displayUserLogin(mCurrentUser.getLogin());
@@ -64,8 +66,9 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
     }
 
     @Override
-    public void onFinished(final List<User> userslist) {
+    public void onFinished(final List<User> userslist, int requestCode) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
+        Log.d(LOG_TAG, "Request code - "+requestCode);
 
         for (User user : userslist) {
             if (mUserLogin.equals(user.getLogin())) {

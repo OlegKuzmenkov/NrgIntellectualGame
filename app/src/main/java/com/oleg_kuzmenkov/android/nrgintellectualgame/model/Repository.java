@@ -6,7 +6,7 @@ public interface Repository {
 
     void getQuestionsList(ReadQuestionsCallback listener);
     void getNewsList(ReadNewsCallback listener);
-    void getUsersList(ReadUsersCallback listener);
+    void getUsersList(int requestCode, ReadUsersCallback listener);
     List<User> getUsers();
     void updateUser(User user);
     void addUser(User user);
@@ -16,7 +16,7 @@ public interface Repository {
     }
 
     interface ReadUsersCallback {
-        void onFinished(List<User> list);
+        void onFinished(List<User> list, int requestCode);
     }
 
     interface ReadNewsCallback {
