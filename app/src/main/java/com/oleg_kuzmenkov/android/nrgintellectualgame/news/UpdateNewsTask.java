@@ -72,7 +72,7 @@ class UpdateNewsTask extends AsyncTask<Void, Void, Void> {
 
                     Bitmap bitmap = downloadImage(newsObj.getString("urlToImage"));
                     //convert bitmap into blob
-                    byte[] byteArray = getBitmapBlob(bitmap);
+                    byte[] byteArray = convertBitmapToBlob(bitmap);
                     cv.put(Database.COLUMN_NEWS_IMAGE, byteArray);
 
                     database.insert(Database.TABLE_NEWS, null, cv);
@@ -129,7 +129,7 @@ class UpdateNewsTask extends AsyncTask<Void, Void, Void> {
     /**
      * Convert bitmap to a blob
      */
-    private byte[] getBitmapBlob(Bitmap bitmap) {
+    private byte[] convertBitmapToBlob(Bitmap bitmap) {
         byte[] byteArray = null;
 
         if (bitmap != null) {

@@ -77,13 +77,13 @@ public class GameData implements Repository {
     public void getUsersList(int requestCode, ReadUsersCallback listener) {
         if (mNewsList == null) {
             Log.d(LOG_TAG, "Start loading all users");
-            readRemoteDatabase(requestCode, listener);
+            readUsers(requestCode, listener);
         } else {
             Log.d(LOG_TAG, "List of users is exist. Loading is not started.");
             listener.onFinished(mUserList, requestCode);
         }
     }
-    
+
     /**
      * Update user data
      */
@@ -107,7 +107,7 @@ public class GameData implements Repository {
     /**
      * Read users list from remote database
      */
-    private void readRemoteDatabase(final int requestCode, final ReadUsersCallback listener) {
+    private void readUsers(final int requestCode, final ReadUsersCallback listener) {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
