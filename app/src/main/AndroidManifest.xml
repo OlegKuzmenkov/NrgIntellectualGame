@@ -33,7 +33,7 @@
         <activity android:name=".news.NewsActivity" />
 
         <service
-            android:name=".news.NewsUpdatingService"
+            android:name=".news.UpdateNewsService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

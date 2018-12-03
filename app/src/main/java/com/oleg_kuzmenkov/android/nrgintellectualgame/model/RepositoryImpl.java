@@ -47,7 +47,7 @@ public class RepositoryImpl implements Repository {
             mQuestionList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading questions.");
             SQLiteDatabase database = mLocalDatabase.getWritableDatabase();
-            new QuestionsReadingTask(database, mQuestionList, listener).execute();
+            new ReadQuestionsTask(database, mQuestionList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
             listener.onFinishedReadingQuestions(mQuestionList);
@@ -63,7 +63,7 @@ public class RepositoryImpl implements Repository {
             mNewsList = new ArrayList<>();
             Log.d(LOG_TAG, "Start loading news.");
             SQLiteDatabase database = mLocalDatabase.getWritableDatabase();
-            new NewsReadingTask(database, mNewsList, listener).execute();
+            new ReadNewsTask(database, mNewsList, listener).execute();
         } else {
             Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
             listener.onFinishedReadingNews(mNewsList);

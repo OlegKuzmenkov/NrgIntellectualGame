@@ -8,15 +8,15 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-class QuestionsReadingTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "QUESTIONS_READING_TASK";
+class ReadQuestionsTask extends AsyncTask<Void, Void, Void> {
+    private static final String LOG_TAG = "READ_QUESTIONS_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.QuestionsReadingCallback mListener;
     private List<Question> mQuestionList;
 
-    QuestionsReadingTask(final SQLiteDatabase database, List<Question> questions,
-                         Repository.QuestionsReadingCallback listener) {
+    ReadQuestionsTask(final SQLiteDatabase database, List<Question> questions,
+                      Repository.QuestionsReadingCallback listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;

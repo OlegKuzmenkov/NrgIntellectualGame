@@ -9,14 +9,14 @@ import android.util.Log;
 
 import java.util.List;
 
-class NewsReadingTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "NEWS_READING_TASK";
+class ReadNewsTask extends AsyncTask<Void, Void, Void> {
+    private static final String LOG_TAG = "READ_NEWS_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.NewsReadingCallback mListener;
     private List<News> mNewsList;
 
-    NewsReadingTask(final SQLiteDatabase database, final List<News> news, Repository.NewsReadingCallback listener) {
+    ReadNewsTask(final SQLiteDatabase database, final List<News> news, Repository.NewsReadingCallback listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;

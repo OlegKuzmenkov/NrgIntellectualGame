@@ -51,7 +51,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     @Override
     public void startNewsUpdating() {
             JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            ComponentName componentName = new ComponentName(NewsListActivity.this, NewsUpdatingService.class);
+            ComponentName componentName = new ComponentName(NewsListActivity.this, UpdateNewsService.class);
             JobInfo.Builder jobInfo = new JobInfo.Builder(101, componentName);
             jobInfo.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
             jobScheduler.schedule(jobInfo.build());

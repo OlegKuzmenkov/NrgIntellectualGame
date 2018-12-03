@@ -22,15 +22,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-class NewsUpdatingTask extends AsyncTask<Void, Void, Void> {
+class UpdateNewsTask extends AsyncTask<Void, Void, Void> {
     private static final String BROADCAST_ACTION = "DOWNLOAD_NEWS";
-    private static final String LOG_TAG = "NEWS_UPDATING_TASK";
+    private static final String LOG_TAG = "UPDATE_NEWS_TASK";
     private static final int REQUIRED_NEWS_COUNT = 10;
 
     private Context mContext;
     private Database mDatabase;
 
-    NewsUpdatingTask(final Context context) {
+    UpdateNewsTask(final Context context) {
         mContext = context;
         mDatabase = new Database(mContext);
     }
