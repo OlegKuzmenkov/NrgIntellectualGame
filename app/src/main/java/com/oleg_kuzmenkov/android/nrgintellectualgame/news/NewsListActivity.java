@@ -31,7 +31,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     private NewsListAdapter mAdapter;
     private FloatingActionButton mFab;
     private BroadcastReceiver mReceiver;
-    private NewsPresenter mPresenter;
+    private ReadNewsPresenter mPresenter;
     private TextView mNotification;
 
     @Override
@@ -108,9 +108,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
      */
     private void setupPresenter(final Bundle savedInstanceState){
         if (savedInstanceState == null) {
-            mPresenter = new NewsPresenter();
+            mPresenter = new ReadNewsPresenter();
         } else {
-            mPresenter = (NewsPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
+            mPresenter = (ReadNewsPresenter) savedInstanceState.getSerializable(BUNDLE_CONTENT);
         }
 
         mPresenter.setView(this);

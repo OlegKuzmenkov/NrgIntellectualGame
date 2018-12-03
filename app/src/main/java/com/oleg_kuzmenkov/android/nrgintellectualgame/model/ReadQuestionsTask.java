@@ -12,11 +12,11 @@ class ReadQuestionsTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "READ_QUESTIONS_TASK";
 
     private SQLiteDatabase mDatabase;
-    private Repository.QuestionsReadingCallback mListener;
+    private Repository.ReadQuestionsCallback mListener;
     private List<Question> mQuestionList;
 
     ReadQuestionsTask(final SQLiteDatabase database, List<Question> questions,
-                      Repository.QuestionsReadingCallback listener) {
+                      Repository.ReadQuestionsCallback listener) {
         mDatabase = database;
         mQuestionList = questions;
         mListener = listener;
@@ -29,7 +29,7 @@ class ReadQuestionsTask extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         Log.d(LOG_TAG, "Loading Questions is finished");
-        mListener.onFinishedReadingQuestions(mQuestionList);
+        mListener.onFinished(mQuestionList);
     }
 
     /**

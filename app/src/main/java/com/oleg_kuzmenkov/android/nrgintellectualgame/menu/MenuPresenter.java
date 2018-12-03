@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuPresenter implements Repository.UsersReadingCallback, Serializable {
+public class MenuPresenter implements Repository.ReadUsersCallback, Serializable {
     private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
@@ -37,7 +37,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         if (mCurrentUser == null) {
             mUserLogin = userLogin;
             mMenuView.enableMenu(false);
-            mRepository.readUsers(this);
+            mRepository.getUsersList(this);
         } else {
             Log.d(LOG_TAG, "Display user login");
             mMenuView.displayUserLogin(mCurrentUser.getLogin());
@@ -57,14 +57,14 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
     }
 
     void onClickBestPlayersButton() {
-        List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsersList());
+        List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsers());
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         // send list of the best players
         mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 
     @Override
-    public void onFinishedReadingUsers(final List<User> userslist) {
+    public void onFinished(final List<User> userslist) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
 
         for (User user : userslist) {
@@ -110,7 +110,7 @@ public class MenuPresenter implements Repository.UsersReadingCallback, Serializa
         newUser.setLatitude(0);
         newUser.setLongitude(0);
 
-        mRepository.addNewUser(newUser);
+        mRepository.addUser(newUser);
     }
 
     private void showMenu() {

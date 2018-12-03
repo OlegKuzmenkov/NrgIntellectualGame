@@ -13,10 +13,10 @@ class ReadNewsTask extends AsyncTask<Void, Void, Void> {
     private static final String LOG_TAG = "READ_NEWS_TASK";
 
     private SQLiteDatabase mDatabase;
-    private Repository.NewsReadingCallback mListener;
+    private Repository.ReadNewsCallback mListener;
     private List<News> mNewsList;
 
-    ReadNewsTask(final SQLiteDatabase database, final List<News> news, Repository.NewsReadingCallback listener) {
+    ReadNewsTask(final SQLiteDatabase database, final List<News> news, Repository.ReadNewsCallback listener) {
         mDatabase = database;
         mNewsList = news;
         mListener = listener;
@@ -29,7 +29,7 @@ class ReadNewsTask extends AsyncTask<Void, Void, Void> {
 
     protected void onPostExecute(Void result) {
         Log.d(LOG_TAG, "Loading News is finished");
-        mListener.onFinishedReadingNews(mNewsList);
+        mListener.onFinished(mNewsList);
     }
 
     /**
