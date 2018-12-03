@@ -59,10 +59,7 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
     }
 
     void onClickBestPlayersButton() {
-        List<User> bestPlayersList = chooseBestPlayers(mRepository.getUsers());
-        Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
-        // send list of the best players
-        mMenuView.startBestPlayersActivity(bestPlayersList);
+        mRepository.getUsersList(BEST_PLAYERS_REQUEST_CODE,this);
     }
 
     @Override
@@ -76,7 +73,7 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
                 break;
 
             case BEST_PLAYERS_REQUEST_CODE:
-                Log.i(LOG_TAG, "Best player request code");
+                showBestPlayers(userslist);
                 break;
 
             default:
@@ -100,6 +97,12 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
             // user is exist in firebase
             showMenu();
         }
+    }
+
+    private void showBestPlayers(final List<User> userslist) {
+        List<User> bestPlayersList = chooseBestPlayers(userslist);
+        Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
+        mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 
     private List<User> chooseBestPlayers(List<User> playersList) {
