@@ -61,13 +61,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
 
     @Override
     public void enableMenu(boolean isEnable) {
-        int state;
-
-        if (isEnable) {
-            state = View.VISIBLE;
-        } else {
-            state = View.GONE;
-        }
+        int state = isEnable ? View.VISIBLE : View.GONE;
 
         for (Button button : mMenuButtonsMap.values()) {
             button.setVisibility(state);
