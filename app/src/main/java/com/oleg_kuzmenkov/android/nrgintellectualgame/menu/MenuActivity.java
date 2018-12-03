@@ -181,11 +181,13 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
      */
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+
             if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    permission) != PackageManager.PERMISSION_GRANTED) {
                 //permission not granted
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
+                        new String[]{permission}, PERMISSION_REQUEST_CODE);
             }
         }
     }
