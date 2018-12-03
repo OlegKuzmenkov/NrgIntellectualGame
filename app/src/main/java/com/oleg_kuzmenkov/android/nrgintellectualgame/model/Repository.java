@@ -7,7 +7,6 @@ public interface Repository {
     void getQuestionsList(ReadQuestionsCallback listener);
     void getNewsList(ReadNewsCallback listener);
     void getUsersList(int requestCode, ReadUsersCallback listener);
-    List<User> getUsers();
     void updateUser(User user);
     void addUser(User user);
 

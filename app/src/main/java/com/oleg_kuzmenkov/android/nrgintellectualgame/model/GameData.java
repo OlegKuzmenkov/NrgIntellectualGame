@@ -83,16 +83,7 @@ public class GameData implements Repository {
             listener.onFinished(mUserList, requestCode);
         }
     }
-
-    /**
-     * Get users list
-     */
-    @Override
-    public List<User> getUsers() {
-        Log.d(LOG_TAG, "Send all users");
-        return mUserList;
-    }
-
+    
     /**
      * Update user data
      */
