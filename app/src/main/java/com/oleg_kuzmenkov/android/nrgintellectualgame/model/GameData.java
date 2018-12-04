@@ -75,7 +75,7 @@ public class GameData implements Repository {
      */
     @Override
     public void getUsersList(int requestCode, ReadUsersCallback listener) {
-        if (mNewsList == null) {
+        if (mUserList == null) {
             Log.d(LOG_TAG, "Start loading all users");
             readUsers(requestCode, listener);
         } else {
