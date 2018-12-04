@@ -136,6 +136,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         }
     }
 
+    /**
+     * Start the location service
+     */
     @Override
     public void startLocationService() {
         Log.d(LOG_TAG, "startGettingUserLocation");
@@ -165,6 +168,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         }
     }
 
+    /**
+     * Stop the location service
+     */
     @Override
     public void stopLocationService() {
         Log.d(LOG_TAG, "stopGettingUserLocation");
@@ -172,6 +178,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         mLocationClient = null;
     }
 
+    /**
+     * Display question on the screen
+     */
     @Override
     public void displayQuestion(final Question question) {
         Log.d(LOG_TAG, "displayQuestion");
@@ -192,6 +201,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         });
     }
 
+    /**
+     * Display last game results
+     */
     @Override
     public void displayResultsOfGame(int rightAnswersCount) {
         FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -199,6 +211,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         fm.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
+    /**
+     * Find the appropriate button
+     */
     @Nullable
     private Button getAppropriateButton(String buttonText) {
         for (Button button : mGameButtonsMap.values()) {
@@ -210,12 +225,18 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         return null;
     }
 
+    /**
+     * Display results after right answer from player
+     */
     @Override
     public void displayRightAnswerResult(final String rightAnswer) {
         getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
         mRightAnswerPlayer.start();
     }
 
+    /**
+     * Display results after wrong answer from player
+     */
     @Override
     public void displayWrongAnswerResult(String rightAnswer, String wrongAnswer) {
         getAppropriateButton(rightAnswer).setBackgroundResource(R.drawable.right_answer_button_border);
@@ -223,6 +244,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         mWrongAnswerPlayer.start();
     }
 
+    /**
+     * Display results when the user did not answer the question
+     */
     @Override
     public void displayRightAnswer(final String rightAnswer) {
         getActivity().runOnUiThread(new Runnable() {
@@ -234,6 +258,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         });
     }
 
+    /**
+     * Enable or disable game buttons depending on the parameter
+     */
     @Override
     public void enableAnswerButtons(final boolean isEnable) {
         getActivity().runOnUiThread(new Runnable() {
@@ -246,6 +273,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         });
     }
 
+    /**
+     * Refresh game buttons between questions
+     */
     @Override
     public void clearButtons() {
         getActivity().runOnUiThread(new Runnable() {
@@ -258,6 +288,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         });
     }
 
+    /**
+     * Show question's remain time for answering on the screen
+     */
     @Override
     public void setQuestionRemainTime(final int remainTime) {
         getActivity().runOnUiThread(new Runnable() {
@@ -274,6 +307,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
+    /**
+     * Show green question's remain time indicator for answering on the screen
+     */
     @Override
     public void setGreenTimeIndicator() {
         getActivity().runOnUiThread(new Runnable() {
@@ -284,6 +320,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         });
     }
 
+    /**
+     * Show red question's remain time indicator for answering on the screen
+     */
     @Override
     public void setRedTimeIndicator() {
         getActivity().runOnUiThread(new Runnable() {
@@ -304,12 +343,18 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         super.onDestroy();
     }
 
+    /**
+     * Initialize media player
+     */
     private MediaPlayer initMedia(int id) {
         MediaPlayer media = MediaPlayer.create(getActivity(), id);
         media.setVolume(VOLUME, VOLUME);
         return media;
     }
 
+    /**
+     * Initialize all controls
+     */
     private void initControls(@NonNull View view) {
         mQuestionTimer = view.findViewById(R.id.timer_view);
         mQuestionText = view.findViewById(R.id.question_text_view);
@@ -325,6 +370,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         }
     }
 
+    /**
+     * Setup presenter. Create or restore it.
+     */
     private void setupPresenter(final Bundle savedInstanceState){
         if (savedInstanceState == null) {
             // create presenter

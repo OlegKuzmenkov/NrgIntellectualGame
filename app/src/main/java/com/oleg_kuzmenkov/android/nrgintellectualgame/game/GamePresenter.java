@@ -58,6 +58,9 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
             mRepository.getQuestionsList(this);
     }
 
+    /**
+     * Get the next question from gameQuestionsList
+     */
     private void getNextQuestion() {
         if (mCurrentQuestionIndex == (mGameQuestionsList.size() - 1)) {
             finishGame();
@@ -70,11 +73,17 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         }
     }
 
+    /**
+     * Display the current question on the screen
+     */
     private void getCurrentQuestion() {
             mQuestionTimer = new QuestionTimer(this);
             mGameView.displayQuestion(mGameQuestionsList.get(mCurrentQuestionIndex));
     }
 
+    /**
+     * Restore question
+     */
     void restoreQuestion() {
         if (mAnswerIsDone) {
             getNextQuestion();
@@ -97,6 +106,9 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         mCurrentUser = user;
     }
 
+    /**
+     * Check user's location. Start location service if user's data is not exist
+     */
     void getUserLocation() {
         if (mCurrentUser.getLatitude() == 0) {
             Log.d(LOG_TAG, "It is a new User. We must get his location!!!");
@@ -123,6 +135,9 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         mGameView.displayResultsOfGame(mRightAnswersCount);
     }
 
+    /**
+     * Update user's statistics after game
+     */
     private void updateUserStatistics() {
         mCurrentUser.setRightAnswersCount(mCurrentUser.getRightAnswersCount() + mRightAnswersCount);
         mCurrentUser.setAnswersCount(mCurrentUser.getAnswersCount() + mGameQuestionsList.size());
@@ -204,7 +219,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
     }
 
     /**
-     * Start the Game
+     * This is callback from GameData. Start game after getting questions list
      */
     @Override
     public void onFinished(final List<Question> list) {

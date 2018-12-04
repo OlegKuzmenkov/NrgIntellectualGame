@@ -48,6 +48,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
         mPresenter.getNews();
     }
 
+    /**
+     * Start JobScheduler service for updating news
+     */
     @Override
     public void startNewsUpdating() {
             JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -57,6 +60,9 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
             jobScheduler.schedule(jobInfo.build());
     }
 
+    /**
+     * Display news list
+     */
     @Override
     public void displayNews(List<News> newsList) {
         mNotification.setText("List of all news:");

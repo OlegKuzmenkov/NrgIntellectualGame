@@ -73,6 +73,9 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Calculate the percentage of user's correct answers
+     */
     private int calculatePercentage(int answersCount, int rightAnswersCount) {
         return answersCount > 0 ? rightAnswersCount * 100 / answersCount : 0;
     }

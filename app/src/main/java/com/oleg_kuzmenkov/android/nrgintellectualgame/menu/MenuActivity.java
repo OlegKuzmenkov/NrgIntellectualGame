@@ -59,6 +59,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
 
     }
 
+    /**
+     * Enable or disable game menu depending on the parameter
+     */
     @Override
     public void enableMenu(boolean isEnable) {
         int state = isEnable ? View.VISIBLE : View.GONE;
@@ -68,6 +71,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         }
     }
 
+    /**
+     * Display login of current user
+     */
     @Override
     public void displayUserLogin(String userLogin) {
         mCurrentUser.setText(String.format("Login:%s ", userLogin));
@@ -102,6 +108,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         }
     }
 
+    /**
+     * Start new game
+     */
     @Override
     public void startGameActivity(User user) {
         Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
@@ -109,6 +118,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         startActivity(startGameIntent);
     }
 
+    /**
+     * Show statistics of current user
+     */
     @Override
     public void startStatisticsActivity(User user) {
         Intent startStatisticsIntent = new Intent(getApplicationContext(), StatisticsActivity.class);
@@ -116,6 +128,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         startActivity(startStatisticsIntent);
     }
 
+    /**
+     * Show location of the best players
+     */
     @Override
     public void startBestPlayersActivity(List<User> listBestPlayers) {
         Intent startBestPlayersActivityIntent = new Intent(getApplicationContext(), BestPlayersActivity.class);
@@ -123,6 +138,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         startActivity(startBestPlayersActivityIntent);
     }
 
+    /**
+     * Show last available news
+     */
     @Override
     public void startNewsActivity() {
         Intent startNewsActivityIntent = new Intent(getApplicationContext(), NewsListActivity.class);
@@ -192,6 +210,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         }
     }
 
+    /**
+     * Initialize all controls
+     */
     private void initControls() {
         mCurrentUser = findViewById(R.id.current_user_text_view);
 
@@ -207,6 +228,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         }
     }
 
+    /**
+     * Setup presenter. Create or restore it.
+     */
     private void setupPresenter(final Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             // create presenter

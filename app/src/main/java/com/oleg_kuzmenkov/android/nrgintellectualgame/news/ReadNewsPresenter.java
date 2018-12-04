@@ -26,6 +26,9 @@ public class ReadNewsPresenter implements Repository.ReadNewsCallback, Serializa
         mRepository = repository;
     }
 
+    /**
+     * Detach presenter with view and repository
+     */
     void detach() {
         mNewsView = null;
         mRepository = null;
@@ -44,6 +47,9 @@ public class ReadNewsPresenter implements Repository.ReadNewsCallback, Serializa
         }
     }
 
+    /**
+     * This is callback from GameData. Show list of available news
+     */
     @Override
     public void onFinished(List<News> list) {
         Log.d(LOG_TAG, "Count of news = " + list.size());

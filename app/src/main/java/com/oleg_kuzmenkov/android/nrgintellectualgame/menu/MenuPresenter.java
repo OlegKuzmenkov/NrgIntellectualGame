@@ -62,6 +62,10 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         mRepository.getUsersList(BEST_PLAYERS_REQUEST_CODE,this);
     }
 
+    /**
+     * This is callback from GameData. Show the best players or authorize user depending
+     * on the parameter
+     */
     @Override
     public void onFinished(final List<User> userslist, int requestCode) {
         Log.d(LOG_TAG, "OnFinishedGettingUsers");
@@ -82,6 +86,9 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         }
     }
 
+    /**
+     * Authorize user
+     */
     private void authorizeUser(final List<User> userslist) {
         for (User user : userslist) {
             if (mUserLogin.equals(user.getLogin())) {
@@ -99,12 +106,18 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         }
     }
 
+    /**
+     * Show the best players
+     */
     private void showBestPlayers(final List<User> userslist) {
         List<User> bestPlayersList = chooseBestPlayers(userslist);
         Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 
+    /**
+     * Choose the best players
+     */
     private List<User> chooseBestPlayers(List<User> playersList) {
         List<User> bestPlayersList = new ArrayList<>();
 
@@ -120,10 +133,16 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         return bestPlayersList;
     }
 
+    /**
+     * Calculate the percentage of user's correct answers
+     */
     private int calculatePercentage(int answersCount, int rightAnswersCount) {
         return answersCount > 0 ? rightAnswersCount * 100 / answersCount : 0;
     }
 
+    /**
+     * Create a new user
+     */
     private void createNewUser() {
         User newUser = new User();
         newUser.setLogin(mUserLogin);
@@ -135,6 +154,9 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
         mRepository.addUser(newUser);
     }
 
+    /**
+     * Show menu for user
+     */
     private void showMenu() {
         if (mMenuView != null) {
             mMenuView.enableMenu(true);

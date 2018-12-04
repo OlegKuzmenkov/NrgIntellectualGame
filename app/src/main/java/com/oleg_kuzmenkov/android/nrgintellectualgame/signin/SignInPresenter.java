@@ -14,12 +14,15 @@ public class SignInPresenter implements Serializable {
     }
 
     /**
-     * Detach View and presenter
+     * Detach presenter with view
      */
     void detach() {
         mSignInView = null;
     }
 
+    /**
+     * Check user login
+     */
     void checkUserLogin(String userLogin) {
         if (userLogin.equals("")) {
             mSignInView.displayNotification();
