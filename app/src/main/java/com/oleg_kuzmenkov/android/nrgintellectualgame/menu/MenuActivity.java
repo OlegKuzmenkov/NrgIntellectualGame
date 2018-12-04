@@ -103,7 +103,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
                 break;
 
             default:
-                Log.i(LOG_TAG, "onClick() from another view");
+                Log.i(LOG_TAG, "onClick() from unknown view");
                 break;
         }
     }
@@ -165,7 +165,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "MenuActivity:onSaveInstanceState");
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 

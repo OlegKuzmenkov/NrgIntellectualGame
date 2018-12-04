@@ -45,8 +45,7 @@ public class BestPlayersActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        Log.d(LOG_TAG, "OnMapReady");
-        Log.d(LOG_TAG, "Best players count = " + mBestPlayersList.size());
+        Log.i(LOG_TAG, "OnMapReady");
 
         for (User user : mBestPlayersList) {
             LatLng userPlace = new LatLng(user.getLatitude(), user.getLongitude());

@@ -91,12 +91,11 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      * Create the Location callback
      */
     private void createLocationCallback() {
-        Log.d(LOG_TAG, "createLocationCallback");
+        Log.i(LOG_TAG, "createLocationCallback");
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(final LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Log.d(LOG_TAG, "OnLocationResult from Service");
                 //set location result
                 setLocationResult(locationResult);
             }
@@ -107,7 +106,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      * Create the Location request
      */
     private void createLocationRequest() {
-        Log.d(LOG_TAG, "createLocationRequest");
+        Log.i(LOG_TAG, "createLocationRequest");
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(0);
         mLocationRequest.setFastestInterval(0);
@@ -118,7 +117,6 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      * Set user's location
      */
     private void setLocationResult(final LocationResult locationResult) {
-        Log.d(LOG_TAG, "OnLocationResult");
         List<Location> locationList;
 
         if (locationResult != null) {
@@ -130,8 +128,6 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         if (locationList.size() > 0) {
             //the last location in the list is the newest
             Location currentLocation = locationList.get(locationList.size() - 1);
-            Log.d(LOG_TAG, "Location latitude - " + currentLocation.getLatitude());
-            Log.d(LOG_TAG, "Location longitude - " + currentLocation.getLongitude());
             mPresenter.setUserLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
         }
     }
@@ -141,7 +137,6 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      */
     @Override
     public void startLocationService() {
-        Log.d(LOG_TAG, "startGettingUserLocation");
         createLocationCallback();
         createLocationRequest();
         mLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -152,7 +147,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
                 mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             } else {
                 // Send Message to User
-                Log.d(LOG_TAG, "Geolocation is disabled");
+                Log.i(LOG_TAG, "Geolocation is disabled");
             }
         } else {
             mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
@@ -183,7 +178,6 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      */
     @Override
     public void displayQuestion(final Question question) {
-        Log.d(LOG_TAG, "displayQuestion");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -334,7 +328,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
 
     @Override
     public void onDestroy() {
-        Log.d(LOG_TAG, "Fragment: onDestroy");
+        Log.i(LOG_TAG, "GameFragment: onDestroy");
         if (mLocationClient != null) {
             mLocationClient.removeLocationUpdates(mLocationCallback);
         }

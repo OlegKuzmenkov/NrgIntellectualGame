@@ -42,7 +42,6 @@ class UpdateNewsTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected void onPostExecute(Void result) {
-        Log.d(LOG_TAG, "Loading News is finished");
         Intent intent = new Intent(BROADCAST_ACTION);
         mContext.sendBroadcast(intent);
     }
@@ -79,7 +78,7 @@ class UpdateNewsTask extends AsyncTask<Void, Void, Void> {
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Error of news saving");
+            Log.e(LOG_TAG, "Error news saving");
             e.printStackTrace();
         }
 

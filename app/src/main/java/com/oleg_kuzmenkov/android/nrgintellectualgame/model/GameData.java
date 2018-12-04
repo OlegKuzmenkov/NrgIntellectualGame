@@ -45,11 +45,11 @@ public class GameData implements Repository {
     public void getQuestionsList(ReadQuestionsCallback listener) {
         if (mQuestionList == null) {
             mQuestionList = new ArrayList<>();
-            Log.d(LOG_TAG, "Start loading questions.");
+            Log.i(LOG_TAG, "Start loading questions.");
             SQLiteDatabase database = mLocalDatabase.getWritableDatabase();
             new ReadQuestionsTask(database, mQuestionList, listener).execute();
         } else {
-            Log.d(LOG_TAG, "List of questions is exist. Loading is not started.");
+            Log.i(LOG_TAG, "List of questions is exist. Loading is not started.");
             listener.onFinished(mQuestionList);
         }
     }
@@ -61,11 +61,11 @@ public class GameData implements Repository {
     public void getNewsList(ReadNewsCallback listener) {
         if (mNewsList == null) {
             mNewsList = new ArrayList<>();
-            Log.d(LOG_TAG, "Start loading news.");
+            Log.i(LOG_TAG, "Start loading news.");
             SQLiteDatabase database = mLocalDatabase.getWritableDatabase();
             new ReadNewsTask(database, mNewsList, listener).execute();
         } else {
-            Log.d(LOG_TAG, "List of news is exist. Loading is not started.");
+            Log.i(LOG_TAG, "List of news is exist. Loading is not started.");
             listener.onFinished(mNewsList);
         }
     }
@@ -76,10 +76,10 @@ public class GameData implements Repository {
     @Override
     public void getUsersList(int requestCode, ReadUsersCallback listener) {
         if (mUserList == null) {
-            Log.d(LOG_TAG, "Start loading all users");
+            Log.i(LOG_TAG, "Start loading all users");
             readUsers(requestCode, listener);
         } else {
-            Log.d(LOG_TAG, "List of users is exist. Loading is not started.");
+            Log.i(LOG_TAG, "List of users is exist. Loading is not started.");
             listener.onFinished(mUserList, requestCode);
         }
     }
@@ -126,7 +126,7 @@ public class GameData implements Repository {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(LOG_TAG, "loading is onCancelled", databaseError.toException());
+                Log.e(LOG_TAG, "loading is onCancelled", databaseError.toException());
             }
         };
 

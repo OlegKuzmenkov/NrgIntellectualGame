@@ -77,7 +77,6 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(LOG_TAG, "NewsListActivity:onSaveInstanceState");
         outState.putSerializable(BUNDLE_CONTENT, mPresenter);
     }
 
@@ -95,7 +94,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     private void createBroadcastReceiver() {
         mReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
-                Log.d(LOG_TAG, "OnReceive");
+                Log.i(LOG_TAG, "OnReceive");
                 mPresenter.getNews();
             }
         };
