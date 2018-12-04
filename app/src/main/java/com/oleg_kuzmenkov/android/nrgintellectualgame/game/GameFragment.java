@@ -168,9 +168,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      */
     @Override
     public void stopLocationService() {
-        Log.d(LOG_TAG, "stopGettingUserLocation");
-        mLocationClient.removeLocationUpdates(mLocationCallback);
-        mLocationClient = null;
+        if (mLocationClient != null) {
+            mLocationClient.removeLocationUpdates(mLocationCallback);
+        }
     }
 
     /**
@@ -329,9 +329,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
     @Override
     public void onDestroy() {
         Log.i(LOG_TAG, "GameFragment: onDestroy");
-        if (mLocationClient != null) {
-            mLocationClient.removeLocationUpdates(mLocationCallback);
-        }
+        stopLocationService();
         mPresenter.detach();
         super.onDestroy();
     }
