@@ -66,6 +66,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
             finishGame();
         } else {
             //get new question
+            mAnswerIsDone = false;
             mCurrentQuestionIndex++;
             mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
             mGameView.setGreenTimeIndicator();
@@ -85,21 +86,15 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
      * Restore game
      */
     void restoreGame() {
-        if (mAnswerIsDone) {
+        if (mAnswerIsDone || mQuestionRemainTime == 0) {
             moveToNextQuestion();
-            return;
-        }
+        } else {
+            if (mQuestionRemainTime < 4) {
+                mGameView.setRedTimeIndicator();
+            }
 
-        if (mQuestionRemainTime == 0) {
-            //time is left
-            return;
+            askQuestion();
         }
-
-        if (mQuestionRemainTime < 4) {
-            mGameView.setRedTimeIndicator();
-        }
-
-        askQuestion();
     }
 
     void setUser(final User user) {
