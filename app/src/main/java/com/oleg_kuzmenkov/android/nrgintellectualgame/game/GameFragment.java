@@ -81,7 +81,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
             mPresenter.startGame();
         } else {
             // restore game
-            mPresenter.restoreQuestion();
+            mPresenter.restoreGame();
         }
 
         return v;

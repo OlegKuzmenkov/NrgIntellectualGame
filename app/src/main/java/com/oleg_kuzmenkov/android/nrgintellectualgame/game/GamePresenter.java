@@ -59,9 +59,9 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
     }
 
     /**
-     * Get the next question from gameQuestionsList
+     * Move to the next question from gameQuestionsList
      */
-    private void getNextQuestion() {
+    private void moveToNextQuestion() {
         if (mCurrentQuestionIndex == (mGameQuestionsList.size() - 1)) {
             finishGame();
         } else {
@@ -69,24 +69,24 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
             mCurrentQuestionIndex++;
             mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
             mGameView.setGreenTimeIndicator();
-            getCurrentQuestion();
+            askQuestion();
         }
     }
 
     /**
      * Display the current question on the screen
      */
-    private void getCurrentQuestion() {
+    private void askQuestion() {
             mQuestionTimer = new QuestionTimer(this);
             mGameView.displayQuestion(mGameQuestionsList.get(mCurrentQuestionIndex));
     }
 
     /**
-     * Restore question
+     * Restore game
      */
-    void restoreQuestion() {
+    void restoreGame() {
         if (mAnswerIsDone) {
-            getNextQuestion();
+            moveToNextQuestion();
             return;
         }
 
@@ -99,7 +99,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
             mGameView.setRedTimeIndicator();
         }
 
-        getCurrentQuestion();
+        askQuestion();
     }
 
     void setUser(final User user) {
@@ -215,7 +215,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         //refresh game board
         mGameView.clearButtons();
         mGameView.enableAnswerButtons(true);
-        getNextQuestion();
+        moveToNextQuestion();
     }
 
     /**
@@ -228,6 +228,6 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         mRightAnswersCount = 0;
         //refresh timer
         mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
-        getCurrentQuestion();
+        askQuestion();
     }
 }
