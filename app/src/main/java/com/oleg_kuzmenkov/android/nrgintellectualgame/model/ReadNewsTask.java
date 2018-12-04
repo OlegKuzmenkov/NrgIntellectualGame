@@ -10,7 +10,6 @@ import android.util.Log;
 import java.util.List;
 
 class ReadNewsTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "READ_NEWS_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.ReadNewsCallback mListener;
@@ -28,7 +27,6 @@ class ReadNewsTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected void onPostExecute(Void result) {
-        Log.d(LOG_TAG, "Loading News is finished");
         mListener.onFinished(mNewsList);
     }
 
@@ -64,10 +62,8 @@ class ReadNewsTask extends AsyncTask<Void, Void, Void> {
                     mNewsList.add(news);
 
                 } catch (Exception e) {
-                    Log.e(LOG_TAG, "News contains an error!");
+                    Log.e(GameData.LOG_TAG, "News contains an error!");
                 }
-
-                Log.d(LOG_TAG, String.format("Count of news is - %d", mNewsList.size()));
             } while (c.moveToNext());
         }
 

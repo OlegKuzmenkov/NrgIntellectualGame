@@ -3,13 +3,11 @@ package com.oleg_kuzmenkov.android.nrgintellectualgame.model;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class ReadQuestionsTask extends AsyncTask<Void, Void, Void> {
-    private static final String LOG_TAG = "READ_QUESTIONS_TASK";
 
     private SQLiteDatabase mDatabase;
     private Repository.ReadQuestionsCallback mListener;
@@ -28,7 +26,6 @@ class ReadQuestionsTask extends AsyncTask<Void, Void, Void> {
     }
 
     protected void onPostExecute(Void result) {
-        Log.d(LOG_TAG, "Loading Questions is finished");
         mListener.onFinished(mQuestionList);
     }
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameData implements Repository {
-    private static final String LOG_TAG = "GAME_DATA";
+    static final String LOG_TAG = "GAME_DATA";
     private static GameData sRepository;
 
     private Database mLocalDatabase;

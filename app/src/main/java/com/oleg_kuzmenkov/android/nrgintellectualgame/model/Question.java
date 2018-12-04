@@ -7,7 +7,8 @@ public class Question {
     private List<String> mAnswersList;
     private String mRightAnswer;
 
-    Question() { }
+    Question() {
+    }
 
     public String getQuestionText() {
         return mQuestionText;
