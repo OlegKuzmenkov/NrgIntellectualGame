@@ -18,7 +18,7 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 import java.util.List;
 
 public class BestPlayersActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "BEST_PLAYER_ACTIVITY";
 
     private GoogleMap mGoogleMap;
     private MapFragment mMapFragment;

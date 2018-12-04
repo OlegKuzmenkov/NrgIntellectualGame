@@ -34,7 +34,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     public static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
     private static final int PERMISSION_REQUEST_CODE = 1;
-    private static final String LOG_TAG = "Message";
+    private static final String LOG_TAG = "MENU_ACTIVITY";
 
     private MenuPresenter mPresenter;
 
