@@ -48,18 +48,25 @@ class ReadNewsTask extends AsyncTask<Void, Void, Void> {
 
             do {
                 News news = new News();
-                news.setSource(c.getString(newsSourceColIndex));
-                news.setTitle(c.getString(newsTitleColIndex));
-                news.setDescription(c.getString(newsDescriptionColIndex));
-                news.setUrl(c.getString(newsURLColIndex));
-                byte[] byteArray = c.getBlob(newsImageColIndex);
 
-                if (byteArray != null) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                    news.setImage(bitmap);
+                try {
+                    news.setSource(c.getString(newsSourceColIndex));
+                    news.setTitle(c.getString(newsTitleColIndex));
+                    news.setDescription(c.getString(newsDescriptionColIndex));
+                    news.setUrl(c.getString(newsURLColIndex));
+                    byte[] byteArray = c.getBlob(newsImageColIndex);
+
+                    if (byteArray != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                        news.setImage(bitmap);
+                    }
+
+                    mNewsList.add(news);
+
+                } catch (Exception e) {
+                    Log.e(LOG_TAG, "News contains an error!");
                 }
 
-                mNewsList.add(news);
                 Log.d(LOG_TAG, String.format("Count of news is - %d", mNewsList.size()));
             } while (c.moveToNext());
         }
