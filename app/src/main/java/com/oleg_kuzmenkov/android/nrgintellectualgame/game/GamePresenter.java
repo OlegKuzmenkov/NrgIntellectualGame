@@ -21,18 +21,19 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
     private static final int RED_INDICATOR_TIME = 3;
     private static final int QUESTION_AVAILABLE_TIME = 10;
 
-    private int mCurrentQuestionIndex;
-    private int mRightAnswersCount;
-    private int mQuestionRemainTime;
-    private boolean mAnswerIsDone;
-    private QuestionTimer mQuestionTimer;
-    private QuestionPause mQuestionPause;
-    private List<Question> mGameQuestionsList;
-    private User mCurrentUser;
-
     private GameView mGameView;
     private Repository mRepository;
 
+    private User mCurrentUser;
+
+    private List<Question> mGameQuestionsList;
+    private boolean mIsAnswerDone;
+    private int mQuestionIndex;
+    private int mQuestionRemainTime;
+    private int mRightAnswersCount;
+    private QuestionTimer mQuestionTimer;
+    private QuestionPause mQuestionPause;
+    
     GamePresenter(@NonNull final Repository repository) {
         mRepository = repository;
     }
@@ -62,12 +63,12 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
      * Move to the next question from gameQuestionsList
      */
     private void moveToNextQuestion() {
-        if (mCurrentQuestionIndex == (mGameQuestionsList.size() - 1)) {
+        if (mQuestionIndex == (mGameQuestionsList.size() - 1)) {
             finishGame();
         } else {
             //get new question
-            mAnswerIsDone = false;
-            mCurrentQuestionIndex++;
+            mIsAnswerDone = false;
+            mQuestionIndex++;
             mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
             mGameView.setGreenTimeIndicator();
             askQuestion();
@@ -79,14 +80,14 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
      */
     private void askQuestion() {
             mQuestionTimer = new QuestionTimer(this);
-            mGameView.displayQuestion(mGameQuestionsList.get(mCurrentQuestionIndex));
+            mGameView.displayQuestion(mGameQuestionsList.get(mQuestionIndex));
     }
 
     /**
      * Restore game
      */
     void restoreGame() {
-        if (mAnswerIsDone || mQuestionRemainTime == 0) {
+        if (mIsAnswerDone || mQuestionRemainTime == 0) {
             moveToNextQuestion();
         } else {
             if (mQuestionRemainTime < 4) {
@@ -144,10 +145,10 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
      */
     void checkAnswer(String answer) {
         mQuestionTimer.cancel();
-        mAnswerIsDone = true;
+        mIsAnswerDone = true;
         mGameView.enableAnswerButtons(false);
 
-        String rightAnswer = mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer();
+        String rightAnswer = mGameQuestionsList.get(mQuestionIndex).getRightAnswer();
         if (rightAnswer.equals(answer)) {
             //answer is true
             mRightAnswersCount++;
@@ -196,7 +197,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
 
         if (mQuestionRemainTime == 0) {
             mQuestionTimer.cancel();
-            mGameView.displayRightAnswer(mGameQuestionsList.get(mCurrentQuestionIndex).getRightAnswer());
+            mGameView.displayRightAnswer(mGameQuestionsList.get(mQuestionIndex).getRightAnswer());
             mQuestionPause = new QuestionPause(this);
             mQuestionPause.start();
         }
@@ -219,7 +220,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
     @Override
     public void onFinished(final List<Question> list) {
         chooseRandomQuestions(list);
-        mCurrentQuestionIndex = 0;
+        mQuestionIndex = 0;
         mRightAnswersCount = 0;
         //refresh timer
         mQuestionRemainTime = QUESTION_AVAILABLE_TIME;
