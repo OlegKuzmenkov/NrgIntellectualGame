@@ -6,13 +6,13 @@ import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 import java.io.Serializable;
 import java.util.List;
 
-public class ReadNewsPresenter implements Repository.ReadNewsCallback, Serializable {
+public class NewsPresenter implements Repository.ReadNewsCallback, Serializable {
     private transient NewsView mNewsView;
     private transient Repository mRepository;
 
     private boolean mIsServiceStart;
 
-    ReadNewsPresenter() { }
+    NewsPresenter() { }
 
     public void setView(NewsView newsView) {
         mNewsView = newsView;
