@@ -1,7 +1,5 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.news;
 
-import android.util.Log;
-
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.News;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 
@@ -9,8 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ReadNewsPresenter implements Repository.ReadNewsCallback, Serializable {
-    private static final String LOG_TAG = "Message";
-
     private transient NewsView mNewsView;
     private transient Repository mRepository;
 
@@ -52,7 +48,6 @@ public class ReadNewsPresenter implements Repository.ReadNewsCallback, Serializa
      */
     @Override
     public void onFinished(List<News> list) {
-        Log.d(LOG_TAG, "Count of news = " + list.size());
         mNewsView.displayNews(list);
     }
 }

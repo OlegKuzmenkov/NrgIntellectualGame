@@ -1,7 +1,5 @@
 package com.oleg_kuzmenkov.android.nrgintellectualgame.menu;
 
-import android.util.Log;
-
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.Repository;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
@@ -12,7 +10,6 @@ import java.util.List;
 public class MenuPresenter implements Repository.ReadUsersCallback, Serializable {
     private static final int AUTHORIZATION_REQUEST_CODE = 1;
     private static final int BEST_PLAYERS_REQUEST_CODE = 2;
-    private static final String LOG_TAG = "Message";
 
     private User mCurrentUser;
     private String mUserLogin;
@@ -41,7 +38,6 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
             mMenuView.enableMenu(false);
             mRepository.getUsersList(AUTHORIZATION_REQUEST_CODE,this);
         } else {
-            Log.d(LOG_TAG, "Display user login");
             mMenuView.displayUserLogin(mCurrentUser.getLogin());
         }
     }
@@ -68,8 +64,6 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
      */
     @Override
     public void onFinished(final List<User> userslist, int requestCode) {
-        Log.d(LOG_TAG, "OnFinishedGettingUsers");
-        Log.d(LOG_TAG, "Request code - "+requestCode);
 
         switch (requestCode) {
             case AUTHORIZATION_REQUEST_CODE:
@@ -81,7 +75,7 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
                 break;
 
             default:
-                Log.i(LOG_TAG, "Unknown request");
+                //unknown request
                 break;
         }
     }
@@ -111,7 +105,6 @@ public class MenuPresenter implements Repository.ReadUsersCallback, Serializable
      */
     private void showBestPlayers(final List<User> userslist) {
         List<User> bestPlayersList = chooseBestPlayers(userslist);
-        Log.d(LOG_TAG, "Best players count = " + bestPlayersList.size());
         mMenuView.startBestPlayersActivity(bestPlayersList);
     }
 

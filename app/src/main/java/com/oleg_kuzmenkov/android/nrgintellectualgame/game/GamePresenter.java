@@ -16,8 +16,6 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
         QuestionTimerCallback, QuestionPauseCallback {
 
     static final int GAME_QUESTIONS_COUNT = 3;
-
-    private static final String LOG_TAG = "GAME_PRESENTER";
     private static final int RED_INDICATOR_TIME = 3;
     private static final int QUESTION_AVAILABLE_TIME = 10;
 
@@ -107,8 +105,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
      */
     void getUserLocation() {
         if (mCurrentUser.getLatitude() == 0) {
-            Log.d(LOG_TAG, "It is a new User. We must get his location!!!");
-            //get location
+            //it's a new user
             mGameView.startLocationService();
         }
     }
