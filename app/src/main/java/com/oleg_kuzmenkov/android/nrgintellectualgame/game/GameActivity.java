@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 public class GameActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
         if (fragment == null) {
             Intent intent = getIntent();
-            User user = (User) intent.getSerializableExtra("1");
+            User user = (User) intent.getSerializableExtra(MenuActivity.INTENT_CONTENT);
             fragment = GameFragment.newInstance(user);
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }

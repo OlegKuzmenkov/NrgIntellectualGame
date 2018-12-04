@@ -31,8 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MenuActivity extends AppCompatActivity implements MenuView, View.OnClickListener {
+    public static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
-    private static final String INTENT_CONTENT = "INTENT_CONTENT";
     private static final int PERMISSION_REQUEST_CODE = 1;
     private static final String LOG_TAG = "Message";
 
@@ -51,7 +51,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
         setupPresenter(savedInstanceState);
 
         //get data from intent
-        String userLogin = getIntent().getStringExtra(INTENT_CONTENT);
+        String userLogin = getIntent().getStringExtra(SignInActivity.INTENT_CONTENT);
         //get user data
         mPresenter.getUserData(userLogin);
 
@@ -114,7 +114,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     @Override
     public void startGameActivity(User user) {
         Intent startGameIntent = new Intent(getApplicationContext(), GameActivity.class);
-        startGameIntent.putExtra("1", user);
+        startGameIntent.putExtra(INTENT_CONTENT, user);
         startActivity(startGameIntent);
     }
 
@@ -124,7 +124,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     @Override
     public void startStatisticsActivity(User user) {
         Intent startStatisticsIntent = new Intent(getApplicationContext(), StatisticsActivity.class);
-        startStatisticsIntent.putExtra("1", user);
+        startStatisticsIntent.putExtra(INTENT_CONTENT, user);
         startActivity(startStatisticsIntent);
     }
 
@@ -134,7 +134,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView, View.On
     @Override
     public void startBestPlayersActivity(List<User> listBestPlayers) {
         Intent startBestPlayersActivityIntent = new Intent(getApplicationContext(), BestPlayersActivity.class);
-        startBestPlayersActivityIntent.putExtra("1", (Serializable) listBestPlayers);
+        startBestPlayersActivityIntent.putExtra(INTENT_CONTENT, (Serializable) listBestPlayers);
         startActivity(startBestPlayersActivityIntent);
     }
 

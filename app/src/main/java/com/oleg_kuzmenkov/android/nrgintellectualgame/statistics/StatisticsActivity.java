@@ -10,11 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 public class StatisticsActivity extends AppCompatActivity {
-    private static final String INTENT_CONTENT = "1";
-
     private Button mExit;
 
     @Override
@@ -22,7 +21,7 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        User user = (User) getIntent().getSerializableExtra(INTENT_CONTENT);
+        User user = (User) getIntent().getSerializableExtra(MenuActivity.INTENT_CONTENT);
         setUserStatistics(user);
 
         mExit = findViewById(R.id.go_to_main_menu_button);

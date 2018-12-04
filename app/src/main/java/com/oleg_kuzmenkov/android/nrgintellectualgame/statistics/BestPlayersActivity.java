@@ -12,12 +12,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
+import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuActivity;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.model.User;
 
 import java.util.List;
 
 public class BestPlayersActivity extends AppCompatActivity implements OnMapReadyCallback {
-    private static final String INTENT_CONTENT = "1";
     private static final String LOG_TAG = "Message";
 
     private GoogleMap mGoogleMap;
@@ -31,7 +31,7 @@ public class BestPlayersActivity extends AppCompatActivity implements OnMapReady
 
         //get Data From intent
         Intent intent = getIntent();
-        mBestPlayersList = (List<User>) intent.getSerializableExtra(INTENT_CONTENT);
+        mBestPlayersList = (List<User>) intent.getSerializableExtra(MenuActivity.INTENT_CONTENT);
 
         // create dynamic MapFragment
         mMapFragment = MapFragment.newInstance();

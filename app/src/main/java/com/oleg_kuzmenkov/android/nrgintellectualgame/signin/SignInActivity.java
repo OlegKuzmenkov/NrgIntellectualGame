@@ -11,9 +11,9 @@ import android.widget.Toast;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.R;
 import com.oleg_kuzmenkov.android.nrgintellectualgame.menu.MenuActivity;
 
-public class SignInActivity extends AppCompatActivity implements SignInView{
+public class SignInActivity extends AppCompatActivity implements SignInView {
+    public static final String INTENT_CONTENT = "USER_LOGIN";
     private static final String BUNDLE_CONTENT = "BUNDLE_CONTENT";
-    private static final String INTENT_CONTENT = "INTENT_CONTENT";
 
     private SignInPresenter mPresenter;
 
