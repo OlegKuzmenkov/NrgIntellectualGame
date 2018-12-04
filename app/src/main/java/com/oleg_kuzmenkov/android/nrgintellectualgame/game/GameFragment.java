@@ -184,7 +184,6 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
     @Override
     public void displayQuestion(final Question question) {
         Log.d(LOG_TAG, "displayQuestion");
-        //mAnswerIsDone = false;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

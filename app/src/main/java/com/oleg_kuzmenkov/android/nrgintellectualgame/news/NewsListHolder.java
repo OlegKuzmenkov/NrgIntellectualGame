@@ -54,7 +54,6 @@ public class NewsListHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), NewsActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(INTENT_CONTENT, mNews.getUrl());
         view.getContext().startActivity(intent);
     }

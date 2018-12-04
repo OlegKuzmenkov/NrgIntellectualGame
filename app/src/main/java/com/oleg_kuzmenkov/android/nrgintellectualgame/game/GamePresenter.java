@@ -33,7 +33,7 @@ public class GamePresenter implements Repository.ReadQuestionsCallback, Serializ
     private int mRightAnswersCount;
     private QuestionTimer mQuestionTimer;
     private QuestionPause mQuestionPause;
-    
+
     GamePresenter(@NonNull final Repository repository) {
         mRepository = repository;
     }
