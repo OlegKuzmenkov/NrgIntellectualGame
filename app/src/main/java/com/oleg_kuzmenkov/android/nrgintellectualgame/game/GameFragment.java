@@ -142,7 +142,7 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
                 //location permission is not granted
                 Log.i(LOG_TAG, "Geolocation is disabled");
             }
-            
+
         } else {
             mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }

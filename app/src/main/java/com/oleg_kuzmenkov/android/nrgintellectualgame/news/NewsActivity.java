@@ -13,7 +13,7 @@ public class NewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_original_news);
+        setContentView(R.layout.activity_news);
 
         String  url = getIntent().getStringExtra(INTENT_CONTENT);
 

@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity implements SignInView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_login);
+        setContentView(R.layout.activity_sign_in);
 
         setupPresenter(savedInstanceState);
 

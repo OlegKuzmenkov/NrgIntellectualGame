@@ -37,7 +37,7 @@ public class NewsListActivity extends AppCompatActivity implements NewsView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_news_list);
 
         initControls();
         
