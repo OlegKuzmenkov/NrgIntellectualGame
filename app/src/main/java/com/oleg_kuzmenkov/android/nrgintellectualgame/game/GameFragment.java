@@ -117,18 +117,9 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
      * Set user's location
      */
     private void setLocationResult(final LocationResult locationResult) {
-        List<Location> locationList;
-
         if (locationResult != null) {
-            locationList = locationResult.getLocations();
-        } else {
-            return;
-        }
-
-        if (locationList.size() > 0) {
-            //the last location in the list is the newest
-            Location currentLocation = locationList.get(locationList.size() - 1);
-            mPresenter.setUserLocation(currentLocation.getLatitude(), currentLocation.getLongitude());
+            Location userLocation = locationResult.getLastLocation();
+            mPresenter.setUserLocation(userLocation.getLatitude(), userLocation.getLongitude());
         }
     }
 
