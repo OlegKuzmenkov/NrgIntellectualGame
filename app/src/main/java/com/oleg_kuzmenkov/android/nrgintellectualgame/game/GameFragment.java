@@ -132,14 +132,17 @@ public class GameFragment extends Fragment implements GameView, View.OnClickList
         createLocationRequest();
         mLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                //Location Permission already granted
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                //location permission already granted
                 mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             } else {
-                // Send Message to User
+                //location permission is not granted
                 Log.i(LOG_TAG, "Geolocation is disabled");
             }
+            
         } else {
             mLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }
